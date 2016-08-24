@@ -1,0 +1,55 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-code}[2015/01/14 Packages, commands, etc for typesetting source code]
+\typeout{Document Style `SPL-code.sty' <2015/01/14>}
+\typeout{Rev. 1.0.0}
+
+% Revision history
+% 1.0.0 (2015/01/14) - extracted source code typesetting packages, commands etc from SPL-packages
+
+% Bera Mono (a monospaced, san serif font) is a good choice for code listings;
+% font expansion not available (see microtype)
+
+\usepackage{listings}
+% base style for listings
+\lstdefinestyle{base}{
+basicstyle=\small\ttfamily,
+tabsize=3,
+language=[11]C++,
+morekeywords={override, default},
+showstringspaces=false,
+breaklines=true,
+breakatwhitespace=true,
+captionpos=b,
+moredelim=[il]{//*},
+%escapeinside={//*}{\^^M}, % cannot get this escape sequence to work, \^^M represents a new line return
+escapeinside=\`\`,
+escapechar=\`}
+
+% for slides
+\lstdefinestyle{slide}{
+style=base,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+keywordstyle=\color{bluekeywords}\bfseries,
+%stringstyle=\color{redstrings},
+escapechar=\$
+}
+\lstdefinestyle{numbered-slide}{style=slide,numbers=left,numberstyle=\tiny}
+
+% for documents
+\lstdefinestyle{indented}{xleftmargin=1.7em, xrightmargin=1.7em}
+\lstdefinestyle{framed}{frame=tlrb, aboveskip=2em, abovecaptionskip=4mm}
+\lstdefinestyle{with-numbers}{numbers=left,numberstyle=\tiny, xleftmargin=2.5em, xrightmargin=2.5em}
+\lstdefinestyle{inline}{style=base, basicstyle=\ttfamily, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
+\lstdefinestyle{output}{style=base, style=framed, keywordstyle={}}
+\lstdefinestyle{frame}{style=base, style=framed}
+\lstdefinestyle{appendix}{style=base, style=framed}
+% fix these up
+\lstdefinestyle{mcq}{basicstyle=\small\ttfamily,tabsize=3,language=C++,showstringspaces=false,frame=tlrb,aboveskip=1em,xleftmargin=1em}
+\lstdefinestyle{mcq-with-numbers}{style=mcq,numbers=left,xleftmargin=4.5em}
+\definecolor{verylightgray}{gray}{0.2}
+\lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
+
+\newcommand{\coderef}[1]{Listing~\ref{#1}\xspace}
+\newcommand{\coderefs}[2]{Listings~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\algref}[1]{Algorithm~\ref{#1}\xspace}

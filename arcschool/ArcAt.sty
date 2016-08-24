@@ -1,0 +1,44 @@
+% ArcAt.sty 
+%
+% Matt Walsh's series of macros are included in the standard teTeX
+% distribution, and that contains a completely unrelated at.sty!!
+% Since this file is not usually distributed by MikTeX(MsLoss) or
+% teTeX(unix), I have simply renamed it.
+% 
+% Alan Robert Clark a.clark@ee.wits.ac.za.
+%
+% at.sty  12-Aug-91  Colin Hogben (chah@jet.uk)
+%
+% at(HPOS,VPOS){TEXT}
+% Save up TEXT to be output at absolute distance HPOS from the left
+% edge and VPOS from the top edge of the paper.
+% First create a box in which to store absolute positioned material.
+%
+\newbox\@atbox
+%
+\long\def\at(#1,#2)#3{\setbox\@atbox=\hbox
+ {\unhbox\@atbox
+  \vtop to 0pt{\kern #2\hbox to 0pt{\kern #1\relax #3\hss}\vss}}}
+%
+% Unload the saved absolute-positioned material.
+% Teleport to the actual top corner of the page by undoing the header
+% separation, the top and side margins, and the mysterious 1 inch
+% offset applied to each. Then make it look like a singularity (zero
+% height, depth and width).
+%
+\def\@useat{\vtop to 0pt{\kern-\headsep \kern-\topmargin \kern-1in
+            \hbox to 0pt{\kern-\@themargin \kern-1in \unhbox\@atbox \hss}\vss}}
+%
+% The following is a copy of the latex.tex \output routine except for
+% line 1: this prepends the shifted absolute material to the current
+% page. A little unsafe to copy code like this, I admit, but I
+% couldn't work out where/how else to insert the box.
+%
+\output{\setbox255=\vbox{\@useat \unvbox255}
+  \ifnum\outputpenalty <-\@M\@specialoutput\else
+  \@makecol\@opcol\@floatplacement\@startcolumn
+  \@whilesw\if@fcolmade \fi{\@opcol\@startcolumn}\fi
+  \global\vsize\ifnum\outputpenalty >-\@Miv \@colroom
+                  \else \maxdimen\fi}
+%
+

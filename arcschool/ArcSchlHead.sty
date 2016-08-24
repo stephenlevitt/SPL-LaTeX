@@ -1,0 +1,119 @@
+% Schlhead.sty produces a School Letterhead on plain paper (therefore
+% officially unnofficial!), but suitable for all the things that you
+% would usually use the letterhead for anyway.
+% Alan Robert Clark clark@YingTongDiddleipo.ee.wits.ac.za
+% Latest update: 21 January 2002.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% User callable macros:
+% \letterhead produces the letterhead, *after* you have set the following:
+% \ext{7209} sets your extension number, if absent, defaults to blank.
+% \reference{IgH6789Ym.987Yh} defaults to the filename!
+% \to{Mr Henry Crun\\c/o Miss Minnie Bannister\\Bexhill-on-Sea} defaults blank!
+% \enquiries{Mrs L McDonald} blank if absent.
+% \date{37 June 6022} todays date if absent.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dependancies:
+% fancyhdr.sty    % Allows headers and footers
+% pifont.sty      % for the postscript Wingdings font (Envelope etc)
+% graphicx.sty    % for logo inclusion.
+% Above are in std distribution. In addition:
+% ArcAt.sty       % Positions text at a particular x,y coord.
+% ArcSchlLogo.eps % My version of the School logo (VECTOR, NOT BITMAP!!!)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example Usage:
+% \documentclass{article}
+% \usepackage[widetext]{A4ee}
+% \usepackage{ArcSchlHead}
+% \begin{document}
+% \to{The Very Right Honourable Chancellor A R Clark \\ Dept Royal Heads \\
+%     BigHead Lane \\ ENGLAAAAAAANDDD}
+% \letterhead
+% I hereby wish to inform you that this is a letter. Thank you.
+% \end {document}
+%
+\ProvidesPackage{ArcSchlHead}
+
+\typeout{(***********************************************************************)}
+\typeout{(* ArcSchlHead Style Option -- Thank you for using ClarkWare Products! *)}
+\typeout{(*****************************--v 1.0--*********************************)}
+
+% input dependancies (standard LaTeX distribution) ...
+\RequirePackage{fancyhdr}
+\RequirePackage{pifont}
+
+\RequirePackage{graphicx}
+%\RequirePackage[pdftex]{graphicx}
+
+
+% Not in standard LaTeX distribution.
+\RequirePackage{ArcAt}
+
+\AtEndDocument{\label{ArcLastPage}}
+
+% defaulting of callable macros -- with @hiding of ``internal'' variables.
+
+% Tel No
+\def\ext#1{\def\@mynum{#1}}
+\def\@mynum{7209}
+
+% Address, note \long.
+\long\def\to#1{\def\@to{#1}}
+\def\@to{}
+
+% Reference -- defaults to filename
+\def\reference#1{\def\@reference{#1}}
+\def\@reference{\scriptsize\jobname.\TeX}
+
+% Enquiries
+\def\enquiries#1{\def\@enquiries{#1}}
+\def\@enquiries{SP Levitt}
+
+% Email
+\def\email#1{\def\@email{#1}}
+\def\@email{\small email:\ s.levitt@ee.wits.ac.za.}
+
+% Date -- defaults to today
+\def\date#1{\def\@date{#1}}
+\def\@date{\today }
+
+\def\letterhead
+{
+  \begin{tabular}{p{7mm}p{133mm}}
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(0,0)(15,20)
+      \includegraphics[width=25mm]{ArcSchlLogo.eps}%
+      %\includegraphics[width=25mm]{PNGLogo.png}%
+    \end{picture}%
+    &{\Large\sf UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
+      \cline{2-2}\\
+    &1 Jan Smuts Avenue, Johannesburg.\\
+    &School of Electrical and Information Engineering\\
+    &www.ee.wits.ac.za\\
+  \end{tabular}
+  \vspace{10mm}
+  {\par \raggedright \@to \par}
+%  \thispagestyle{fancy}
+  \pagestyle{fancy}
+  \lhead{}
+  \rhead{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0.4pt}
+  \cfoot{}
+  % Apartheid-era footnote:
+  %\cfoot{\tiny The University of the Witwatersrand rejects racism and
+  %racial segregation. It is committed to non-discrimination particularly in
+  %the constitution of its student body, in the selection of its staff, and in
+  %its administration.}
+  \rfoot{Page \thepage\ of \pageref{ArcLastPage}}
+  \at(139mm,33mm){\raisebox{-1.5mm}{{\huge\ding{41}}}\ \ School of Elec\&Info Eng}
+%  \at(132.5mm,35mm){\raisebox{-1.5mm}{{\huge\ding{41}}}\ \ School of Elec\&Info Eng}
+  \at(139mm,38mm){Wits}
+  \at(139mm,42mm){2050 South Africa}
+  \at(139mm,55mm){Reference: \@reference }
+  \at(139mm,60mm){Enquiries: \@enquiries }
+  \at(139mm,65mm){\raisebox{-1.5mm}{{\huge\ding{37}}}\ \ $+$27 11 717-\@mynum }
+  \at(139mm,70mm){Fax: $+$27 11 403-1929}
+  \at(139mm,75mm){\@email}
+  \at(139mm,80mm){\@date}
+}
+

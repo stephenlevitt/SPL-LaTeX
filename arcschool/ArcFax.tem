@@ -1,0 +1,33 @@
+% Note the order -- so that \@to in witshead is overridden!!
+\documentclass[11pt]{article}
+\usepackage[widetext]{A4ee}
+\usepackage{ArcSchlHead, ArcFax}
+\begin{document}
+
+%%%%fill in curlies
+\to{}
+\acct{}
+\faxno{}
+%\date{\today}
+\date{FILL IN!!!}
+
+\ext{7223}
+\enquiries{Dr. A.R.Clark}
+\makefax
+\large 
+
+\vspace{-1cm} % Depending on the ``length'' of the address, adjust this.
+
+Dear 
+
+%%%% Start typing the fax message :
+\centerline{\bf \underline{Re:  } }
+
+
+\vspace{7 mm}
+Yours sincerely, \\  
+% Scan your own signature, or use a \vspace{15mm} and sign!
+\includegraphics[width=35mm]{arcsig.eps}\\
+
+Dr. A.R.Clark, Pr.Eng.
+\end{document}

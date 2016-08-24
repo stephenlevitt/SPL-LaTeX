@@ -1,0 +1,180 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-beamer}[2012/01/29 Packages, commands, etc for beamer presentations]
+\typeout{Document Style `SPL-beamer.sty' <2012/01/29>}
+\typeout{Rev. 2.0.0}
+
+% Revision history
+% 2.0.0 (2013/01/29) - introduced XeTeX in order to allow for big quotation marks.
+%         The libertine package which contained the glyphs was discontinued
+%         for pdflatex - see here:
+%         http://tex.stackexchange.com/questions/76305/how-does-libertine-type1-work?
+%         http://tex.stackexchange.com/questions/78516/linux-libertine-package-and-fonts-not-working-anymore-fall-2012
+%         It is possible to fallback to PDFLaTeX but XeTeX has been made a requirement for slide production.
+%
+%         For the author field to be included in the PDF properties, it needs to appear before the document starts,
+%         so it has been moved out of the titleslide definition, and documents using this style
+%         need to specify the author
+
+
+\usepackage{ifxetex}
+\RequireXeTeX % remove in order to use PDFLaTeX
+\ifxetex
+    % XeLaTeX
+    \usepackage{fontspec}
+    \setmainfont{Bitstream Charter}
+    \setmonofont[Scale=0.9]{Bera Sans Mono} % for code listings beramono is used
+    \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine for quotation marks
+                                                               % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+\else
+    % fallback: pdfLaTeX
+    % for code listings beramono is used
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage[scaled]{beramono}
+    \newcommand*\quotefont{} % do nothing
+    \newcommand*\quotefont{\fontfamily{fxl}} % selects Libertine for quote font
+                                              % (now broken because of the way libertine
+                                              % has evolved so quotation marks
+                                              % are not as nice)
+\fi
+
+% for automatically generated year on title slide
+\usepackage{datetime}
+\newdateformat{yearonly}{\THEYEAR}
+\usepackage{graphicx}
+
+
+% for figure placement on title page, for using tikzoverlay for general figure
+% placement, and for drawing graphics etc
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{
+  every overlay node/.style={
+    draw=white,fill=white,rounded corners,anchor=north west,
+  },
+}
+% Usage:
+% \tikzoverlay at (-1cm,-5cm) {content};
+% or
+% \tikzoverlay[text width=5cm] at (-1cm,-5cm) {content};
+\def\tikzoverlay{%
+   \tikz[baseline,overlay]\node[every overlay node]
+}%
+
+
+\usepackage{color}
+% colour external links, keep default Beamer theme colour for internal links
+% external link colour is a dark purple gray - so as not to be too distracting
+\definecolor{links}{HTML}{180F6D}%{0B0071}%{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+% colour definitions for code listings
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0.2,0.2} % perhaps change to brown
+
+\usepackage{xspace}
+
+\usepackage{listings}
+\lstset{language=C++,
+showspaces=false,
+showtabs=false,
+tabsize=3,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+keywordstyle=\color{bluekeywords}\bfseries,
+%stringstyle=\color{redstrings},
+basicstyle=\small\ttfamily,
+escapechar=\$
+%escapeinside={(*@}{@*)}
+}
+\lstdefinestyle{with-numbers}{numbers=left,numberstyle=\tiny}
+
+% path for diagrams and figures
+\graphicspath{{./Figures/}}
+
+% suppress navigation symbols in beamer
+\setbeamertemplate{navigation symbols}{}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+
+%------------------------------------------------------------------------------
+
+% definition of the title slide with school logo in the background
+\newcommand{\titleslide}{
+%\institute{School of Electrical and Information Engineering\\University of the Witwatersrand}
+\date{\yearonly\today}
+\begin{frame}[plain]
+   \tikz [remember picture,overlay]
+    \node at
+       ([xshift=-4cm,yshift=2cm]current page.center)
+        {\includegraphics[width=1.5\textwidth]{eie-logo-paler}};
+   \titlepage
+\end{frame}
+
+% title slide is not numbered, following slides are numbered from 1
+\addtocounter{framenumber}{-1}
+}
+
+%------------------------------------------------------------------------------
+% definition of "signedquote" and "unsignedquote" environments
+% typeset signed quotations using extra-large quotation marks and a gray background
+% (inspired by tex.stackexchange.com)
+
+\usepackage{tikz}
+\usepackage{framed}
+\usepackage{amsthm} % pushQED, popQED
+
+% Make commands for the quotes
+\newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-16pt,yshift=-3pt]
+     \node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
+\newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=-.5pt,yshift=-8pt]
+     \node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
+
+% quoteblock colour based on current theme
+\setbeamercolor{quoteblock}{fg=black,bg=structure.fg!75!black!10!bg}
+\newenvironment{signedquote}[1]%
+{
+   \pushQED{#1} % for using arguments at the end of a new environment definition. Push arg at the beginning of the definition and pop to use at the end
+   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+   \large
+   \begin{quote}
+   \openquote
+}
+{
+   \closequote
+   \end{quote}
+   \vskip3mm
+   \hspace*\fill{\small--- \popQED}
+   \end{beamercolorbox}
+}
+
+\newenvironment{unsignedquote}%
+{
+   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+   \large
+   \begin{quote}
+   \openquote
+}
+{
+   \closequote
+   \end{quote}
+   \end{beamercolorbox}
+}
+
+%------------------------------------------------------------------------------
+
+% For realistic looking highlighter (will not handle line breaks)
+% from: http://tex.stackexchange.com/questions/5959/cool-text-highlighting-in-latex
+\newcommand\hl[1]{%
+    \tikz[baseline,%
+      decoration={random steps,amplitude=1pt,segment length=15pt},%
+      outer sep=-15pt, inner sep = 0pt%
+    ]%
+   \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
+}%
+
+%------------------------------------------------------------------------------

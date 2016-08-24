@@ -1,0 +1,169 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-beamer}[2012/01/29 Packages, commands, etc for beamer presentations]
+\typeout{Document Style `SPL-beamer.sty' <2015/09/02>}
+\typeout{Rev. 2.1.0}
+
+% Revision history
+% 2.0.0 (2013/01/29) - introduced XeTeX in order to allow for big quotation marks.
+%         The libertine package which contained the glyphs was discontinued
+%         for pdflatex - see here:
+%         http://tex.stackexchange.com/questions/76305/how-does-libertine-type1-work?
+%         http://tex.stackexchange.com/questions/78516/linux-libertine-package-and-fonts-not-working-anymore-fall-2012
+%         It is possible to fallback to PDFLaTeX but XeTeX has been made a requirement for slide production.
+%
+%         For the author field to be included in the PDF properties, it needs to appear before the document starts,
+%         so it has been moved out of the titleslide definition, and documents using this style
+%         need to specify the author
+%
+% 2.1.0 (2015/09/02) - commented ifxetex package and branch for pfdLaTeX as XeLaTeX or LuaTeX
+%                      is now always required. Tidied up file. Move listings setting to SPL-code.sty
+%                      Corrected the use of \setmonofont so that it uses a ttf monospaced font
+%                      The font is Bitstream Vera Sans Mono which has to be downloaded and manually installed
+%                      on Windows. It can be downloaded from: http://www.fontsquirrel.com/fonts/list/foundry/bitstream
+%                      See own question on texexchange
+%                      Note: this font is pretty much the same as the type1 font Bera Mono
+%                      for use with PDFLaTeX:
+%                      \usepackage[scaled]{beramono}   % the font scaling is controlled in beramono.sty (0.9)
+%                      \usepackage[T1]{fontenc}
+
+%------------------------------------------------------------------------------
+%                 Font Selection (requires XeLaTeX or LuaTeX
+%------------------------------------------------------------------------------
+\RequireXeTeX % code listings font scales better with XeTeX but pdfLaTeX can be used as well
+\usepackage{fontspec}
+\setmonofont{Bitstream Vera Sans Mono}[Scale=0.9] % for code listings beramono is used
+\newfontfamily\quotefont{Linux Libertine O}[Ligatures=TeX] % selects Libertine for quotation marks
+                                                           % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+%\setsansfont{Gigi}  % to change the main font that beamer uses (the sans font)
+\newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans} % a tiny version of the main beamer font
+                                                      % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+%------------------------------------------------------------------------------
+%                               Title Page
+%------------------------------------------------------------------------------
+% for automatically generated year on title slide
+\usepackage{datetime}
+\newdateformat{yearonly}{\THEYEAR}
+
+% for figure placement on title page, for using tikzoverlay for general figure
+% placement, and for drawing graphics etc
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\tikzset{
+  every overlay node/.style={
+    draw=white,fill=white,rounded corners,anchor=north west,
+  },
+}
+% Usage:
+% \tikzoverlay at (-1cm,-5cm) {content};
+% or
+% \tikzoverlay[text width=5cm] at (-1cm,-5cm) {content};
+\def\tikzoverlay{%
+   \tikz[baseline,overlay]\node[every overlay node]
+}%
+
+% definition of the title slide with school logo in the background
+\newcommand{\titleslide}{
+\institute{School of Electrical and Information Engineering\\University of the Witwatersrand}
+\date{\yearonly\today}
+
+\begin{frame}[plain]
+   \tikz [remember picture,overlay]
+    \node at
+       ([xshift=-4cm,yshift=2cm]current page.center)
+        {\includegraphics[width=1.5\textwidth]{eie-logo-paler}};
+   \titlepage
+\end{frame}
+
+% title slide is not numbered, following slides are numbered from 1
+\addtocounter{framenumber}{-1}
+}
+
+%------------------------------------------------------------------------------
+%                             General
+%------------------------------------------------------------------------------
+\usepackage{SPL-code}  % for code listings
+\usepackage{color}
+% colour external links, keep default Beamer theme colour for internal links
+% external link colour is a dark purple gray - so as not to be too distracting
+\definecolor{links}{HTML}{180F6D}%{0B0071}%{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+
+% colour definitions for code listings
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0.2,0.2} % perhaps change to brown
+
+\usepackage{xspace}
+
+% path for diagrams and figures
+\graphicspath{{./Figures/}}
+
+% suppress navigation symbols in beamer
+\setbeamertemplate{navigation symbols}{}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+\usepackage{relsize}                                    % for font sizes relative to the current font
+\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace}
+\protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
+
+%------------------------------------------------------------------------------
+%                        Quotation Environments
+%------------------------------------------------------------------------------
+% definition of "signedquote" and "unsignedquote" environments
+% typeset signed quotations using extra-large quotation marks and a gray background
+% (inspired by tex.stackexchange.com)
+\usepackage{framed}
+\usepackage{amsthm} % pushQED, popQED
+
+% Make commands for the quotes
+\newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-16pt,yshift=-3pt]
+     \node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
+\newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=-.5pt,yshift=-8pt]
+     \node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
+
+% quoteblock colour based on current theme
+\setbeamercolor{quoteblock}{fg=black,bg=structure.fg!75!black!10!bg}
+
+\usepackage{xparse}
+\DeclareDocumentEnvironment{signedquote}{m}
+{
+   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+   \large
+   \begin{quote}
+   \openquote
+}
+{
+   \closequote
+   \end{quote}
+   \vskip3mm
+   \hspace*\fill{\small--- #1}
+   \end{beamercolorbox}
+}
+
+\newenvironment{unsignedquote}%
+{
+   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+   \large
+   \begin{quote}
+   \openquote
+}
+{
+   \closequote
+   \end{quote}
+   \end{beamercolorbox}
+}
+
+%------------------------------------------------------------------------------
+%                                   Highlighter
+%------------------------------------------------------------------------------
+% For realistic looking highlighter (will not handle line breaks)
+% from: http://tex.stackexchange.com/questions/5959/cool-text-highlighting-in-latex
+\newcommand\hl[1]{%
+    \tikz[baseline,%
+      decoration={random steps,amplitude=1pt,segment length=15pt},%
+      outer sep=-15pt, inner sep = 0pt%
+    ]%
+   \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
+}%
+
+%------------------------------------------------------------------------------

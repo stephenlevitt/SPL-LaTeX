@@ -1,0 +1,477 @@
+% \def\fileversion{1.5}
+% \def\filedate{1997/10/21}
+% \changes{v1.5}{1997/10/21}{Fixed multiple page number bug.}
+% \changes{v1.2b}{1997/10/10}{Bug fixes, added default list behaviour and 
+%                             squashlist environment}
+% \changes{v1.2a}{1997/10/08}{Added front cover support}
+% \changes{v0.1a}{04-05-1997}{Adapted for LaTeX2e and DocStrip from 
+%                             Rev. 1 of exam.sty and examarc.sty}
+% 
+% \MakeShortVerb{\|}
+% \CheckSum{564}
+% 
+% \title{Wits Electrical Engineering Exam Class}
+% \author{Alan Robert Clark/Previously: Dean Redelinghuys}
+% \maketitle
+% \begin{abstract}
+% This class provides a structure for preparing and setting
+% examinations and class tests under \LaTeXe. Multiple-choice questions as
+% well as sub-questions are handled. The cover page doesn't need to be
+% typed by anyone else either!
+% \end{abstract}
+% 
+% \section{Quick Start - Using {\ttfamily exam.cls}}
+% \emph{Please read this whole section at least!}
+% \begin{enumerate}
+%   \item Start a new document using the |exam| class (the |11pt|
+%     option is used by \emph{default} for a better font size - change it 
+%     with |10pt| or |12pt| if you like).
+%
+%     If you want the cover page, use the option |cover|. Otherwise, a
+%     blank page is printed to hide your exam from prying eyes.
+% 
+%   \item Add the following commands in the preamble to define some 
+%   data needed for typesetting (some are only needed if you use 
+%   |cover| as an option):\\
+%   \begin{tabularx}{0.9\textwidth}{>{\ttfamily}lXc}\hline
+%   \textbf{\rmfamily Command} & \textbf{Description} & 
+%     \textbf{Cover} only \\
+%   \bslash{}coursecode & Course code, like|ELEN101|. & - \\
+%   \bslash{}coursename & Course name, like ``Engineering Design''. & - \\
+%   \bslash{}exammonth & Month and year of exam, in words. & X \\
+%   \bslash{}studyyear & Year of study (e.g., ``First''). & X \\
+%   \bslash{}studydegs & Degrees begin awarded (e.g., '`BSc (Eng) (Elec)'',
+%     which is the default). & X \\
+%   \bslash{}faculties & Defaults to \texttt{Engineering}. & X \\
+%   \bslash{}internal & Internal examiners and extensions. & X \\
+%   \bslash{}external & External examiners. & X \\
+%   \bslash{}require & Special requirements block. & X \\
+%   \bslash{}duration & Duration of exam. If the course codes write for
+%     different amounts of time, separate the times on lines, like you 
+%     did for the \texttt{\bslash{}coursecode}. & X \\
+%   \bslash{}instruct & Instructions block. I almost always simply say 
+%     ``See page 1''. & X \\
+%   \end{tabularx}
+%
+%   Each of the items is placed into a |minipage| environment, so you can
+%   typeset stuff as you like. The only catch is the |\coursecode| and
+%   |\coursename|: Try to make those single lines. If you can't, redefine
+%   (especially) the |\coursecode| immediately after the |\makeheads| 
+%   command.
+%   \item Start your document and issue a |\makeheads| command to typeset
+%   either the cover page (option |cover|) or a covering sheet which hides
+%   the innards of the exam.
+%   \item Start each question with a |\question| command. Finish it with the
+%     command |\marks{nn}| where \meta{nn} is your total for the question. If
+%     you want to provide more structure, use |\marks{nn}| for a part of a
+%     question, and |\totalmarks{nn}| for the total marks for a question.
+%   \item Itemised lists are now numbered |(a)| etc. for the first level, 
+%     and |ii| etc. for the second level.
+%   \item For squeezed lists, use the |squashenum| environment, which is an
+%     |enumerate| with no lines between items.
+%   \item You can have multiple choice questions with |\mcq| and the Alan
+%     Clark Gems |\Banum| and |\Eanum|. Special mcq items are defined with
+%     the command |\mcqi|, with an optional mark as the argument. See 
+%     options (Sec.~\ref{Sec:Options}) for more info.
+%   \item You can place optional printed material in a |\comment| 
+%     command. This is only printed if |comments| is passed
+%     as an option. Most people (Alan and I) use it for two things: 
+%     discussion of what we are aiming at in the question, and/or complete
+%     solutions to each question! Makes marking really easy, and those
+%     examiners meetings may never be the same.
+%   \item If you have the |draftcopy| package and you ordinarily print via
+%     a |dvips| postscript step, a very useful toy is to place the
+%     following at the top of your document:
+%     \begin{tiny} 
+%       \begin{verbatim}
+% %\documentclass[cover]{exam}
+% \documentclass[cover,comments]{exam}\usepackage{draftcopy}\draftcopyName{ANSWER}{160}
+%       \end{verbatim}
+%     \end{tiny}
+%     (All as one line etc. You then simply comment out the one you dont
+%     need!) A greyed out, massive ANSWER appears diagonally across each
+%     page. No matter how Dof the exams office is, its unlikely to be
+%     printed :-)
+% \end{enumerate}
+%
+% \StopEventually{}
+% \section{The Documentation Driver}
+% The following code will generate the documentation for this file. Since
+% it is the first piece of code, and it is separated by a special option,
+% this file can be used to produce the documentation but this code will
+% \emph{not} appear in the class.
+%    \begin{macrocode}
+%<*driver>
+\documentclass[a4paper]{article}
+\usepackage{A4ee,tabularx}
+\usepackage{doc}
+\begin{document} \DocInput{exam.dtx} \end{document}
+%</driver>
+%    \end{macrocode}
+% 
+% \section{The Code}
+% We begin by announcing which class this is and what it requires.
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{exam}[1998/10/05 v1.6 Wits Elec. Eng. Exam Class]
+%    \end{macrocode}
+% This class is based heavily on the article option, so we need to load and
+% send standard options to the |article| class, except our own definitions,
+% which are covered in the next section.
+%
+% \subsection{Class Options}\label{Sec:Options}
+% This class provides two options to the user: |comments|, which typesets
+% the |\comment|s, and |showsol| which shows the
+% solutions for multiple-choice questions.
+% We must also strictly disallow double-sided layout:
+%    \begin{macrocode}
+\DeclareOption{showsol}
+    {\AtBeginDocument{%
+    \renewcommand{\mcqsol}[1]{\marginpar{\footnotesize\scshape%
+    {}\ensuremath{[#1]}}}%
+    }}
+\DeclareOption{comments}
+    {\AtBeginDocument{%
+    \renewcommand{\comment}[1]{{\footnotesize\scshape #1\vspace*{0.5em}\\}}%
+    \renewcommand{\commenthead}{\textsc{Do Not Send for Printing!}}%
+    }}
+%    \end{macrocode}
+% A final option, |cover|, redefines the |\makeheads| command (at the
+% |\begin{document}|) to print the official looking cover page instead of
+% the blank page. We need some boxes for that: |\internal|, |\external|,
+% |\duration|, |\require|, |\instruct|, |\exammonth|, |\studyyear|,
+% |\faculties|, |\studydegs|, |\coursecode|, |\coursename|.
+%    \begin{macrocode}
+\newcommand{\eeInternal}{None}
+\newcommand{\internal}[1]{\renewcommand{\eeInternal}{#1}}
+\newcommand{\eeExternal}{None}
+\newcommand{\external}[1]{\renewcommand{\eeExternal}{#1}}
+\newcommand{\eeDuration}{Three (3)}
+\newcommand{\duration}[1]{\renewcommand{\eeDuration}{#1}}
+\newcommand{\eeRequires}{None}
+\newcommand{\require}[1]{\renewcommand{\eeRequires}{#1}}
+\newcommand{\eeInstruct}{None}
+\newcommand{\instruct}[1]{\renewcommand{\eeInstruct}{#1}}
+\newcommand{\eeMonth}{TBA}
+\newcommand{\exammonth}[1]{\renewcommand{\eeMonth}{#1}}
+\newcommand{\eeYoS}{TBA}
+\newcommand{\studyyear}[1]{\renewcommand{\eeYoS}{#1}}
+\newcommand{\eeFacs}{Engineering}
+\newcommand{\faculties}[1]{\renewcommand{\eeFacs}{#1}}
+\newcommand{\eeDegs}{BSc (Eng) Elec}
+\newcommand{\studydegs}[1]{\renewcommand{\eeDegs}{#1}}
+\newcommand{\eeCCode}{ELEN???}
+\newcommand{\coursecode}[1]{\renewcommand{\eeCCode}{#1}%
+  \markright{\eeCCode -- \eeCName}}
+\newcommand{\eeCName}{??}
+\newcommand{\coursename}[1]{\renewcommand{\eeCName}{#1}%
+  \markright{\eeCCode -- \eeCName}}
+%    \end{macrocode}
+% And now we can define |cover| (I use a picture environment; if anyone can
+% tell me an easier way to do this let me know!)
+% \begin{footnotesize}
+%    \begin{macrocode}
+\DeclareOption{cover}
+  {\AtBeginDocument{%
+    \renewcommand{\makeheads}{
+    \addtolength{\evensidemargin}{-15mm}
+    \addtolength{\oddsidemargin}{-15mm}
+    \addtolength{\textwidth}{30mm}
+    \begin{titlepage}%
+    \thispagestyle{empty}
+    \vspace*{-35mm}
+
+    % temporarily shift the margins
+    \fbox{\parbox[c]{25mm}{\raggedleft hrs}}\hspace*{10mm}
+    \fbox{\parbox[c]{25mm}{\centering ~~/~~/20~~}}\hspace*{10mm}
+    \fbox{\parbox[c]{50mm}{\strut}}\hspace*{13mm}\begin{tabular}{c}
+    Exams Office\\Use Only\end{tabular}\medskip
+
+    ~\rule{180mm}{0.4pt}~\\
+    \begin{samepage}
+    \begin{textsf}
+    {\large University of the Witwatersrand, Johannesburg}\bigskip
+
+\unitlength 1.00mm
+\linethickness{0.4pt}
+\begin{picture}(190.00,205.00)(5,5)
+\put(5.00,19.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Instructions to candidates\\
+  (Examiners may wish to use\\
+  this space to indicate, inter alia,\\
+  the contribution made by this\\
+  examination or test towards\\
+  the year mark, if appropriate)\end{tabular}}}
+\put(5.00,50.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Time allowance\end{tabular}}}
+\put(5.00,70.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Special materials required\\
+  (graph/music/drawing paper)\\
+  maps, diagrams, tables,\\
+  computer cards, etc)\end{tabular}}}
+\put(5.00,90.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  External examiner(s)\end{tabular}}}
+\put(5.00,110.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Internal examiners\\and telephone\\number(s)\end{tabular}}}
+\put(5.00,125.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Faculty/ies presenting\\candidates\end{tabular}}}
+\put(5.00,160.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Year of Study\\(Art \& Sciences leave blank)\end{tabular}}}
+\put(5.00,145.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Degrees/Diplomas for which\\this course is prescribed\\
+  (BSc (Eng) should indicate which branch)\end{tabular}}}
+\put(5.00,175.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Examination/Test$^*$ to be\\held during month(s) of\\
+  \footnotesize($^*$delete as applicable)\end{tabular}}}
+\put(5.00,190.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Course or topic name(s)\\Paper Number \& title\end{tabular}}}
+\put(5.00,205.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+  Course or topic No(s)\end{tabular}}}
+\put(90.00,5.00){\framebox(100.00,28.00)[cc]{\begin{minipage}{95mm}
+  \centering\small\texttt{\eeInstruct}\end{minipage}}}
+\put(90.00,40.00){\framebox(20.00,15.00)[cc]{\small
+  \shortstack{Course\\Nos}}}
+\put(110.00,40.00){\framebox(40.00,15.00)[cc]{\small
+  \begin{minipage}{14mm}\centering\texttt{\eeCCode}\end{minipage}}}
+\put(150.00,40.00){\framebox(18.00,15.00)[cc]{\small Hours}}
+\put(168.00,40.00){\framebox(22.00,15.00)[cc]{\small
+  \begin{minipage}{22mm}\centering\texttt{\eeDuration}\end{minipage}}}
+\put(90.00,63.00){\framebox(100.00,13.00)[cc]{\small
+  \begin{minipage}{95mm}\centering\ttfamily\eeRequires\end{minipage}}}
+\put(90.00,83.00){\framebox(100.00,13.00)[cc]{\small
+  \begin{minipage}{95mm}\centering\ttfamily\eeExternal\end{minipage}}}
+\put(90.00,100.00){\framebox(100.00,13.00)[cc]{\small
+  \begin{minipage}{95mm}\centering\ttfamily\eeInternal\end{minipage}}}
+\put(110.00,122.00){\framebox(80.00,8.00)[cc]{\small
+  \begin{minipage}{75mm}\centering\ttfamily\eeFacs\end{minipage}}}
+\put(110.00,136.00){\framebox(80.00,13.00)[cc]{\small
+  \begin{minipage}{75mm}\centering\ttfamily\eeDegs\end{minipage}}}
+\put(110.00,157.00){\framebox(80.00,8.00)[cc]{\small
+  \begin{minipage}{75mm}\centering\ttfamily\eeYoS\end{minipage}}}
+\put(110.00,172.00){\framebox(80.00,8.00)[cc]{\small
+  \begin{minipage}{75mm}\centering\ttfamily\eeMonth\end{minipage}}}
+\put(90.00,187.00){\framebox(100.00,10.00)[cc]{\small
+  \begin{minipage}{95mm}\centering\ttfamily\eeCName\end{minipage}}}
+\put(110.00,202.00){\framebox(80.00,8.00)[cc]{\small
+  \begin{minipage}{75mm}\centering\ttfamily\eeCCode\end{minipage}}}
+\end{picture}
+\bigskip
+
+    {\Large Internal Examiners or Heads of Department are requested to sign
+    the declaration overleaf}
+    \end{textsf}
+    \end{samepage}
+    \newpage\vspace{40mm}
+    1. As the Internal Examiner/Head of Department, I certify that this
+    question paper is in final form, as approved by the External Examiner,
+    and is ready for reproduction.\\[10mm]
+    2. As the Internal Examiner/Head of Department, I certify that this
+    question paper is in final form and is ready for reproduction.\\[10mm]
+    (1. is applicable to formal examinations as approved by an external
+    examiner, while 2. is applicable to formal tests not requiring approval
+    by an external examiner---Delete whichever is not applicable)\\[20mm]
+    Name:\hrulefill\ \  Signature:\hrulefill\\[20mm](THIS PAGE NOT FOR
+    REPRODUCTION)
+    \end{titlepage}
+    \addtolength{\evensidemargin}{15mm}
+    \addtolength{\oddsidemargin}{15mm}
+    \addtolength{\textwidth}{-30mm}}
+    }%
+  }
+%    \end{macrocode}
+% \end{footnotesize}
+%
+% The rest of the options need to be passed on to the |article| class.
+%
+%    \begin{macrocode}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\PassOptionsToClass{a4paper,11pt}{article}
+\ProcessOptions
+\LoadClass{article}
+%    \end{macrocode}
+%
+% \subsection{Margins and Page Style}
+% Somehow we always manage to redefine these, although they should have
+% been set up by the |a4paper| option passed to article above, so:
+%    \begin{macrocode}
+\setlength{\topmargin}{-3mm}
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{15mm}
+\setlength{\textheight}{240mm}
+\setlength{\footskip}{0mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\textwidth}{150mm}
+\setlength{\evensidemargin}{10mm}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0em}
+\setlength{\unitlength}{1mm}
+\setlength{\marginparwidth}{40pt}
+\setlength{\marginparsep}{10pt}
+\brokenpenalty=10000
+%    \end{macrocode}
+% \subsubsection{Special Holders}
+% We define |\eeCourse| to hold the course code and |\eelastpg| 
+% to hold the last page of the report (may be auto-generated). 
+% We also need our own counter to add up the questions.
+%
+% The user can change these by specifying the
+% commands |\course| (sensible) and |\lastpg|
+% (to override the auto-generation).
+%    \begin{macrocode}
+\newcounter{qno}
+\newcommand{\eelastpg}{\pageref{@last-page}}
+\newcommand{\lastpg}[1]{\renewcommand{\eelastpg}{#1}}
+%    \end{macrocode}
+% \subsubsection{How to flag the last page of a document}
+% Under \LaTeXe, this is so simple it's scary!!!
+%    \begin{macrocode}
+\AtEndDocument{\label{@last-page}}
+%    \end{macrocode}
+% \subsection{The Cover Page}
+% To hide this from prying eyes, and to let other people know about what's
+% happening, we define a ``dummy'' |\makeheads| command.
+%    \begin{macrocode}
+\newcommand{\makeheads}{\begin{titlepage}\vspace{80mm}\thispagestyle{empty}
+  Examination question paper for:
+  \begin{center}\Large \eeCCode -- \eeCName \end{center}
+  Printed on:\quad \today.\par This covering page \emph{must not} be sent
+  for printing as part of the question paper.
+  \end{titlepage}}
+%    \end{macrocode}
+% \subsection{Page Headers}
+% This prints the exam title, the page (and last page) info, and turns off
+% page numbering at the base of the page.
+%    \begin{macrocode}
+\AtBeginDocument{\pagestyle{empty}
+\markright{\eeCCode -- \eeCName \commenthead}
+\renewcommand{\@oddhead}{\hbox{}\sl\rightmark \hfil
+\rm (\eelastpg\ pages---page \thepage)}}
+%    \end{macrocode}
+% \subsection{Questions}
+% Two types, either a |Question| which is a biggy, or a |Q|, which is
+% smaller but still a whole question.
+%    \begin{macrocode}
+\newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
+\newcommand{\quest}{\addtocounter{qno}{1}\par{\bf Q\theqno :\quad}}
+%    \end{macrocode}
+% \subsection{Multiple-Choice Support}
+% Because multiple-choice is used so often, we support the use of the
+% environment |mcq| to define a multiple-choice question, which is 
+% automatically numbered as a sub-number of the current question. The
+% advantage of this is that the multiple choice question is \emph{never}
+% broken across a page (this may become a problem is your questions are too
+% long, but then ask yourself why that is so!
+%    \begin{macrocode}
+\newcounter{mcqno}[qno]
+\newenvironment{mcq}%
+{\addtocounter{mcqno}{1}\par\relax\begin{samepage}\theqno.\themcqno \quad}%
+{\end{samepage}\medskip\par\pagebreak[1]}
+%    \end{macrocode}
+% Lists seem an integral component of an exam. However, we usually denote
+% the second part of question 1 as |(b)|, and the third portion of that
+% |iii.| so we redefine a few commands. We would like to refer to this as
+% |1(a)-iii| and we make this so.
+%
+% Note that this does not preclude the possiblity of using other lists
+% yourself, it just changes the default behaviour.
+%    \begin{macrocode}
+\makeatletter
+\renewcommand{\theenumi}{(\alph{enumi})}
+\renewcommand{\theenumii}{\roman{enumii}}
+\renewcommand{\labelenumi}{\theenumi}
+\renewcommand{\labelenumii}{\theenumii.}
+\renewcommand{\p@enumi}{\theqno}
+\renewcommand{\p@enumii}{\theqno\theenumi--}
+%    \end{macrocode}
+% Now you may like to squash up your questions, so either use the |\Banum|
+% and |\Eanum| stuff from Alan Clark (included here) or use the more general
+% (and hopefully more robust) |squashenum| environment.
+%    \begin{macrocode}
+\newenvironment{squashenum}{\begin{enumerate}\setlength{\parsep}{0pt}}%
+  {\end{enumerate}}
+%    \end{macrocode}
+% To add the options, we provide Alan Clark's
+% |\Banum| and |\Eanum| commands, which produce alpha enumerated scrunched
+% lists (which works exactly right):
+%    \begin{macrocode}
+\providecommand{\Banum}{\begin{list}%
+   {(\alph{enumi})}{\usecounter{enumi}}\parskip=0pt}
+\providecommand{\Eanum}{\end{list}}
+%    \end{macrocode}
+% We defined the class option |showsol| which shows solutions where
+% necessary. Well, multiple-choice is where they are really useful; we can
+% define an optional argument for the |\mcqi| (kind of like an |\item|),
+% denoting the marks for the particular multiple-choice
+% question. This is printed \emph{only when |showsol| is used}. In this way,
+% we can embed our solutions, and hide them from printing by omitting the
+% |showsol| option in the declaration.
+%
+% For long questions, and discussion-type musings, we provide the command
+% |\comment|, which is ignored if the option |comments| is not used, but
+% printed in a special way if it is (see Options above).
+%    \begin{macrocode}
+\newcommand{\mcqi}[1][??]{\item \mbox{}\mcqsol{#1}}
+\newcommand{\mcqsol}[1]{\relax}
+\newcommand{\comment}[1]{\relax}
+\newcommand{\commenthead}{\relax}
+%    \end{macrocode}
+% |\mcqsol| is redefined (if necessary) in the options-passing section, but
+% deferred until all of the preamble is done. Likewise for |\comment|.
+%
+% \subsection{Marks}
+% Each question should denote the total marks, so we use a special command
+% |\rhfit| internally to make sure the marks are on the right hand side of
+% the page. Then we define |\marks| and |\totalmarks| for consistent
+% typesetting of these objects.
+%    \begin{macrocode}
+\newcommand{\rhfit}[1]{
+{\unskip\nobreak\hfil\penalty50\hskip2em\vadjust{}\nobreak\hfil
+{#1}\parfillskip=0pt \finalhyphendemerits=0 \par}}
+\providecommand{\marks}[1]{\rhfit{\textsf{(#1~marks)}}}
+\providecommand{\totalmarks}[1]{\rhfit{\textsf{[Total Marks #1]}}}
+%    \end{macrocode}
+% \subsection{Figures}
+% Somehow exams need special treatment of figures, so:
+%    \begin{macrocode}
+\newcommand{\fig}[1]{\addtocounter{figure}{1}
+\begin{center}\vspace*{#1}Figure \thefigure\end{center}}
+\newcommand{\figc}[2]{\addtocounter{figure}{1}
+\begin{center}\vspace*{#1}Figure \thefigure : {#2}\end{center}}
+\newcommand{\figf}[1]{\addtocounter{figure}{1}\begin{figure}[htb]
+\vspace{#1}\begin{center}Figure \thefigure\end{center} \end{figure}}
+\newcommand{\figcf}[2]{\addtocounter{figure}{1}\begin{figure}[htb]
+\vspace{#1}\begin{center}Figure \thefigure : {#2}\end{center} \end{figure}}
+%    \end{macrocode}
+%
+% \Finale
+% \section*{Revision History}
+% This is surrounded by documentation tags, so it should not be inserted
+% into the style file.
+%    \begin{macrocode}
+%<*driver>
+
+$Log: exam.dtx,v $
+Revision 1.7  1998-11-30 08:02:49+02  redel
+Added comment warning on each page. Not sure if it works!
+
+Revision 1.6  1998/10/04 18:36:36  redel
+Changed ver. number.
+
+Revision 1.6  1997/10/22 06:21:01  redel
+Re-introduced to RCS
+
+Revision 1.4  1997/10/21 05:19:43  redel
+Fixed multiple page number bug (thanks George)
+
+Revision 1.3  1997/10/10 05:54:55  redel
+Added squashenum, default behaviour of lists. Fixed some bugs.
+
+Revision 1.2  1997/10/09 03:05:52  redel
+Finished cover page, documentation
+
+Revision 1.1  1997/10/08 02:52:16  redel
+Added cover option. Not yet finished!
+
+%</driver>
+%    \end{macrocode}
+\endinput

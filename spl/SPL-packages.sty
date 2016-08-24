@@ -1,0 +1,198 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-packages}[2013/01/31 Common packages, commands, etc for SPL styles]
+\typeout{Document Style `SPL-packages.sty' <2013/01/31>}
+\typeout{Rev. 1.0.2}
+
+% Revision history
+% 1.0.2 (2013/01/31) - replaced amsfonts with mathdesign, fourier ornaments now working
+% 1.0.3 (2014/01/13) - added up-to-date packages and good practices section
+% 1.0.4 (2015/01/14) - big clean-up, split packages up into small groups, see SPL-code.sty and SPL-math.sty;
+%                      used xparse (LaTeX3) for declaring signed quote environment;
+%                      gave options for using XeLaTeX as a backend driver, deprecated DVI->PDF route;
+%                      added checks for good practice
+% TO DO 
+%- rework end rules according to stack overflow example
+%- use mdframed instead of framed, can also replace shabox with it
+%- look up missing explanation for listed packages
+%- fix copyright symbol?
+%- post problem with adforn using a MWE on tex exchange
+%- change all declarations to xparse format ?? see comments on xparse on tex exchange - may be worth eliminating?
+
+%------------------------------------------------------------------------------
+%                        Checks for good practice
+%   (see https://tex.stackexchange.com/questions/19264/techniques-and-packages-to-keep-up-with-good-practices?rq=1)
+%------------------------------------------------------------------------------
+\RequirePackage[l2tabu,orthodox]{nag}% Old habits die hard. All the same, there are
+                                     % commands, classes and packages which are
+                                     % outdated and superseded. nag provides routines
+                                     % to warn the user about the use of those.
+\usepackage{strict}                  % prevents using LaTeX's declarations as environments (stored in local tree - not part of the MikTeX package manager)
+
+%------------------------------------------------------------------------------
+%                               General Packages
+%------------------------------------------------------------------------------
+%\usepackage[a4paper,bottom=26.6mm, textwidth=140mm, textheight=242mm, footskip=12mm]{geometry}
+%\setlength{\parskip}{2ex}%
+%\setlength{\parindent}{0em}%
+\usepackage{textcomp}                                   % Provides "true" copyright symbol and many others
+\usepackage{relsize}                                    % for font sizes relative to the current font
+\usepackage[british]{babel}
+\usepackage{booktabs}                                   % nicer tables
+\usepackage{multirow}
+\usepackage{fancybox}                                   % boxed text, equations
+\usepackage{currfile}                                   % ascertain the file's name
+\usepackage{lastpage}                                   % determines the last page of the document
+\usepackage{fancyhdr}                                   % headers and footers
+%\usepackage[useregional]{datetime2}                     % date/time formats - redefines \today (datetime package is obsolete)
+%\DTMlangsetup{ord=raise,monthyearsep={,\space}}         % 10th March, 2016
+\usepackage[useregional=numeric]{datetime2}             % 10/3/2016 (datetime package is obsolete)
+\usepackage[square,comma,numbers,sort&compress]{natbib} % citations and references - Numerical Style
+\usepackage{bibentry}                                   % inline references (incl with natbib)
+\usepackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
+\usepackage[margin=10pt,format=hang]{subcaption}        % better replacement for subfig
+\usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+\usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
+\usepackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
+\usepackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
+\usepackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
+\usepackage{graphicx}                                   % for including graphics
+\usepackage[svgnames]{xcolor}                           % for defining custom colours
+\graphicspath{{./Figures/}}                             % path for all graphics files
+\usepackage{pdflscape}                                  % for landscape layout in pdf
+\usepackage{acronym}                                    % Nomenclature listing
+\usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
+\setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
+\setdescription{style=nextline, itemsep=6pt, parsep=6pt}
+\usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
+\usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
+%\usepackage{refcheck}                                  % highlights missing and unreferred to citations
+
+%------------------------------------------------------------------------------
+%                      Handling XeLaTeX and PDFLaTeX Processing
+%------------------------------------------------------------------------------
+\usepackage{ifxetex}
+\ifxetex
+    \usepackage{fontspec}
+    \setmainfont[Ligatures=TeX]{Bitstream Charter} % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+    \setmonofont[Scale=0.9]{Bera Sans Mono} % for code listings beramono is used
+    \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine for quotation marks
+                                                               % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+\else
+    % assuming pdfLaTeX driver
+    \usepackage{lmodern}
+    \usepackage[bitstream-charter]{mathdesign} % main font for document text + maths, supports font expansion (see microtype)
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage[scaled]{beramono}                           % for code listings beramono is used
+    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}} % selects Libertine as the quote font
+    \usepackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
+\fi
+
+\definecolor{darkblue}{rgb}{0,0,0.5}                % 'red', 'green' and 'blue' are predefined
+\usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
+\hypersetup{
+    pdfauthor={SP Levitt},                          % remove to reuse author data
+    linkbordercolor={darkblue}                      % darkblue is defined above
+}%
+
+%------------------------------------------------------------------------------
+%                                   Commands
+%------------------------------------------------------------------------------
+% For use with Bitstream Charter
+\newcommand{\cpyright}{
+\vspace{5mm}
+\vfill \copyright \, \footnotesize Copyright SP Levitt, School of Electrical and Information Engineering.\\
+\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
+\hspace*{1.32em} \footnotesize \texttt{\currfilename}
+}
+
+% typeset C++, maths symbols, urls, etc. nicely
+\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace}
+\protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+\newcommand{\SDIIhomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen3009/}{homepage}\xspace}
+\newcommand{\SDIIwebsite}{\href{http://dept.ee.wits.ac.za/~levitt/elen3009/}{website}\xspace}
+\newcommand{\SDIIurl}{\url{http://dept.ee.wits.ac.za/~levitt/elen3009/}}
+\newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen7045/}{homepage}\xspace}
+
+% Shorthands for references
+\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
+\newcommand{\secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}\xspace}
+\newcommand{\chaprefs}[2]{chapters~\ref{#1} and \ref{#2}\xspace}
+\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
+\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
+\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+
+%------------------------------------------------------------------------------
+%                       Definition of "signedquote" environment
+% typeset signed quotations using extra-large quotation marks and a gray background
+% adapted from https://tex.stackexchange.com/questions/16964/block-quote-with-big-quotation-marks
+%
+%------------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usepackage{framed}
+
+% Commands for the quotes
+\newcommand*\quotesize{60} % if quote size changes, need a way to make shifts relative
+\newcommand*{\openquote}
+   {\tikz[remember picture,overlay,xshift=-4ex,yshift=-2.5ex]
+   \node (OQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont``};\kern0pt}
+\newcommand*{\closequote}
+  {\tikz[remember picture,overlay,xshift=4ex,yshift=-5pt]
+   \node (CQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont''};}
+
+% select a colour for the shading
+\colorlet{shadecolor}{GhostWhite}
+
+% define the new environment using xparse
+\usepackage{xparse}
+\DeclareDocumentEnvironment{signedquote}{m}
+{
+    \begin{snugshade}
+    \begin{quote}
+    \openquote
+}
+{
+    \hfill\closequote
+    \vskip 1.5mm\hspace{95mm} --- \emph{#1}
+    \end{quote}
+    \end{snugshade}
+    \vspace{6mm}
+}
+
+%------------------------------------------------------------------------------
+%                      Definition of fancy end rules for documents
+%
+% adapted from https://tex.stackexchange.com/questions/30043/visual-separation-when-using-linerange-in-listings/
+%
+%------------------------------------------------------------------------------
+
+% adforn ornaments cannot be found so settling for fourier ornaments
+%\usepackage{adforn}
+\usepackage{fourier-orns}
+
+% Nice ending for sections and subsections
+\def\Vhrulefill{\leavevmode\leaders\hrule height 0.7ex depth \dimexpr0.4pt-0.7ex} % vertically centered rule
+\newcommand*\myhrulefill{%
+%   \Vhrulefill\hfill\kern1pt} % rule for star
+   \leavevmode\leaders\hrule depth-2pt height 2.6pt\hfill\kern1pt} % rule for flourishes
+
+\newcommand\niceending[1]{%
+  \begin{center}%
+    \LARGE  \myhrulefill \hspace{.02cm} #1 \hspace{-0.13cm} \myhrulefill%
+  \end{center}}
+
+%\newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} } % plain rule
+\newcommand*\theend{\vspace{5mm}\niceending{\decofourleft\,\decofourright}\vspace{15mm}} % flourishes
+%\newcommand*\theend{\vspace{5mm}\niceending{\starredbullet}\vspace{15mm}} % star
+
+% adforn ornaments cannot be accessed
+%\newcommand*\nicesectionending{\niceending{\adfsingleflourishright\adfsingleflourishleft}}
+
+%------------------------------------------------------------------------------
+% end of file - SPL-packages.sty

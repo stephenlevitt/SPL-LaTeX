@@ -1,0 +1,65 @@
+ArcSchool.{zip,tgz}
+
+Logo, Letterhead, fax and memo templates.
+
+The zip file has been tailored to MsLoss users, and the tarball to unix
+users.
+
+I have reverted to my previous practice of putting `Arc' in front of all
+packages that I maintain. Like Matlab, LaTeX ultimitely has a flat
+namespace, and several name conflicts have ocurred. Theoretically, I should
+extend this to every defined command, but I have a finite life.
+
+The use of dvips is obviously assumed. Undo the archive within your own
+texmf tree (for TDS-compliant distributions).
+
+School logo history:
+
+  Anton Frolich created the vector graphic Wits logo, as opposed to the
+  bitmapped thingy I did years ago. He did this in Corel Draw. (crest.eps)
+
+  Using LaTeX and PSTricks, I created the school logo, viewable on a full
+  page by ghostscript, after a learning curve of pstricks! (school.tex.ps)
+
+  dvips -E (and etc) created the eps form, with a bad bounding box
+  (documented reasons). I manually edited the bounding box produced until the
+  entire logo was visible. Thus the eps in truly vector form. (Don't forget
+  that even the cm fonts are type 1 nowadays. (school.eps, copied as
+  ArcSchlLogo.eps)
+
+  Final bounding box is in school.bb
+
+  The file ArcSchlLogoTrial.tex shows the logo from 5mm to 150mm. Nice and
+  crisp.
+
+(Since most people can't parse `sed' scripts, I'll repeat myself:)
+
+Letterhead:
+  Prints on plain paper. `ArcSchlHead.sty' is the Style File, `.tem' is the
+  template file to copy for a new letter. `schllet' is a simple shell
+  script to do that. An example is ArcSchlHeadEx.pdf.
+
+
+Fax:
+  Prints on plain paper. `ArcFax.sty' is the Style File, `.tem' is the
+  template file to copy for a new fax. `schlfax' is a simple shell
+  script to do that. An example is ArcFaxEx.pdf.
+
+
+Memo:
+  Prints on plain paper. `ArcMemo.sty' is the Style File, `.tem' is the
+  template file to copy for a new memo. `schlmemo' is a simple shell
+  script to do that. An example is ArcMemoEx.pdf.
+
+  
+Handout:
+  Prints on plain paper. `ArcHandout.sty' is the Style File, `.tem' is the
+  template file to copy for a new memo. `schlhandout' is a simple shell
+  script to do that. An example is ArcHandoutEx.pdf.
+
+
+Minutes:
+  Prints on plain paper. `ArcMinutes.sty' is the Style File, `.tem' is the
+  template file to copy for a new memo. `schlminutes' is a simple shell
+  script to do that. An example is ArcMinutes.pdf.
+

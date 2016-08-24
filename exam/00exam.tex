@@ -1,0 +1,227 @@
+\documentclass[cover]{exam}
+%\documentclass[cover,comments]{exam}\usepackage{draftcopy}\draftcopyName{ANSWER}{160}
+
+\usepackage{ArcMacro,shadow,latexsym,epsf}
+%\usepackage{amsmath}
+\coursecode{ELEN224}
+\coursename{Electronics I}
+\exammonth{June 2000}
+\studyyear{Second}
+\studydegs{B.Sc (Eng) Elec.}
+\internal{Dr. A. R. Clark \ \ x7223}
+\external{Dr. G. J. Gibbon}
+\duration{Three}
+\instruct{Answer \emph{ALL} questions.\\Type `2' Examination.}
+
+\begin{document}
+\makeheads
+
+\comment{\large \bfseries This version printed with the ``comments''
+option\\\centering NOT FOR PRINTING!!!!!!!!!!} 
+
+\begin{centre}
+\shabox{Note: Show {\Large\em ALL\/} workings, complete with the
+necessary comments!!---regardless of how fast your calculator can print the
+results in one step. I am not interested in how well you can read your
+formulae from your formula sheet. I am marking your reasoning, not only the
+answer!! Marks are awarded for the reasoning as well as the ``answer''. A
+correct numerical answer will not necessarily attract any marks!}
+\end{centre}
+\def\vs{\vspace{1ex}}                                                 
+
+\question 
+\comment{Op-Amp Question}
+%KC 2.50
+An inverting amplifier with a gain of -100V/V and an input resistance of
+100k\Ohm, uses an op-amp with a 1mV offset voltage, a bias current of 30nA,
+and an offset bias current of 3nA. 
+
+What output voltage offset results with \\a) a basic uncompensated design
+\\b) a bias-current compensated design (where a resistor is placed from the
+non-inverting terminal to ground). 
+
+Which offset source dominates in each case?
+
+\comment{KC 2.50
+
+This question will frighten most :-)
+
+G=100, Rin = 100k\Ohm (=R1), hence R2=10M\Ohm 
+
+In the Uncompensated case, both the effects of the offset voltage and the
+bias currents cause a voltage at the inverting input. This voltage is then
+multiplied by the closed loop gain to form the output offset. The bias
+currents suck current from the efffective parallel combination of R1 and
+R2.
+
+Hence the output voltage becomes
+\begin{align*}
+v_0&=(1+R2/R1)(Vos+Vbias)
+&=101(1mV + 30\times 10^9 \times 100k||10M
+&=101(1mV + 3mV)
+&=404mV
+\end{align*}
+
+Note that the voltage from the bias currents dominates the output offset.
+
+For the bias-current compensated design, $R_3 = R_1//R_2$, and the voltage
+at both terminals is raised due to the bias currents, and the output
+voltage offset is then cancelled. The only remaining cause of output offset
+is then the Vos and the Ios. In the worst case, 
+
+\begin{align*}
+v_0&=101(1mV + 3\times 10^9 \times 100k)
+&=101(1mV + 0.3mV)
+&=131mV
+\end{align*}
+
+Note that the Vos dominates the output.
+}
+\marks{20}
+
+
+
+
+\question
+\comment{Digital Question -- dead simple stuff.}
+\Banum
+\item 
+Simplify the following to a minimum number of gates:
+\begin{center}\input{99Test.cct}\ \box\graph\end{center}
+\marks{10}
+\comment{Trivial}
+\item Design a state-machine which cycles between 5 possible states.
+\marks{15}
+\comment{ie a counter with simple combinational logic to reset it. They
+have the choice of flip flops and polarity of edge triggering.}
+
+\Eanum
+\marks{Total 25}
+
+\question
+\comment{Diode Question}
+Design a dual-ended power supply for an audio amplifier. It is required
+that the rails are at $\pm$50V, and that each rail can deliver 4A. Justify
+all assumptions. \emph{Hint: By ``design'', I mean specify the
+characteristics and ratings of all components used.}
+\marks{20}
+
+\comment{
+Simple stuff, but will get a wide range of allowable ripple etc.. I am
+looking here for a bit of engineering judgement in sizing the caps. Can they
+actually relate the 4A to a discharge rate and hence a voltage drop.
+
+If they do include a voltage regulator, the lowest ripple voltage must
+still be 2V above the output voltage etc.
+
+Only twist is the dual-ended bit.
+
+Clearly no ``answer'' in a numerical form.}
+
+
+
+\question
+\Banum
+\item
+Fully design and specify a circuit to turn on a security floodlight at
+night.  Amongst other possible components, use an LDR (Light Dependant
+Resistor) and an NPN Transistor. Make reasonable assumptions about the LDR
+characteristics.
+
+\comment{I am looking for a simple but thorough design where the LDR is
+fed by a resistor. The question is really a check on whether they
+individually designed their project, where the LDR was used with op-amps to
+do the same. 
+
+As light decreases, the voltage at the LDR increases, and will turn on the
+NPN transistor. The subtlety comes in the fact that the base drive needs
+supplying from the potential divider too. 
+
+Hence sizing of the resistors is important. Most of the ``feel'' for the
+LDR etc will have come from the project. They must recognise that a relay
+will be needed for the mains. Bonus if they derive a non transformered
+power source!!!!
+
+Bonus plus if they actually use a transistor based Schmidt Trigger
+
+(The relay itself will provide sufficient hysteresis, but I don't expect
+anyone to actually mention this!)}
+
+\marks{15}
+
+\item With the aid of sketches, explain how an N-channel enhancement
+MOSFET first gains its channel. Further explain what happens when the
+transistor conducts an appreciable current. \marks{10}
+\comment{A little bit of bookwork. Need to see gate-body rise to give
+depletion region, followed by n-channel forming after the threshold
+voltage. As current increases, channel skews and pinches off. Alleviated by
+incresing gate voltage.}
+\Eanum
+\marks{Total 25}
+
+
+
+
+\question
+\comment{Transistor Question (SSEx6.7)}
+  Consider the following circuit:
+    \begin{center}\input{Mirror.cct}\ \box\graph\end{center}
+\Banum\item
+  For the current mirror shown above using two matched-gain transistors,
+  find the value of $R$ that results in $I_o=1$mA with $V_{CC}$=5V\\
+    i)Assume $\beta=\infty$\\
+    ii)Assume $\beta=100$\\
+    iii)For case (ii), for what values of $V_o$ will the current mirror work?
+
+\item In what application would the above circuit be used?.
+\comment{Transistor biasing, long tailed pairs etc}
+    
+    \Eanum\marks {20}
+\comment{Obviously, for infinite $\beta$, the current feeding into both
+bases is negected. Hence R=(5-0.7)/1mA=4.3k
+
+For $\beta=100$, however, a full analysis needs doing. Assuming that the
+base drives are the same (matched). We now get $2i_B$ through $R$ as well. 
+Hence $I_o=1mA, i_B=10\mu A, I_{ref}=1.02mA, R=(5-0.7)/1.02mA = 4.22k$ 
+}
+
+\marks{Total 20}
+\marks{Exam Total 110}
+\marks{100\%=100}
+
+
+
+
+\filedescribe
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\marks{Exam Total 110}
+
+\filedescribe
+\end{document}

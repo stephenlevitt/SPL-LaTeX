@@ -1,0 +1,14 @@
+\documentclass{article}
+\usepackage{A4ee,ArcMemo}
+\begin{document}
+\to{} % Fill in !
+\makememo
+
+\re{} % Fill in !
+
+% Memo Contents here....
+
+
+
+\end{document}
+

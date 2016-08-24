@@ -1,0 +1,55 @@
+\documentclass{article}
+\usepackage[widetext]{A4ee}
+\usepackage{ArcSchlHead}
+
+\begin{document}
+% Line spacing -----------------------------------------------------------
+% taken from WinEdt PhD Thesis
+\newlength{\defbaselineskip}
+\setlength{\defbaselineskip}{\baselineskip}
+\newcommand{\setlinespacing}[1]%
+           {\setlength{\baselineskip}{#1 \defbaselineskip}}
+\def\baselinestretch{1}
+%  -----------------------------------------------------------
+
+% Student details:
+\newcommand{\name}{ }
+\newcommand{\studno}{}
+\newcommand{\pronoun}{his } % his /her
+\newcommand{\prnoun}{him } % him /her
+
+
+\to{\\\\}
+
+\letterhead
+\linespread{1.6}
+
+\vspace{2cm}
+
+Dear 
+
+\vspace{4mm}
+
+\centerline{\bf \underline{Re: Computer for Bursar \name (Student Number: \studno)} }
+
+\vspace{2mm}
+
+\setlinespacing{1.33}
+
+\name is a second year student in the Faculty of Engineering. I am \pronoun lecturer for the course: 
+\textit{Engineering Applied Computing (ELEN201)}. 
+
+A home personal computer is not a pre-requisite for Engineering students at Wits. The School has excellent computing laboratories, which are available to students doing courses such as Engineering Applied Computing. However, we do recommend that all Engineering students who can manage to do so should acquire a PC for home use. Computers have become an essential tool for all engineers and easy access to one will greatly benefit the student during this year of study and for the rest of their University and professional career.
+
+If you, as \pronoun bursars, can assist \prnoun in acquiring a suitable home computer \pronoun studies will certainly benefit. Please see the attached document (``Suggestions for Students Wishing to Buy a Personal Computer") for the School's recommended system.
+
+If you have any queries regarding this please contact me at (011) 717 7209.
+
+\vspace{7 mm}
+
+Yours sincerely,\\  
+
+\vspace{15mm}
+
+Mr. SP Levitt 
+\end{document}

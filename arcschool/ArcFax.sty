@@ -1,0 +1,46 @@
+% ArcFax.sty implements a simple Fax Sheet, based on my witshead style.
+% finally works ok 5 Sept. 1994 Alan Robert Clark clark@odie.ee.wits.ac.za
+% Updated to new School logo 22 Jan 2002.
+
+% Callable Macros
+% \to (overriding the witshead \to placement)
+% \acct for the deparmental billing.
+% \faxno for the person fax no!
+% \makefax which does all the work.
+
+% Dependancies
+% \makefax calls \letterhead which is usually defined in ArcSchlHead.sty
+%          but can be replaced with a suitable companies' logo.
+
+\ProvidesPackage{ArcFax}
+
+%\AtEndDocument{\label{ARCLastPage}}
+
+% redefine the witshead \@to stuff to blank and get a newdef for it......
+\def\@to{}
+\long\def\to#1{\def\@faxto{#1}}
+\def\@faxto{In ArcFax}
+
+\def\acct#1{\def\@acct{#1}}
+\def\@acct{ACCOUNT}
+
+\def\faxno#1{\def\@faxno{#1}}
+\def\@faxno{}
+
+\def\makefax
+{ 
+  \letterhead
+  \vspace{1ex}
+
+{\bf 
+\begin{tabular} {|p{0.56\textwidth}|}  \cline{1-1} 
+     \\ [-1ex]
+{\bf To:} \@faxto \\
+{\bf Fax No.:} \@faxno   \\ 
+{\bf Acct:} \@acct \\ 
+{\bf No. of Pages:} \pageref{ArcLastPage} ~(including this page)  \\ [1ex] \cline{1-1} 
+\end{tabular}
+} % End bf 
+
+\vspace{15ex}
+}

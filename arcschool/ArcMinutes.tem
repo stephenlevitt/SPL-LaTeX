@@ -1,0 +1,23 @@
+\documentclass[widetext]{ArcMinutes}
+\usepackage{graphicx}
+\meeting{CommitteeName}
+\date{31 October 1996}
+\time{10h30}
+\place{Conference Room}
+\minuteref{NC96/10}
+\begin{document}
+\begin{present}
+\item[BD]{Barry Dwolatzky}
+\item[DR]{Dean Redelinghuys (in the chair)}
+\end{present}
+
+\section*{Welcome and Leave of Absence}
+The chairman welcomed everyone.
+
+\section*{New Network Rules}
+\action[BD]{Schedule upgrade}
+\action{After some discussion of the new network rules,
+the committee was asked to propose new rules for use of the
+network} % lack of [name] => [All]
+\note{there is a need to upgrade} % `that' is auto-inserted.
+\end{document}

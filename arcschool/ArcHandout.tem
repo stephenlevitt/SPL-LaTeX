@@ -1,0 +1,9 @@
+\documentclass[twocolumn]{ArcHandout}
+\begin{document}
+\course{ELEN224 Electronics I}
+\title{TUTORIAL  1 Op-Amps \& Other Monsters\\\vspace{1em}\hrule}
+\makeheads
+\question
+First Question
+
+\end{document}

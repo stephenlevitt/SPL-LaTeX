@@ -1,0 +1,60 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-math}[2015/01/14 Packages, commands, etc for typesetting math formulae]
+\typeout{Document Style `SPL-math.sty' <2015/01/14>}
+\typeout{Rev. 1.0.0}
+
+% Revision history
+% 1.0.0 (2015/01/14) - extracted packages, commands etc from SPL-packages
+
+\usepackage[all,error]{onlyamsmath}  % Error on deprecated math commands like $$ $$.
+\usepackage{isomath}                 % provides tools for a mathematical style that conforms to the International Standard ISO 80000-2
+\usepackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
+
+
+\newcommand{\jw}{j\omega}
+\newcommand{\w}{\omega}
+\newcommand{\eqnref}[1]{equation~\ref{#1}\xspace}
+\newcommand{\eqnrefs}[2]{equations~\ref{#1}\/ and \ref{#2}}
+
+%\DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
+%\DeclareMathSymbol{\therefore}    {\mathrel}{AMSa}{"29}
+
+
+%------------------------------------------------------------------------------
+%                                   Environments
+%------------------------------------------------------------------------------
+
+% definition of "where" environment
+% for typesetting equations followed by an explanation of each symbol
+\RequirePackage{array}
+\newenvironment{where}
+{
+    \setlength{\@rcwhere}{\textwidth}
+    \addtolength{\@rcwhere}{-\@lcsym}
+    \addtolength{\@rcwhere}{-\@spwhere}
+    \addtolength{\@rcwhere}{-\@eqwhere}
+    \addtolength{\@rcwhere}{-3\tabcolsep}
+    where \hfill \nopagebreak\\ \hspace*{\@spwhere}
+    \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
+}
+{\end{tabular}}
+
+% KJN for primary equation referencing
+\newcommand{\wheresymbol}[2]{\addtocontents{los}{\protect \makenicesymbolline{#1}{#2, {\em Equation~(\theequation)}}}#1 & #2}
+
+\newlength{\@lcsym} \setlength{\@lcsym}{5em}
+\newlength{\@mcsym} \setlength{\@mcsym}{2em}
+\newlength{\@rcsym} \setlength{\@rcsym}{\textwidth}
+% KJN fix to remove annoying warning about overfull box
+\addtolength{\@rcsym}{-8pt}
+\addtolength{\@rcsym}{-\@lcsym}
+\addtolength{\@rcsym}{-\@mcsym}
+\newlength{\@spwhere} \setlength{\@spwhere}{2em}
+\newlength{\@eqwhere} \settowidth{\@eqwhere}{ = }
+\newlength{\@rcwhere} \setlength{\@rcwhere}{\textwidth}
+\addtolength{\@rcwhere}{-\@lcsym}
+\addtolength{\@rcwhere}{-\@spwhere}
+\addtolength{\@rcwhere}{-\@eqwhere}
+\addtolength{\@rcwhere}{-3\tabcolsep}
+
+%------------------------------------------------------------------------------

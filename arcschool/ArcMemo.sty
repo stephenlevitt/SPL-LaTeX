@@ -1,0 +1,53 @@
+% ArcMemo.sty
+% Updated Memorandum style sheet for the School
+% Alan Robert Clark 22/1/2002 a.clark@ee.wits.ac.za
+% (Previous update was 2/6/1994 :-)
+
+% Callable Macros are \to, \from \date and \makememo.
+% Edit the accompanying template file for defaults...
+\ProvidesPackage{ArcMemo}
+
+\RequirePackage{graphicx}
+
+\def\to#1{\def\@to{#1}}
+\def\@to{}
+
+\def\from#1{\def\@from{#1}}
+\def\@from{SP Levitt}
+
+\def\date#1{\def\@date{#1}}
+\def\@date{\today}
+
+\def\@head{
+  \Large
+  \begin{tabular}{p{7mm}l}
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(0,0)(15,20)
+      \includegraphics[width=25mm]{ArcSchlLogo.eps}%
+    \end{picture}%
+    &\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
+    &\textsl{School of Electrical and Information Engineering}\\
+    &\smallskip{Sabbatical Application}
+%    &\smallskip{Memorandum\hfill\small Ref:\jobname.\TeX{}}
+  \end{tabular}
+}
+
+\providecommand{\re}[1]
+  {
+    \begin{center}
+      \begin{bf}
+        \underline{Re: #1}
+      \end{bf}
+    \end{center}
+  }
+
+
+\def\makememo{
+%  \@head \\
+%  \vspace{1em}\\
+  {{\sf \@to \hfill \hfill \@date}}\\
+  %{{\sf To: \@to \hfill From: \@from \hfill \@date}}\\
+  %\hrule
+  \vspace{1em}
+}
+

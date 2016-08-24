@@ -1,0 +1,56 @@
+%%
+%% This is file `A4ee.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% A4ee.dtx 
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from A4ee.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file A4ee.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{A4ee}[1998/11/30 2e.5 A4 SA Layout Wits Elec. Eng.]
+\setlength{\topmargin}{-10mm}%
+\setlength{\headheight}{5mm}%
+\setlength{\headsep}{8mm}%
+\setlength{\textheight}{242mm}%
+\setlength{\footskip}{12mm}%
+\setlength{\textwidth}{140mm}%
+\setlength{\marginparwidth}{25mm}%
+\setlength{\oddsidemargin}{10mm}%
+\setlength{\evensidemargin}{10mm}%
+\setlength{\columnsep}{10mm}%
+\setlength{\unitlength}{1mm}%
+\setlength{\parskip}{2ex}%
+\setlength{\parindent}{0em}%
+\DeclareOption{doublespacing}{%
+  \renewcommand{\baselinestretch}{1.2}%
+  \renewcommand{\arraystretch}{0.8}%
+  \setlength{\parskip}{2.4ex}%
+  }%
+\DeclareOption{bindmargins}{%
+  \addtolength{\oddsidemargin}{5mm}%
+  \addtolength{\evensidemargin}{-5mm}%
+  }%
+\DeclareOption{widetext}{%
+  \addtolength{\oddsidemargin}{-5mm}%
+  \addtolength{\evensidemargin}{-5mm}%
+  \addtolength{\marginparwidth}{-10mm}%
+  \addtolength{\textwidth}{10mm}%
+  }%
+\ProcessOptions
+\endinput
+%%
+%% End of file `A4ee.sty'.

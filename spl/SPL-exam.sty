@@ -1,0 +1,161 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-exam}[2011/07/05 Common packages, commands, etc for SPL styles]
+\typeout{Document Style `SPL-exam.sty' <2015/10/08>}
+\typeout{Rev. 1.0.1}
+
+%------------------------------------------------------------------------------
+%                                   Packages
+%------------------------------------------------------------------------------
+\RequirePackage[l2tabu, orthodox]{nag}                  % checks for deprecated LaTeX commands
+\usepackage[british]{babel}
+\usepackage{booktabs}                                   % nicer tables
+\usepackage{multirow}
+\usepackage{fancybox}                                   % boxed text, equations, required by the seminar class
+\usepackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
+\usepackage{amsmath}                                    % very useful math functionality
+\usepackage{amssymb}
+\usepackage{lastpage}                                   % determines the last page of the document
+\usepackage{fancyhdr}                                   % headers and footers
+\usepackage{currfile}                                   % ascertain the file's name
+\usepackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
+\usepackage[margin=10pt,format=hang]{subcaption}        % better replacement for subfig
+\usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+\usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
+\usepackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
+\usepackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
+\usepackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
+\usepackage{graphicx}                                   % for including graphics
+\usepackage[svgnames]{xcolor}                           % for defining custom colours
+\graphicspath{{./Figures/}}                             % path for all graphics files
+\definecolor{darkblue}{rgb}{0,0,0.5}                    % 'red', 'green' and 'blue' are predefined
+\usepackage{pdflscape}                                  % for landscape layout in pdf
+\usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
+\setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
+\setdescription{style=nextline, itemsep=6pt, parsep=6pt}
+\setlist[enumerate]{labelsep=*, leftmargin=1.5pc}
+%\setlist[enumerate,1]{label=\arabic*., ref=\arabic*}
+\setlist[enumerate,1]{label=\alph*), ref=\theenumi.\alph*}
+\setlist[enumerate,2]{label=\roman*), ref=\theenumii.\roman*}
+%\setlist[enumerate,2]{label=\emph{\alph*}),
+%ref=\theenumi.\emph{\alph*}}
+%\usepackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
+\usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
+\usepackage{ifpdf}                                      % true if pdflatex is being used; false otherwise
+\usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
+%------------------------------------------------------------------------------
+%                                   Fonts
+%------------------------------------------------------------------------------
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[bitstream-charter]{mathdesign} % main font for document text, supports font expansion (see microtype)
+\usepackage[scaled]{beramono}   % san serif font - used for code snippets; font expansion not available (see microtype)
+\usepackage{textcomp}           % Provides "true" copyright symbol and many others
+\usepackage{relsize}            % for font sizes relative to the current font
+
+%------------------------------------------------------------------------------
+%                                   PDF vs DVI Generation
+%------------------------------------------------------------------------------
+% Load packages differently depending on PDF generation or not
+\ifpdf  % generating PDF
+    \usepackage[outdir=./Figures/]{epstopdf}            % suitable file types are {.png,.pdf,.jpg,.jpeg}
+                                                        % eps files will be automatically converted and
+                                                        % saved in the Figures directory on first run of pdflatex
+    \usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
+    \hypersetup{
+        pdfauthor={SP Levitt},                          % remove to reuse author data
+        linkbordercolor={darkblue}                      % darkblue is defined above
+    }%
+\else   % NOT generating PDF
+                                                        % suitable graphics file types are {.eps,.bmp}
+    %\usepackage[dvipdfm]{hyperref}                     % for hyperlinks in PDF (LaTeX -> DVIPDFM) (link colours are defined in hyperref.cfg)
+    %\usepackage[dvips,breaklinks]{hyperref}            % for hyperlinks in PDF (LaTeX -> DVIPS -> PS2PDF) - does not support linebreaks in URL descriptions!
+    \usepackage[hypertex]{hyperref}                     % for hyperlinks in DVI - accessible in YAP
+\fi
+
+%------------------------------------------------------------------------------
+%                                   Commands
+%------------------------------------------------------------------------------
+
+
+% typeset C++, maths symbols, urls, etc. nicely
+\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\bf ++}}\xspace}
+\newcommand{\jw}{j\omega}
+\newcommand{\w}{\omega}
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+\newcommand{\SDIIhomepage}{\href{http://dept.ee.wits.ac.za/~slevitt/elen3009/}{homepage}\xspace}
+\newcommand{\SDIIurl}{\url{http://dept.ee.wits.ac.za/~slevitt/elen3009/}}
+\newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~slevitt/elen7045/}{homepage}\xspace}
+\newcommand{\cpyright}[1]{
+\vspace{5mm} % For use with Bitstream Charter
+\vfill \copyright \, \footnotesize Copyright #1, School of Electrical and Information Engineering.\\
+\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
+\hspace*{1.32em} \footnotesize \texttt{\currfilename}
+}
+
+
+% Shorthands for references
+\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
+\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
+\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+\newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} }
+
+
+% Macro for easy inclusion of figures
+% arguments:
+% #1 - Short figure name for toc [optional]
+% #2 - Figure filename
+% #3 - Scale (1 == no scaling)
+% #4 - Long figure name for caption
+\newcommand{\inputfig}[4][\DefaultCap]
+{\def\DefaultCap{#4}
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[#3]{#2}
+    \caption[#1]{#4}   % includes fig num
+    \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
+    \end{center}
+\end{figure}
+}
+
+\DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
+\DeclareMathSymbol{\therefore}    {\mathrel}{AMSa}{"29}
+
+%------------------------------------------------------------------------------
+%                                   Environments
+%------------------------------------------------------------------------------
+
+% definition of "where" environment
+% for typesetting equations followed by an explanation of each symbol
+\RequirePackage{array}
+\newenvironment{where}
+{
+    \setlength{\@rcwhere}{\textwidth}
+    \addtolength{\@rcwhere}{-\@lcsym}
+    \addtolength{\@rcwhere}{-\@spwhere}
+    \addtolength{\@rcwhere}{-\@eqwhere}
+    \addtolength{\@rcwhere}{-3\tabcolsep}
+    where \hfill \nopagebreak\\ \hspace*{\@spwhere}
+    \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
+}
+{\end{tabular}}
+
+\newlength{\@lcsym} \setlength{\@lcsym}{5em}
+\newlength{\@mcsym} \setlength{\@mcsym}{2em}
+\newlength{\@rcsym} \setlength{\@rcsym}{\textwidth}
+% KJN fix to remove annoying warning about overfull box
+\addtolength{\@rcsym}{-8pt}
+\addtolength{\@rcsym}{-\@lcsym}
+\addtolength{\@rcsym}{-\@mcsym}
+\newlength{\@spwhere} \setlength{\@spwhere}{2em}
+\newlength{\@eqwhere} \settowidth{\@eqwhere}{ = }
+\newlength{\@rcwhere} \setlength{\@rcwhere}{\textwidth}
+\addtolength{\@rcwhere}{-\@lcsym}
+\addtolength{\@rcwhere}{-\@spwhere}
+\addtolength{\@rcwhere}{-\@eqwhere}
+\addtolength{\@rcwhere}{-3\tabcolsep}
+
+% end of file - SPL-exam.sty

@@ -1,0 +1,34 @@
+\input{article.hva}
+% ArcCBO.hva is the HEVEA implementation of the ArcCBO Class. 
+\newcommand{\zzzc}{}      % Course name generator
+\newcommand{\course}[1]{\renewcommand{\zzzc}{#1}}
+\newcommand{\makeheads}{\newpage
+{\Large
+  \begin{rawhtml}
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+  <tr>
+  <td valign=top width="5%">
+  <a href="http://www.ee.wits.ac.za">
+  <img width=150 src="ArcSchlLogo.png">
+  </td>
+  <td align=top width="80%">
+   <font size=5><font color=purple>UNIVERSITY OF THE WITWATERSRAND,
+   JOHANNESBURG<br></font></font>
+   
+   <font size=5><i><font color=maroon>School of Electrical and Information
+ Engineering<br></i></font></font>
+   </td>
+   </table>
+  \end{rawhtml}
+}
+\begin{center}
+  {\Large\bf \zzzc \par \@title \par}
+  {\large 
+    \begin{tabular}[t]{c}\@author\end{tabular}\par
+  }
+  {\large \@date} 
+\end{center}\par}
+\renewcommand{\maketitle}{\makeheads}
+\newcommand{\omithead}{\renewcommand{\makeheads}{}}
+\title{}\author{}\date{}  % default these to nothing
+\endinput
