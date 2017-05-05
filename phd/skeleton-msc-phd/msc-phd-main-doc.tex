@@ -1,0 +1,73 @@
+%
+% File:    thesis.tex
+%
+% Version: 1.00
+% Date:    2008/09/07
+%
+% Description:
+%   Top level file for the thesis.
+%   Includes chapters and appendices from separate files.
+%   Uses a slightly tweaked version of KJN's thesis style file
+%
+\documentclass[MScDiss,altheaders,colorlinks,a4paper]{KJNwitseiethesis}
+\usepackage[plain,chapter]{algorithm}
+\usepackage{algorithmic}
+% To include list of algorithms in TOC
+\renewcommand{\listofalgorithms}
+{
+    \clearpage
+    \phantomsection
+    {\setlength{\baselineskip}% for increasing line spacing
+    {1.7\baselineskip}
+    \listof{algorithm}{\listalgorithmname}
+    \addcontentsline{toc}{chapter}{\listalgorithmname}\par}
+}
+\usepackage{SPL}
+\usepackage{mathrsfs}
+
+
+% in-document links, bibliographic citations, urls
+\linkcolors{Black}{Black}{Black}
+
+% title page and PDF document properties
+\title{How to Organize your Thesis}
+\thesisyear{1999}
+\author{John W. Chinneck}
+\keywords{dissertation, thesis, graduate research}
+\logo{} % No logo, thank you
+
+\begin{document}
+
+\ifpdf
+    \pdfinfo{
+    /CreationDate (D:201705050000)
+    /ModDate (D:201705050000)
+    }
+\fi
+
+% Preamble - includes the title page, abstract, acknowledgements, dedication etc
+\include{preamble}
+
+% Thesis body - includes introduction, conclusion and all intervening chapters
+\include{introduction}
+\include{background}
+\include{skeleton}
+% \include{litsurvey}
+% \include{problem}
+% \include{methodology}
+% \include{results}
+% \include{conclusion}
+
+
+% References: .bib files, followed by bibliography style
+
+
+% Appendices
+\appendix
+% KJN: Need to change that fancy heading :) - haven't worked out elegant solution
+\renewcommand{\chaptermark}[1]{\markboth{\appendixname\ \thechapter\ --- #1}{}}
+
+% \include{parameters}
+% \include{etc}
+
+\end{document}
