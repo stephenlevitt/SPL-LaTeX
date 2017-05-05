@@ -10,11 +10,25 @@
 % font expansion not available (see microtype)
 
 \usepackage{listings}
-% base style for listings
+
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  sensitive=true
+}
+
+
+
+% base style
 \lstdefinestyle{base}{
 basicstyle=\small\ttfamily,
 tabsize=3,
 language=[11]C++,
+alsolanguage=JavaScript,
+%alsolanguage=HTML,
 morekeywords={override, default},
 showstringspaces=false,
 breaklines=true,
@@ -25,31 +39,28 @@ moredelim=[il]{//*},
 escapeinside=\`\`,
 escapechar=\`}
 
-% for slides
-\lstdefinestyle{slide}{
-style=base,
-escapeinside={(*@}{@*)},
-commentstyle=\color{greencomments},
-keywordstyle=\color{bluekeywords}\bfseries,
-%stringstyle=\color{redstrings},
-escapechar=\$
-}
-\lstdefinestyle{numbered-slide}{style=slide,numbers=left,numberstyle=\tiny}
-
-% for documents
+% style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.7em, xrightmargin=1.7em}
 \lstdefinestyle{framed}{frame=tlrb, aboveskip=2em, abovecaptionskip=4mm}
 \lstdefinestyle{with-numbers}{numbers=left,numberstyle=\tiny, xleftmargin=2.5em, xrightmargin=2.5em}
+
+% styles for slides
+\lstdefinestyle{slide}{style=base,escapeinside={(*@}{@*)},commentstyle=\color{greencomments},keywordstyle=\color{bluekeywords}\bfseries,escapechar=\$}
+\lstdefinestyle{numbered-slide}{style=slide,numbers=left,numberstyle=\tiny, numberblanklines=false}
+
+% styles for documents
 \lstdefinestyle{inline}{style=base, basicstyle=\ttfamily, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{output}{style=base, style=framed, keywordstyle={}}
 \lstdefinestyle{frame}{style=base, style=framed}
 \lstdefinestyle{appendix}{style=base, style=framed}
-% fix these up
-\lstdefinestyle{mcq}{basicstyle=\small\ttfamily,tabsize=3,language=C++,showstringspaces=false,frame=tlrb,aboveskip=1em,xleftmargin=1em}
-\lstdefinestyle{mcq-with-numbers}{style=mcq,numbers=left,xleftmargin=4.5em}
-\definecolor{verylightgray}{gray}{0.2}
+%\definecolor{verylightgray}{gray}{0.2}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
 
+% styles for MCQ
+\lstdefinestyle{mcq}{basicstyle=\small\ttfamily,tabsize=3,language=C++,showstringspaces=false,frame=tlrb,aboveskip=1em,xleftmargin=1em}
+\lstdefinestyle{numbered-mcq}{style=mcq,numbers=left,xleftmargin=4.5em}
+
+% captions
 \newcommand{\coderef}[1]{Listing~\ref{#1}\xspace}
 \newcommand{\coderefs}[2]{Listings~\ref{#1}\/ and \ref{#2}\xspace}
 \newcommand{\algref}[1]{Algorithm~\ref{#1}\xspace}

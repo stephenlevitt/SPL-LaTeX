@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ArcHandout}
+\ProvidesClass{ArcHandoutCPD}
               [2002/01/15 v2.0
                School of Electrical and Information Engineering Handout Class]
 %handout.cls by Alan Robert Clark, a.clark@ee.wits.ac.za, modified from:

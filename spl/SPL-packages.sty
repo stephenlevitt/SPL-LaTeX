@@ -63,7 +63,7 @@
 \usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
 \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
-\usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
+%\usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
 \usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
 %\usepackage{refcheck}                                  % highlights missing and unreferred to citations
 
@@ -107,7 +107,8 @@
 }
 
 % typeset C++, maths symbols, urls, etc. nicely
-\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace}
+\newcommand*\CPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % better C++ definition with no space, invoke with \CPlus{}
+\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace} % kept for backwards compatibility
 \protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
 \newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
