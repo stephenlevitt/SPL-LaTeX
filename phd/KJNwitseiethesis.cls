@@ -76,7 +76,7 @@
     \phantomsection
     \vspace*{50pt}
     {   % modified by SPL, 2007-09-07: changed Huge to huge, to match other headings
-        \parindent \z@ \raggedright \huge \bf Declaration \par
+        \parindent \z@ \raggedright \huge \textbf Declaration \par
         \nobreak
         \vskip 40\p@
     }
@@ -256,9 +256,9 @@ July\or August\or September\or October\or November\or December\fi}
         \hyphenpenalty=10000
         \vspace*{50pt}
         \pdfbookmark[1]{\@title}{TitlePage}
-        {\Huge \bf \raggedright \@title \par} 
+        {\Huge \textbf \raggedright \@title \par} 
         \vspace*{40pt}
-        \pretolerance=100{\Large \bf \@author \par}
+        \pretolerance=100{\Large \textbf \@author \par}
         \vspace*{\fill}{\large \scshape \center \eeThDraft \par}
         \vspace{\fill}
         \ifx\@putlogo\@putlogotrue
@@ -431,10 +431,10 @@ July\or August\or September\or October\or November\or December\fi}
     {
         \parindent \z@ \raggedright
         \ifnum \c@secnumdepth > \m@ne
-            \LARGE \bf \@chapapp{} \thechapter \par
+            \LARGE \textbf \@chapapp{} \thechapter \par
             \vskip 15\p@
         \fi
-        \huge \bf #2 \par
+        \huge \textbf #2 \par
         \nobreak
         \vskip 30\p@
     }
@@ -444,7 +444,7 @@ July\or August\or September\or October\or November\or December\fi}
 {
     \vspace*{50\p@}
     {
-        \parindent \z@ \raggedright \huge \bf #1 \par
+        \parindent \z@ \raggedright \huge \textbf #1 \par
         \nobreak
         \vskip 30\p@
     }
