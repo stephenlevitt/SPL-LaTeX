@@ -259,11 +259,11 @@ July\or August\or September\or October\or November\or December\fi}
         {\Huge \bfseries \raggedright \@title \par} 
         \vspace*{40pt}
         \pretolerance=100{\Large \bfseries \@author \par}
-        \vspace*{\fill}{\large \scshape \center \eeThDraft \par}
+        \vspace*{\fill}{\large \scshape \centering \eeThDraft \par}
         \vspace{\fill}
         \ifx\@putlogo\@putlogotrue
         {
-%            \begin{center}\includegraphics[height=0.17\textheight,draft=false]{\@logo}\end{center}
+            % no logo on title page
             \begin{center}\end{center}
         }
         \fi
@@ -503,7 +503,7 @@ July\or August\or September\or October\or November\or December\fi}
 %    \RequirePackage[pdftex,a4paper,pdfborder={0 0 0},bookmarks,bookmarksnumbered,bookmarksopenlevel=1,hyperindex,breaklinks,pdfpagelayout=OneColumn,pdfstartview=FitH,pdfview=FitH]{hyperref}
 % KJN mods
 % Note plainpages and pdfpagelabels fix "destination with same identifier" warning; use pdfstartview, pdfview=FitV for full page view
-    \RequirePackage[plainpages=false,pdfpagelabels,pdftex,a4paper,pdfborder={0 0 0},bookmarks,bookmarksnumbered,bookmarksopenlevel=2,hyperindex,breaklinks,pdfpagelayout=SinglePage,pdfstartview=FitH,pdfview=FitH]{hyperref}
+    \RequirePackage[plainpages=false,pdfpagelabels,pdftex,pdfborder={0 0 0},bookmarks,bookmarksnumbered,bookmarksopenlevel=2,hyperindex,breaklinks,pdfpagelayout=SinglePage,pdfstartview=FitH,pdfview=FitH]{hyperref}
     \AtBeginDocument
     {
         \pdfadjustspacing=1
