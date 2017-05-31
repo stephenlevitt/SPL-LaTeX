@@ -75,7 +75,7 @@
         \vskip 40\p@
     }
     \addcontentsline{toc}{chapter}{Declaration}
-    I declare that this \@thesistype\ is my own, unaided work, except where otherwise acknowledged. It is being submitted for the degree of \@degreetype\ in the University of the Witwatersrand, Johannesburg. It has not been submitted before for any degree or examination in any other university. \par
+    I declare that this \@thesistype\ is my own, unaided work, except where otherwise acknowledged. It is being submitted for the degree of \@degreetype\ to the University of the Witwatersrand, Johannesburg. It has not been submitted before for any degree or examination to any other university. \par
     \vspace*{\fill} 
     {
         \raggedright Signed this \rule{0.8cm}{0.4pt} day of \rule{2.5cm}{0.4pt} 20\rule{0.5cm}{0.4pt} \par \vspace*{2.5cm} % lines lengthened by CRL

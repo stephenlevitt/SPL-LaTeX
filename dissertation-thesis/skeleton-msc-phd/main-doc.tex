@@ -6,25 +6,10 @@
 %
 % Description:
 %   Top level file for the dissertation or thesis.
-%   Includes chapters and appendices from separate files.
+%   Includes preamble, chapters and appendices from separate files.
 %
 \documentclass[MScDiss,altheaders,colorlinks,a4paper]{wits-eie-thesis}
-\usepackage[l2tabu, orthodox]{nag}                  % checks for deprecated LaTeX commands
-\usepackage[plain,chapter]{algorithm}
-\usepackage{algorithmic}
-% To include list of algorithms in TOC
-\renewcommand{\listofalgorithms}
-{
-    \clearpage
-    \phantomsection
-    {\setlength{\baselineskip}% for increasing line spacing
-    {1.7\baselineskip}
-    \listof{algorithm}{\listalgorithmname}
-    \addcontentsline{toc}{chapter}{\listalgorithmname}\par}
-}
-\usepackage{SPL}
-\usepackage{mathrsfs}
-
+\usepackage{useful-packages} % There are lots of useful packages and command shortcuts here. Review and uncomment what you need.
 
 % in-document links, bibliographic citations, urls
 \linkcolors{Black}{Black}{Black}
@@ -67,7 +52,7 @@
 % KJN: Need to change that fancy heading :) - haven't worked out elegant solution
 \renewcommand{\chaptermark}[1]{\markboth{\appendixname\ \thechapter\ --- #1}{}}
 
-% \include{parameters}
-% \include{etc}
+% \include{appendix-1}
+% \include{appendix-2}
 
 \end{document}

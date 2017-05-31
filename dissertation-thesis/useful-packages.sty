@@ -1,0 +1,147 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{useful-packages}[2017/05/31 Additional packages, commands, etc which are useful for theses/dissertations]
+\typeout{Additional packages, commands, etc which are useful for theses/dissertations}
+\typeout{Rev. 1.0.0}
+
+%------------------------------------------------------------------------------
+%                           Packages
+%------------------------------------------------------------------------------
+\RequirePackage[l2tabu, orthodox]{nag}                  % checks for deprecated LaTeX commands
+\usepackage[british]{babel}
+% \usepackage{booktabs}                                   % nicer tables
+% \usepackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
+% \usepackage{amsmath}                                    % very useful math functionality
+% \usepackage{mathrsfs}
+% \usepackage[square,comma,numbers]{natbib}               % citations and references - Numerical Style
+% \usepackage{bibentry}                                   % inline references (incl with natbib)
+% \usepackage{listings}                                   % source code listings, C++, Java etc
+% \lstset{tabsize=3, %% numbers=left, numberstyle=\tiny,  % arguments for the listings package
+%        basicstyle=\small, stepnumber=2, numbersep=5pt,
+%        showstringspaces=false,language=C++}
+% \usepackage[margin=12pt,font=small,labelfont=bf]{caption} % Nifty for figure captions and subfigures
+% \usepackage[margin=10pt,format=hang]{subfig}            % better replacement for subfigure
+% \usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+% \usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
+\usepackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
+% \usepackage{comment}                                    % allows text to be selectively included or excluded
+% \usepackage{multirow}
+% \usepackage{array}
+% \usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
+%\setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
+%\setdescription{style=nextline, itemsep=6pt, parsep=6pt}
+%\usepackage{pdflscape}                                  % for landscape layout in pdf
+\usepackage{acronym}                                    % Nomenclature listing
+\usepackage{microtype}                                  % character protusion and expansion for better alignment at margins
+%\usepackage[plain,chapter]{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{ifpdf}                                      % true if pdftex is being used; false otherwise
+
+%------------------------------------------------------------------------------
+%                           File Locations
+%------------------------------------------------------------------------------
+\ifpdf  % using pdftex
+    \graphicspath{{./Figures/pdf/}}                     % graphics files are in the pdf directory, suitable files are {.png,.pdf,.jpg,.jpeg}
+    % \usepackage{epstopdf}
+\else   % NOT using pdftex
+    \graphicspath{{./Figures/eps/}}                     % graphics files are in the eps directory, suitable files are {.eps,.bmp}
+\fi
+
+%------------------------------------------------------------------------------
+%                           New Commands
+%------------------------------------------------------------------------------
+\newcommand{\jw}{j\omega}
+\newcommand{\w}{\omega}
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+
+% Shorthands for references
+\newcommand{\Secref}[1]{Section~\ref{#1}\xspace}
+\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
+\newcommand{\Secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
+
+\newcommand{\Chapref}[1]{Chapter~\ref{#1}\xspace}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}\xspace}
+\newcommand{\Chaprefs}[2]{Chapters~\ref{#1} and \ref{#2}\xspace}
+\newcommand{\chaprefs}[2]{Chapters~\ref{#1} and \ref{#2}\xspace}
+
+\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
+\newcommand{\Appref}[1]{Appendix~\ref{#1}\xspace}
+
+\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
+\newcommand{\Tabref}[1] {Table~\ref{#1}\xspace}
+\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\Tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
+
+\newcommand{\Figref}[1]{Figure~\ref{#1}}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+\newcommand{\Figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+\newcommand{\Eqnref}[1]{Equation~\ref{#1}\xspace}
+\newcommand{\eqnref}[1]{Equation~\ref{#1}\xspace}
+\newcommand{\eqnrefs}[2]{Equations~\ref{#1}\/ and \ref{#2}}
+
+% Useful chapter summary box
+\newcommand{\summary}[1]
+{
+  \par
+  \begin{center}
+      \begin{minipage}[c]{0.9\textwidth}
+        \vspace{0.6em}
+        #1
+        \vspace{0.6em}
+      \end{minipage}
+  \end{center}
+  \par
+}
+
+%\newcommand{\algref}[1]{Algorithm~\ref{#1}\xspace}
+%\newcommand{\Algref}[1]{Algorithm~\ref{#1}\xspace}
+
+%\DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
+%\DeclareMathSymbol{\therefore}    {\mathrel}{AMSa}{"29}
+
+%\newcommand{\includepdfgraphic}[2]
+%{\ifpdf
+%    \includegraphics[#1]{#2} % include actual figure for PDFLaTeX compilation
+%\else
+%    \includegraphics{placeholder} % include dummy figure for LaTeX compilation
+%\fi
+%}
+
+% Macros for easy inclusion of figures
+% arguments:
+% #1 - Short figure name for toc [optional]
+% #2 - Figure filename
+% #3 - Scale (1 == no scaling)
+% #4 - Long figure name for caption
+%\newcommand{\inputfig}[4][\DefaultCap]
+%{\def\DefaultCap{#4}
+%\begin{figure}[htbp]
+%    \begin{center}
+%    \includepdfgraphic{#3}{#2}
+%    \caption[#1]{#4}   % includes fig num
+%    \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
+%    \end{center}
+%\end{figure}
+%}
+
+
+% \renewcommand{\listofalgorithms}                        % To include list of algorithms in TOC
+% {
+%    \clearpage
+%    \phantomsection
+%    {\setlength{\baselineskip} % for increasing line spacing
+%    {1.7\baselineskip}
+%    \listof{algorithm}{\listalgorithmname}
+%    \addcontentsline{toc}{chapter}{\listalgorithmname}\par}
+% }  
+
+% modify algorithm package
+% \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+% \renewcommand{\algorithmicensure}{\textbf{Output:}}
+% \newcommand{\INPUT}{\item[\algorithmicrequire]}
+% \newcommand{\OUTPUT}{\item[\algorithmicensure]}
+% \renewcommand{\algorithmiccomment}[1]{\hfill {\{#1\}}}
+
+% end of file
