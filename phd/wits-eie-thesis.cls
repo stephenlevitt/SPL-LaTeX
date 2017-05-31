@@ -1,25 +1,19 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  witseiethesis.cls  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  wits-eie-thesis.cls  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% ===========================================================================
 %%%  @LaTeX-class-file{
-%%%    author          = "Ken Nixon",
+%%%    author          = "Ken Nixon, Stephen Levitt and many others",
 %%%    version         = "1.9.1",
-%%%    date            = "2007/09/07",
-%%%    filename        = "witseiethesis.cls",
-%%%    address         = "Electrical and Information Engineering, 
+%%%    date            = "2017/05/31",
+%%%    filename        = "wits-eie-thesis.cls",
+%%%    address         = "School of Electrical and Information Engineering, 
 %%%                         Wits University, Johannesburg, South Africa",
-%%%    email           = "k.nixon@ee.wits.ac.za",
 %%%    docstring       = "This is a LaTeX style file for the preparation
 %%%                       and submission of theses.  It is heavily based on
 %%%                       the original work of Dean Redelinghuys (eeThesis.cls)
 %%%                       & subsequent modifications by others such as 
 %%%                       David Vannucci (veeThesisDavid.cls) and Chris Lines.
 %%%
-%%%                       2007-09-07 Slight modifications by SP Levitt  
-%%%
-%%%                       Not my best piece of work ever, but it does the trick.
-%%%
-%%%                       The default font size is 11pt but 12pt
-%%%                       is also available.
+%%%                       The default font size is 11pt but 12pt is also available.
 %%%
 %%%                       Options:
 %%%                         PhD [default], MSc, MScDiss, MScProj
@@ -34,7 +28,7 @@
 %%% ===========================================================================
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{KJNwitseiethesis}[2006/07/19 v1.9.0 Wits Elec. and Info. Eng. Thesis]
+\ProvidesClass{wits-eie-thesis}[2017/05/31 Wits School of Electrical and Information Engineering Thesis/Dissertation Style File]
 
 \providecommand*{\phantomsection}{}
 
