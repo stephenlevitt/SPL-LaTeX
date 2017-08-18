@@ -107,9 +107,10 @@
 }
 
 % typeset C++, maths symbols, urls, etc. nicely
-\newcommand*\CPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % better C++ definition with no space, invoke with \CPlus{}
-\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace} % kept for backwards compatibility
-\protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
+%\newcommand*\CPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % better C++ definition using newcommand and not xspace, invoke with \CPlus{} to get trailing space - but does not work within section headings!
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+
 \newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
 \newcommand{\SDIIhomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen3009/}{homepage}\xspace}
@@ -192,8 +193,16 @@
 \newcommand*\theend{\vspace{5mm}\niceending{\decofourleft\,\decofourright}\vspace{15mm}} % flourishes
 %\newcommand*\theend{\vspace{5mm}\niceending{\starredbullet}\vspace{15mm}} % star
 
-% adforn ornaments cannot be accessed
-%\newcommand*\nicesectionending{\niceending{\adfsingleflourishright\adfsingleflourishleft}}
+%------------------------------------------------------------------------------
+%                      Definition of Sidebar enivronment
+%------------------------------------------------------------------------------
+
+\usepackage{wrapfig}
+\usepackage{tcolorbox}
+\newenvironment{Sidebar}
+  {\vspace{4mm}\tcolorbox}  
+  {\endtcolorbox}
+
 
 %------------------------------------------------------------------------------
 % end of file - SPL-packages.sty
