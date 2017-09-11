@@ -103,8 +103,12 @@
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
 \usepackage{relsize}                                    % for font sizes relative to the current font
-\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace}
-\protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
+%\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}\xspace}
+%\protected\def\CPPX{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % no space for version numbers
+
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.31ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++ for beamer slides, no trailing space, rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+
 
 %------------------------------------------------------------------------------
 %                        Quotation Environments
