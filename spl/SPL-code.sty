@@ -11,6 +11,12 @@
 
 \usepackage{listings}
 
+% colour definitions for code listings
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0.2,0.2} % perhaps change to brown
+
 \lstdefinelanguage{JavaScript}{
   keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
   morecomment=[l]{//},
@@ -20,8 +26,6 @@
   sensitive=true
 }
 
-
-
 % base style
 \lstdefinestyle{base}{
 basicstyle=\small\ttfamily,
@@ -29,7 +33,7 @@ tabsize=3,
 language=[11]C++,
 %alsolanguage=JavaScript,
 %alsolanguage=HTML,
-morekeywords={override, default, using, final},
+morekeywords={override, default, final},
 showstringspaces=false,
 breaklines=true,
 breakatwhitespace=true,
@@ -42,11 +46,7 @@ escapechar=\`}
 % style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.7em, xrightmargin=1.7em}
 \lstdefinestyle{framed}{frame=tlrb, aboveskip=2em, abovecaptionskip=4mm}
-\lstdefinestyle{with-numbers}{numbers=left,numberstyle=\tiny, xleftmargin=2.5em, xrightmargin=2.5em}
-
-% styles for slides
-\lstdefinestyle{slide}{style=base,escapeinside={(*@}{@*)},commentstyle=\color{greencomments},keywordstyle=\color{bluekeywords}\bfseries,escapechar=\$}
-\lstdefinestyle{numbered-slide}{style=slide,numbers=left,numberstyle=\tiny, numberblanklines=false}
+\lstdefinestyle{with-numbers}{numbers=left, numberstyle=\tiny, xleftmargin=2.5em, xrightmargin=2.5em}
 
 % styles for documents
 \lstdefinestyle{inline}{style=base, basicstyle=\ttfamily, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
@@ -55,9 +55,14 @@ escapechar=\`}
 \lstdefinestyle{appendix}{style=base, style=framed}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
 
+% styles for slides
+\lstdefinestyle{slide}{style=base,escapeinside={(*@}{@*)},commentstyle=\color{greencomments}, keywordstyle=\color{bluekeywords}\bfseries, escapechar=\$}
+\lstdefinestyle{numbered-slide}{style=slide, numbers=left, numberstyle=\tiny}
+\lstdefinestyle{coloured}{style=base, commentstyle=\color{greencomments}\itshape, keywordstyle=\color{bluekeywords}\bfseries}
+
 % styles for MCQ
 \lstdefinestyle{mcq}{basicstyle=\small\ttfamily,tabsize=3,language=C++,showstringspaces=false,frame=tlrb,aboveskip=1em,xleftmargin=1em}
-\lstdefinestyle{numbered-mcq}{style=mcq,numbers=left,xleftmargin=4.5em}
+\lstdefinestyle{numbered-mcq}{style=mcq, numbers=left, xleftmargin=4.5em}
 
 % captions
 \newcommand{\coderef}[1]{Listing~\ref{#1}\xspace}
