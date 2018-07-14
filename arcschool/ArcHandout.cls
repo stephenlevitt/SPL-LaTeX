@@ -16,7 +16,6 @@
 %   or 12pt can also be used. The default page style, viz., plain is assumed.
 %
 
-
 \DeclareOption{a5paper}
     {\ClassError{proc}{Option ``a5paper'' not supported}{}}
 \DeclareOption{b5paper}
@@ -52,9 +51,20 @@
     \addtolength{\textwidth}{20mm}}
     }
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptions
+\ProcessOptions\relax
 \LoadClass{article}
 %---------------------------------------
+
+\RequirePackage{ifxetex} % for School logo font
+\ifxetex
+    \RequirePackage{fontspec}
+    \newfontfamily\schoolfont{Helvetica Neue LT Std}[Scale=1.4,Color=003179]
+\else
+    
+\fi
+
+%---------------------------------------
+
 \setlength{\parskip}{\medskipamount}
 \setlength{\parindent}{0pt}
 \setlength{\unitlength}{1mm}
@@ -69,18 +79,36 @@
 \newcommand{\zzzc}{}      % Course name generator
 \newcommand{\course}[1]{\renewcommand{\zzzc}{#1}}
 \renewcommand{\@maketitle}{\newpage
-{\Large
-\begin{tabular}{p{7mm}l}
-\setlength{\unitlength}{1mm}
-\begin{picture}(0,0)(15,20)
-\includegraphics[width=25mm]{ArcSchllogo}
-\end{picture}%
-&\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
-&\textsl{School of Electrical and Information Engineering}\\
-&\smallskip\zzzc
-\end{tabular}
-\smallskip\hrulefill\medskip
-}
+
+\ifxetex
+    {\Large
+    \begin{tabular}{p{12mm}l}
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(0,0)(15,20)
+    \includegraphics[width=28mm]{ArcSchllogo}
+    \end{picture}%
+    &{\schoolfont SCHOOL OF ELECTRICAL AND}\\
+    &{\schoolfont INFORMATION ENGINEERING}\\
+    &\smallskip\zzzc
+    \end{tabular}
+    %\smallskip\hrulefill\medskip
+    }
+\else
+    {\Large
+    \begin{tabular}{p{9mm}l}
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(0,0)(15,20)
+    \includegraphics[width=25mm]{ArcSchllogo}
+    \end{picture}%
+    &\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
+    &\textsl{School of Electrical and Information Engineering}\\
+    &\smallskip\zzzc
+    \end{tabular}
+    }
+\fi
+
+
+
 \begin{center}
 {\Large\textbf \@title \par}{\large \lineskip .5em
 \begin{tabular}[t]{c}\@author\end{tabular}\par}

@@ -1,0 +1,42 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-shorthand}[2018/07/14 Useful shorthand commands]
+\typeout{Document Style `SPL-shorthand.sty' <2018/07/14>}
+\typeout{Rev. 1.0.0}
+
+\RequirePackage{textcomp}                                   % Provides "true" copyright symbol and many others
+\RequirePackage{relsize}                                    % for font sizes relative to the current font
+\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+
+%------------------------------------------------------------------------------
+%                                   Commands
+%------------------------------------------------------------------------------
+% For use with Bitstream Charter
+\newcommand{\cpyright}{
+\vspace{5mm}
+\vfill \copyright \, \footnotesize Copyright SP Levitt, School of Electrical and Information Engineering.\\
+\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
+\hspace*{1.32em} \footnotesize \texttt{\currfilename}
+}
+
+% typeset C++, maths symbols, urls, etc. nicely
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+\newcommand{\SDIIwebsite}{\href{https://witseie.github.io/software-dev-2/}{website}\xspace}
+\newcommand{\sdII}{\url{https://witseie.github.io/software-dev-2/}}
+\newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
+\newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen7045/}{homepage}\xspace}
+
+% Shorthands for references
+\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
+\newcommand{\secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}\xspace}
+\newcommand{\chaprefs}[2]{chapters~\ref{#1} and \ref{#2}\xspace}
+\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
+\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
+\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+

@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{SPL-packages}[2013/01/31 Common packages, commands, etc for SPL styles]
-\typeout{Document Style `SPL-packages.sty' <2013/01/31>}
-\typeout{Rev. 1.0.2}
+\typeout{Document Style `SPL-packages.sty' <2018/07/15>}
+\typeout{Rev. 1.0.5}
 
 % Revision history
 % 1.0.2 (2013/01/31) - replaced amsfonts with mathdesign, fourier ornaments now working
@@ -10,6 +10,7 @@
 %                      used xparse (LaTeX3) for declaring signed quote environment;
 %                      gave options for using XeLaTeX as a backend driver, deprecated DVI->PDF route;
 %                      added checks for good practice
+% 1.0.5 (2015/01/14) - Extracted shorthand commands into SPL-shorthand
 % TO DO 
 %- rework end rules according to stack overflow example
 %- use mdframed instead of framed, can also replace shabox with it
@@ -26,108 +27,72 @@
                                      % commands, classes and packages which are
                                      % outdated and superseded. nag provides routines
                                      % to warn the user about the use of those.
-\usepackage{strict}                  % prevents using LaTeX's declarations as environments (stored in local tree - not part of the MikTeX package manager)
+\RequirePackage{strict}                  % prevents using LaTeX's declarations as environments (stored in local tree - not part of the MikTeX package manager)
 
 %------------------------------------------------------------------------------
 %                               General Packages
 %------------------------------------------------------------------------------
-%\usepackage[a4paper,bottom=26.6mm, textwidth=140mm, textheight=242mm, footskip=12mm]{geometry}
+%\RequirePackage[a4paper,bottom=26.6mm, textwidth=140mm, textheight=242mm, footskip=12mm]{geometry}
 %\setlength{\parskip}{2ex}%
 %\setlength{\parindent}{0em}%
-\usepackage{textcomp}                                   % Provides "true" copyright symbol and many others
-\usepackage{relsize}                                    % for font sizes relative to the current font
-\usepackage[british]{babel}
-\usepackage{booktabs}                                   % nicer tables
-\usepackage{multirow}
-\usepackage{fancybox}                                   % boxed text, equations
-\usepackage{currfile}                                   % ascertain the file's name
-\usepackage{lastpage}                                   % determines the last page of the document
-\usepackage{fancyhdr}                                   % headers and footers
-%\usepackage[useregional]{datetime2}                     % date/time formats - redefines \today (datetime package is obsolete)
+\RequirePackage[british]{babel}
+\RequirePackage{booktabs}                                   % nicer tables
+\RequirePackage{multirow}
+\RequirePackage{fancybox}                                   % boxed text, equations
+\RequirePackage{currfile}                                   % ascertain the file's name
+\RequirePackage{lastpage}                                   % determines the last page of the document
+\RequirePackage{fancyhdr}                                   % headers and footers
+%\RequirePackage[useregional]{datetime2}                     % date/time formats - redefines \today (datetime package is obsolete)
 %\DTMlangsetup{ord=raise,monthyearsep={,\space}}         % 10th March, 2016
-\usepackage[useregional=numeric]{datetime2}             % 10/3/2016 (datetime package is obsolete)
-\usepackage[square,comma,numbers,sort&compress]{natbib} % citations and references - Numerical Style
-\usepackage{bibentry}                                   % inline references (incl with natbib)
-\usepackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
-\usepackage[margin=10pt,format=hang]{subcaption}        % better replacement for subfig
-\usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
-\usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
-\usepackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
-\usepackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
-\usepackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
-\usepackage{graphicx}                                   % for including graphics
-\usepackage[svgnames]{xcolor}                           % for defining custom colours
+\RequirePackage[useregional=numeric]{datetime2}             % 10/3/2016 (datetime package is obsolete)
+\RequirePackage[square,comma,numbers,sort&compress]{natbib} % citations and references - Numerical Style
+\RequirePackage{bibentry}                                   % inline references (incl with natbib)
+\RequirePackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
+\RequirePackage[margin=10pt,format=hang]{subcaption}        % better replacement for subfig
+\RequirePackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
+\RequirePackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
+\RequirePackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
+\RequirePackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
+\RequirePackage{graphicx}                                   % for including graphics
+\RequirePackage[svgnames]{xcolor}                           % for defining custom colours
 \graphicspath{{./Figures/}}                             % path for all graphics files
-\usepackage{pdflscape}                                  % for landscape layout in pdf
-\usepackage{acronym}                                    % Nomenclature listing
-\usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
+\RequirePackage{pdflscape}                                  % for landscape layout in pdf
+\RequirePackage{acronym}                                    % Nomenclature listing
+\RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
 \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
-%\usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
-\usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
-%\usepackage{refcheck}                                  % highlights missing and unreferred to citations
+%\RequirePackage{texnames}                                   % defines \LaTeX \BibTeX etc
+\RequirePackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
+%\RequirePackage{refcheck}                                  % highlights missing and unreferred to citations
 
 %------------------------------------------------------------------------------
 %                      Handling XeLaTeX and PDFLaTeX Processing
 %------------------------------------------------------------------------------
-\usepackage{ifxetex}
+\RequirePackage{ifxetex}
 \ifxetex
-    \usepackage{fontspec}
+    \RequirePackage{fontspec}
     \setmainfont[Ligatures=TeX]{Bitstream Charter} % [Ligatures=TeX] required for smart quotes, m-dashes etc.
     \setmonofont[Scale=0.9]{Bera Sans Mono} % for code listings beramono is used
     \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine for quotation marks
                                                                % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
 \else
     % assuming pdfLaTeX driver
-    \usepackage{lmodern}
-    \usepackage[bitstream-charter]{mathdesign} % main font for document text + maths, supports font expansion (see microtype)
-    \usepackage[utf8]{inputenc}
-    \usepackage[T1]{fontenc}
-    \usepackage[scaled]{beramono}                           % for code listings beramono is used
+    \RequirePackage{lmodern}
+    \RequirePackage[bitstream-charter]{mathdesign} % main font for document text + maths, supports font expansion (see microtype)
+    \RequirePackage[utf8]{inputenc}
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[scaled]{beramono}                           % for code listings beramono is used
     \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}} % selects Libertine as the quote font
-    \usepackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
+    \RequirePackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
 \fi
 
 \definecolor{darkblue}{rgb}{0,0,0.5}                % 'red', 'green' and 'blue' are predefined
-\usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
+\RequirePackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
     pdfauthor={SP Levitt},                          % remove to reuse author data
     linkbordercolor={darkblue}                      % darkblue is defined above
 }%
 
-%------------------------------------------------------------------------------
-%                                   Commands
-%------------------------------------------------------------------------------
-% For use with Bitstream Charter
-\newcommand{\cpyright}{
-\vspace{5mm}
-\vfill \copyright \, \footnotesize Copyright SP Levitt, School of Electrical and Information Engineering.\\
-\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
-\hspace*{1.32em} \footnotesize \texttt{\currfilename}
-}
-
-% typeset C++, maths symbols, urls, etc. nicely
-%\newcommand*\CPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % better C++ definition using newcommand and not xspace, invoke with \CPlus{} to get trailing space - but does not work within section headings!
-\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
-\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
-\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
-
-\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
-\newcommand{\SDIIwebsite}{\href{https://witseie.github.io/software-dev-2/}{website}\xspace}
-\newcommand{\SDIIurl}{\url{https://witseie.github.io/software-dev-2/}}
-\newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
-\newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen7045/}{homepage}\xspace}
-
-% Shorthands for references
-\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
-\newcommand{\secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
-\newcommand{\chapref}[1]{Chapter~\ref{#1}\xspace}
-\newcommand{\chaprefs}[2]{chapters~\ref{#1} and \ref{#2}\xspace}
-\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
-\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
-\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
 
 %------------------------------------------------------------------------------
 %                       Definition of "signedquote" environment
@@ -136,8 +101,8 @@
 %
 %------------------------------------------------------------------------------
 
-\usepackage{tikz}
-\usepackage{framed}
+\RequirePackage{tikz}
+\RequirePackage{framed}
 
 % Commands for the quotes
 \newcommand*\quotesize{60} % if quote size changes, need a way to make shifts relative
@@ -152,7 +117,7 @@
 \colorlet{shadecolor}{GhostWhite}
 
 % define the new environment using xparse
-\usepackage{xparse}
+\RequirePackage{xparse}
 \DeclareDocumentEnvironment{signedquote}{m}
 {
     \begin{snugshade}
@@ -175,8 +140,8 @@
 %------------------------------------------------------------------------------
 
 % adforn ornaments cannot be found so settling for fourier ornaments
-%\usepackage{adforn}
-\usepackage{fourier-orns}
+%\RequirePackage{adforn}
+\RequirePackage{fourier-orns}
 
 % Nice ending for sections and subsections
 \def\Vhrulefill{\leavevmode\leaders\hrule height 0.7ex depth \dimexpr0.4pt-0.7ex} % vertically centered rule
@@ -197,8 +162,8 @@
 %                      Definition of Sidebar enivronment
 %------------------------------------------------------------------------------
 
-\usepackage{wrapfig}
-\usepackage{tcolorbox}
+\RequirePackage{wrapfig}
+\RequirePackage{tcolorbox}
 \newenvironment{Sidebar}
   {\vspace{4mm}\tcolorbox}  
   {\endtcolorbox}

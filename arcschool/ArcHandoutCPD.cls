@@ -73,7 +73,7 @@
 \begin{tabular}{p{7mm}l}
 \setlength{\unitlength}{1mm}
 \begin{picture}(0,0)(15,20)
-\includegraphics[width=25mm]{witslogobw}%
+\includegraphics[width=25mm]{EIE-circuit-logo}%
 \end{picture}%
 &\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
 &\textsl{Joburg Centre for Software Engineering at WITS}\\
