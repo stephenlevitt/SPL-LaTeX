@@ -6,7 +6,6 @@
 \RequirePackage{textcomp}                                   % Provides "true" copyright symbol and many others
 \RequirePackage{relsize}                                    % for font sizes relative to the current font
 \RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
-\RequirePackage[pdfusetitle]{hyperref}                  		% for hyperlinks in PDF
 
 %------------------------------------------------------------------------------
 %                                   Commands
@@ -29,6 +28,9 @@
 \newcommand{\sdII}{\url{https://witseie.github.io/software-dev-2/}}
 \newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
 \newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen7045/}{homepage}\xspace}
+% Require this package here if not required elsewhere
+%\RequirePackage[pdfusetitle]{hyperref}                  		% for hyperlinks in PDF
+
 
 % Shorthands for references
 \newcommand{\secref}[1]{Section~\ref{#1}\xspace}

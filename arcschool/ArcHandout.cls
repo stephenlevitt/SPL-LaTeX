@@ -58,9 +58,7 @@
 \RequirePackage{ifxetex} % for School logo font
 \ifxetex
     \RequirePackage{fontspec}
-    \newfontfamily\schoolfont{Helvetica Neue LT Std}[Scale=1.4,Color=003179]
-\else
-    
+    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.45,Color=003179, BoldFont = Helvetica Neue LT Std]
 \fi
 
 %---------------------------------------
@@ -82,16 +80,18 @@
 
 \ifxetex
     {\Large
-    \begin{tabular}{p{12mm}l}
+    \begin{tabular}{p{16.5mm}l} %12
     \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(15,20)
-    \includegraphics[width=28mm]{ArcSchllogo}
+    \begin{picture}(0,0)(10,20) %15,20
+    \includegraphics[width=28mm]{ArcSchllogo} %28mm
     \end{picture}%
-    &{\schoolfont SCHOOL OF ELECTRICAL AND}\\
-    &{\schoolfont INFORMATION ENGINEERING}\\
+    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\\
+    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\\
+    %&UNIVERSITY OF THE WITWATERSRAND\\
     &\smallskip\zzzc
     \end{tabular}
     %\smallskip\hrulefill\medskip
+    %\smallskip
     }
 \else
     {\Large
@@ -107,12 +107,10 @@
     }
 \fi
 
-
-
 \begin{center}
 {\Large\textbf \@title \par}{\large \lineskip .5em
 \begin{tabular}[t]{c}\@author\end{tabular}\par}
-\vskip 1em {\large \@date} \end{center}\par}
+\vskip 1em {\large \@date} \end{center}\vspace{-9mm}}
 
 \newcommand{\makeheads}{\maketitle}
 \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
