@@ -1,8 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{ArcHandout}
-              [2002/01/15 v2.0
+              [2017/07/26 v3.0
                School of Electrical and Information Engineering Handout Class]
-%handout.cls by Alan Robert Clark, a.clark@ee.wits.ac.za, modified from:
+%ArcHandout.cls by Stephen Levitt, modified from:
+%ArcHandout.cls by Alan Robert Clark, a.clark@ee.wits.ac.za, modified from:
 %   Handout.cls by Dean Redelinghuys, modified from
 %   HANDOUT.STY         I.M. MacLeod, 20 Jan 1989. Rev 1, 4 Mar 1992
 %   Custom modifications to the "article" document-style for Electrical
@@ -58,7 +59,7 @@
 \RequirePackage{ifxetex} % for School logo font
 \ifxetex
     \RequirePackage{fontspec}
-    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.45,Color=003179, BoldFont = Helvetica Neue LT Std]
+    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.5,Color=003179, BoldFont = Helvetica Neue LT Std]
 \fi
 
 %---------------------------------------
@@ -80,14 +81,14 @@
 
 \ifxetex
     {\Large
-    \begin{tabular}{p{16.5mm}l} %12
+    \begin{tabular}{p{17mm}l} %12
     \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(10,20) %15,20
-    \includegraphics[width=28mm]{ArcSchllogo} %28mm
+    \begin{picture}(0,0)(15,25) %15,20
+    \includegraphics[width=33mm]{ArcSchllogo} %28mm
     \end{picture}%
-    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\\
-    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\\
-    %&UNIVERSITY OF THE WITWATERSRAND\\
+    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\vspace{0.4mm}\\
+    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\vspace{1mm}\\
+    &{\LARGE UNIVERSITY OF THE WITWATERSRAND}\\
     &\smallskip\zzzc
     \end{tabular}
     %\smallskip\hrulefill\medskip
@@ -95,22 +96,24 @@
     }
 \else
     {\Large
-    \begin{tabular}{p{9mm}l}
+    \begin{tabular}{p{5.5mm}l}
     \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(15,20)
+    \begin{picture}(0,0)(18,18)
     \includegraphics[width=25mm]{ArcSchllogo}
     \end{picture}%
-    &\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
-    &\textsl{School of Electrical and Information Engineering}\\
+    &{\Large SCHOOL OF \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\\
+    &\textsf{University of the Witwatersrand, Johannesburg}\\
     &\smallskip\zzzc
     \end{tabular}
     }
 \fi
-
+\vspace{4mm}
 \begin{center}
-{\Large\textbf \@title \par}{\large \lineskip .5em
-\begin{tabular}[t]{c}\@author\end{tabular}\par}
-\vskip 1em {\large \@date} \end{center}\vspace{-9mm}}
+{\Large\textbf \@title \par}
+{\large \lineskip .5em \begin{tabular}[t]{c}\@author\end{tabular}\par}
+\vskip 1em {\large \@date} 
+\vspace{-8mm}
+\end{center}}
 
 \newcommand{\makeheads}{\maketitle}
 \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
