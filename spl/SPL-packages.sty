@@ -162,11 +162,67 @@
 %                      Definition of Sidebar enivronment
 %------------------------------------------------------------------------------
 
-\RequirePackage{wrapfig}
+%\RequirePackage{wrapfig}
+%\RequirePackage[most]{tcolorbox}
+%\newenvironment{Sidebar}
+%  {\vspace{4mm}\tcolorbox}  
+%  {\endtcolorbox}
+
+% experiment 2
 \RequirePackage{tcolorbox}
-\newenvironment{Sidebar}
-  {\vspace{4mm}\tcolorbox}  
-  {\endtcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+
+% remove tikz error: https://tex.stackexchange.com/questions/165929/semiverbatim-with-tikz-in-beamer 
+ \makeatletter
+ \global\let\tikz@ensure@dollar@catcode=\relax
+ \makeatother
+
+
+%\newenvironment{Sidebar2}
+%  {\tcolorbox[breakable, enhanced,colback=yellow!10!white,boxrule=0pt,frame hidden,
+%borderline west={.5mm}{12mm}{black}]}
+%  {\endtcolorbox}
+
+\newtcolorbox{Sidebar3}{
+  breakable,  % can break across pages
+  enhanced,   % skin
+  beforeafter skip=3mm, % space above and below bounding box
+  right=4mm,  % right margin of bounding box to text
+  top=-2pt,    % top of bounding box to text
+  bottom=2pt, % bottom of bounding box to text
+  colback=white, % background colour of bounding box
+  width=\textwidth,
+  grow to left by=11.5mm, % modify left margin, without moving right margin
+  %show bounding box,
+  boxsep=4pt,
+  boxrule=0pt,frame hidden,
+  borderline west={.3mm}{12mm}{black}, % left bounding box margin
+  fontupper=\small,
+  leftupper=1.5cm, % space from left-hand box margin to text
+  overlay={
+    \node[anchor=north west] 
+      at ([xshift=-2pt,yshift=1pt]frame.north west)
+       {\includegraphics[width=0.7cm,height=0.7cm]{github-mark-2}};}
+}
+
+
+
+
+% experiment
+\usetikzlibrary{calc}
+\newcommand\verpar[2]{
+    \par\vskip1ex
+\noindent
+\begin{tikzpicture}[
+paragraph/.style = {inner sep=5pt, align = left, align = justify,
+                    text width=\textwidth-\baselineskip}
+                            ]
+\node (p1) [paragraph] {#2};
+\path ([xshift=-0.75\baselineskip] p1.south west) coordinate (p2)
+            -- node (p3) [sloped,font=\sffamily] {#1} (p2 |- p1.north);
+\draw[very thick] (p2) -- (p3.west) (p3.east) -- (p2 |- p1.north);
+\end{tikzpicture}}
 
 
 %------------------------------------------------------------------------------
