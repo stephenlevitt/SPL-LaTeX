@@ -162,54 +162,11 @@
 %                      Definition of Sidebar enivronment
 %------------------------------------------------------------------------------
 
-% Sidebar experiments
-
-% Still more experiments
-% \usepackage[most]{tcolorbox}
-
-% \newtcolorbox{marker}[1][]{enhanced,
-%   before skip=2mm,after skip=3mm,
-%   boxrule=0.4pt,left=12mm,right=2mm,top=1mm,bottom=1mm,
-%   %colback=yellow!50,
-%   colframe=yellow!20!black,
-%   sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
-%   underlay={%
-%     \path[fill=tcbcol@back!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2); % corner fold shade
-%     \path[draw=tcbcol@frame,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
-%     \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]%vertical bar
-%     % {\Huge\bfseries !}     
-%     {\includegraphics[scale=0.3]{github-mark-3}} 
-%     ([xshift=4mm]interior.north west);
-%     },
-%   drop fuzzy shadow,#1}
+% Based on:
+% https://tex.stackexchange.com/questions/181090/alignment-of-image-in-tcolorbox 
+% https://tex.stackexchange.com/questions/336201/vertical-highlight-of-a-paragraph
 
 
-
-% More Experiments
-% \usepackage[most]{tcolorbox}
-
-% \newtcolorbox{marker}[1][]{enhanced,
-%   before skip=2mm,after skip=3mm,
-%   boxrule=0.4pt,left=5mm,right=2mm,top=1mm,bottom=1mm,
-%   colback=yellow!50,
-%   colframe=yellow!20!black,
-%   sharp corners,rounded corners=southeast,arc is angular,arc=3mm,
-%   underlay={%
-%     \path[fill=tcbcol@back!80!black] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
-%     \path[draw=tcbcol@frame,shorten <=-0.05mm,shorten >=-0.05mm] ([yshift=3mm]interior.south east)--++(-0.4,-0.1)--++(0.1,-0.2);
-%     \path[fill=yellow!50!black,draw=none] (interior.south west) rectangle node[white]{\Huge\bfseries !} ([xshift=4mm]interior.north west);
-%     },
-%   drop fuzzy shadow,#1}
-
-
-
-%\RequirePackage{wrapfig}
-%\RequirePackage[most]{tcolorbox}
-%\newenvironment{Sidebar}
-%  {\vspace{4mm}\tcolorbox}  
-%  {\endtcolorbox}
-
-% experiment 2
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
 \tcbuselibrary{breakable}
@@ -219,13 +176,7 @@
  \global\let\tikz@ensure@dollar@catcode=\relax
  \makeatother
 
-
-%\newenvironment{Sidebar2}
-%  {\tcolorbox[breakable, enhanced,colback=yellow!10!white,boxrule=0pt,frame hidden,
-%borderline west={.5mm}{12mm}{black}]}
-%  {\endtcolorbox}
-
-\newtcolorbox{Sidebar3}{
+\newtcolorbox{Sidebar}{
   breakable,  % can break across pages
   enhanced,   % skin
   beforeafter skip=3mm, % space above and below bounding box
@@ -235,36 +186,17 @@
   colback=white, % background colour of bounding box
   width=\textwidth,
   grow to left by=11.5mm, % modify left margin, without moving right margin
-  %show bounding box,
+  %show bounding box, % display bounding box
   boxsep=4pt,
   boxrule=0pt,frame hidden,
-  borderline west={.3mm}{12mm}{black}, % left bounding box margin
-  fontupper=\small,
+  borderline west={.3mm}{12mm}{black}, % colour left bounding box margin
+  fontupper=\small, % change font in upper box (here it is the only box)
   leftupper=1.5cm, % space from left-hand box margin to text
-  overlay={
+  overlay={ % overlay GitHub logo
     \node[anchor=north west] 
       at ([xshift=-2pt,yshift=1pt]frame.north west)
        {\includegraphics[width=0.7cm,height=0.7cm]{github-mark-2}};}
 }
-
-
-
-
-% experiment
-\usetikzlibrary{calc}
-\newcommand\verpar[2]{
-    \par\vskip1ex
-\noindent
-\begin{tikzpicture}[
-paragraph/.style = {inner sep=5pt, align = left, align = justify,
-                    text width=\textwidth-\baselineskip}
-                            ]
-\node (p1) [paragraph] {#2};
-\path ([xshift=-0.75\baselineskip] p1.south west) coordinate (p2)
-            -- node (p3) [sloped,font=\sffamily] {#1} (p2 |- p1.north);
-\draw[very thick] (p2) -- (p3.west) (p3.east) -- (p2 |- p1.north);
-\end{tikzpicture}}
-
 
 %------------------------------------------------------------------------------
 % end of file - SPL-packages.sty
