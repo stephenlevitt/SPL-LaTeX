@@ -159,7 +159,7 @@
 %\newcommand*\theend{\vspace{5mm}\niceending{\starredbullet}\vspace{15mm}} % star
 
 %------------------------------------------------------------------------------
-%                      Definition of Sidebar enivronment
+%                      Definition of Sidebar environment
 %------------------------------------------------------------------------------
 
 % Based on:
@@ -194,9 +194,19 @@
   leftupper=1.5cm, % space from left-hand box margin to text
   overlay={ % overlay GitHub logo
     \node[anchor=north west] 
-      at ([xshift=-2pt,yshift=1pt]frame.north west)
-       {\includegraphics[width=0.7cm,height=0.7cm]{github-mark-2}};}
+      at ([xshift=4pt,yshift=4pt]frame.north west)
+       {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
+
+
+%------------------------------------------------------------------------------
+
+% Typeset listing captions from
+% https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
+%\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,bf,footnotesize}}
 
 %------------------------------------------------------------------------------
 % end of file - SPL-packages.sty

@@ -10,8 +10,6 @@
 % font expansion not available (see microtype)
 
 \RequirePackage{listings}
-\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
-
 
 % colour definitions for code listings
 \RequirePackage{color}
@@ -71,13 +69,6 @@ escapechar=\`}
 \newcommand{\coderef}[1]{Listing~\ref{#1}\xspace}
 \newcommand{\coderefs}[2]{Listings~\ref{#1}\/ and \ref{#2}\xspace}
 \newcommand{\algref}[1]{Algorithm~\ref{#1}\xspace}
-
-% Typeset listing captions from
-% https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
-\usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,bf,footnotesize}}
 
 % Rule after listing
 \newcommand{\coderule}{

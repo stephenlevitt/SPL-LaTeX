@@ -59,7 +59,7 @@
 \RequirePackage{ifxetex} % for School logo font
 \ifxetex
     \RequirePackage{fontspec}
-    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.5,Color=003179, BoldFont = Helvetica Neue LT Std]
+    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.4,Color=003179, BoldFont = Helvetica Neue LT Std] %scale=1.5
 \fi
 
 %---------------------------------------
@@ -76,19 +76,19 @@
 \newcommand{\eehd}{{\noindent\Large\sf\eehead\smallskip\zzzc}%
 \smallskip\hrule\medskip}
 \newcommand{\zzzc}{}      % Course name generator
-\newcommand{\course}[1]{\renewcommand{\zzzc}{#1}}
+\newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{\LARGE{#1}}}}
 \renewcommand{\@maketitle}{\newpage
 
 \ifxetex
     {\Large
-    \begin{tabular}{p{17mm}l} %12
+    \begin{tabular}{p{14mm}l} %17
     \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(15,25) %15,20
-    \includegraphics[width=33mm]{ArcSchllogo} %28mm
+    \begin{picture}(0,0)(12,19.5) %15,25
+    \includegraphics[width=27mm]{ArcSchllogo} %33mm
     \end{picture}%
-    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\vspace{0.4mm}\\
-    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\vspace{1mm}\\
-    &{\LARGE UNIVERSITY OF THE WITWATERSRAND}\\
+    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\vspace{1mm}\\  %0.4mm
+    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\vspace{0.4mm}\\ %1mm
+    &\textsf{\LARGE{University of the Witwatersrand}}\vspace{0.4mm}\\ %\LARGE
     &\smallskip\zzzc
     \end{tabular}
     %\smallskip\hrulefill\medskip
