@@ -196,10 +196,10 @@
 % modified by SPL 2008-11-14
 %\markright{\eeCCode -- \eeCName \commenthead}
 \markright{\eeCCode--\eeCName \commenthead}
-\renewcommand{\@oddhead}{\hbox{}\sl\rightmark \hfil
-\rm (\eelastpg\ pages---page \thepage)}}
+\renewcommand{\@oddhead}{\hbox{}\textsl\rightmark \hfil
+\textrm (\eelastpg\ pages---page \thepage)}}
 \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
-\newcommand{\quest}{\addtocounter{qno}{1}\par{\bf Q\theqno :\quad}}
+\newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
 \newcounter{mcqno}[qno]
 \newenvironment{mcq}%
 {\addtocounter{mcqno}{1}\par\relax\begin{samepage}\theqno.\themcqno \quad}%
