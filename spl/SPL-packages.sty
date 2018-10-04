@@ -86,11 +86,15 @@
     \RequirePackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
 \fi
 
-\definecolor{darkblue}{rgb}{0,0,0.5}                % 'red', 'green' and 'blue' are predefined
+%\definecolor{darkblue}{rgb}{0,0,0.5}                % 'red', 'green' and 'blue' are predefined
 \RequirePackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
     pdfauthor={SP Levitt},                          % remove to reuse author data
-    linkbordercolor={darkblue}                      % darkblue is defined above
+    %linkbordercolor={green!60}                      % darkblue is defined above
+    colorlinks,
+    linkcolor={red!50!black},
+    citecolor={green!50!black},
+    urlcolor={blue!80!black}
 }%
 
 
@@ -198,17 +202,57 @@
        {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
 
-
 %------------------------------------------------------------------------------
 
 % Typeset listing captions from
 % https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
 %\usepackage{caption}
-\DeclareCaptionFont{white}{\color{white}}
-\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
-%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={sf,bf,footnotesize}}
-\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
 
+%-------------------------------------------------
+
+%\usepackage{tcolorbox}
+%  \tcbuselibrary{breakable}
+%  \tcbuselibrary{skins}
+%  \tcbuselibrary{listings}
+%\usepackage{caption}
+
+
+%\definecolor{shadecolor}{gray}{0.95}
+%\definecolor{captionbox}{cmyk}{0.43, 0.35, 0.35,0.01}
+
+%\newtcblisting[auto counter]{wgetlisting}[2][]{%
+%  listing only,
+%  breakable,
+%  top=0.5pt,
+%  bottom=0.5pt,
+%  colback=red!5!white,
+%  colframe=red!25,
+%  left=6mm,
+%  sharp corners,
+%  boxrule=0pt,
+%  bottomrule=1pt,
+%  toprule=1pt,
+%  enhanced jigsaw,
+%  listing options={%style=tcblatex,
+%    numbers=left,
+%    numberstyle=\tiny\color{red!75!black},
+%    moredelim={[is][keywordstyle]{@@}{@@}},
+%    basicstyle=\normalsize\ttfamily,
+%    breaklines=true,
+%    breakautoindent=false,
+%    breakindent=0pt,
+%    escapeinside={(*}{*)},
+%  },%
+%  lefttitle=0pt,
+%  coltitle=black,
+%  colbacktitle=white,
+%  title={Listing \thetcbcounter:  #2},#1%  
+%  borderline north={8pt}{14.4pt}{red!25,dashed},
+%}
+% 
 
 %------------------------------------------------------------------------------
 % end of file - SPL-packages.sty
