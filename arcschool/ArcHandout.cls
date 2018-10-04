@@ -73,7 +73,7 @@
 \@addtoreset{eno}{section}
 \newcommand{\eehead}{\textsf{University of the Witwatersrand, Johannesburg}\\
 \textit{School of Electrical and Information Engineering}}
-\newcommand{\eehd}{{\noindent\Large\sf\eehead\smallskip\zzzc}%
+\newcommand{\eehd}{{\noindent\Large\textsf\eehead\smallskip\zzzc}%
 \smallskip\hrule\medskip}
 \newcommand{\zzzc}{}      % Course name generator
 \newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{\LARGE{#1}}}}
@@ -127,7 +127,7 @@
 {#1}\parfillskip=0pt \finalhyphendemerits=0 \par}}
 %\providecommand{\marks}[1]{\rhfit{\textsf{(#1~marks)}}}
 %\newcommand{\marks}[1]{\rhfit{\sf(#1~marks)}}
-\newcommand{\mrks}[1]{\rhfit{\sf(#1~marks)}}
+\newcommand{\mrks}[1]{\rhfit{\textsf(#1~marks)}}
 \providecommand{\totalmarks}[1]{\rhfit{\textsf{[Total Marks #1]}}}
 \newcommand{\fig}[1]{\addtocounter{figure}{1}
 \begin{center}\vspace*{#1}Figure \thefigure\end{center}}

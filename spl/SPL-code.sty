@@ -13,9 +13,9 @@
 
 % colour definitions for code listings
 \RequirePackage{color}
-\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
-\definecolor{greencomments}{rgb}{0,0.5,0}
-\definecolor{redstrings}{rgb}{0.9,0.2,0.2} % perhaps change to brown
+\definecolor{blue}{rgb}{0.13,0.13,1}
+\definecolor{green}{rgb}{0,0.5,0}
+\definecolor{darkbrown}{HTML}{87422B}
 
 \lstdefinelanguage{JavaScript}{
   keywords={break, case, catch, continue, debugger, default, delete, do, else, finally, for, function, if, in, instanceof, new, return, switch, this, throw, try, typeof, var, void, while, with},
@@ -26,7 +26,7 @@
   sensitive=true
 }
 
-% base style
+% base style for C++
 \lstdefinestyle{base}{
 basicstyle=\small\ttfamily,
 tabsize=3,
@@ -40,14 +40,11 @@ moredelim=[il]{//*},
 escapeinside=\`\`,
 escapechar=\`}
 
-\definecolor{darkbrown}{HTML}{87422B}
-
 % base style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.7em, xrightmargin=1.7em}
 \lstdefinestyle{framed}{frame=tlrb, framexleftmargin=1mm, aboveskip=2em, abovecaptionskip=4mm}
 \lstdefinestyle{numbered}{numbers=left, numberstyle=\ttfamily\color{black!35}\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em}
-\lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{greencomments}\itshape, keywordstyle=\color{bluekeywords}\bfseries}
-
+\lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}\bfseries}
 
 % styles for documents
 \lstdefinestyle{inline}{style=base, basicstyle=\ttfamily, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
@@ -56,8 +53,6 @@ escapechar=\`}
 \lstdefinestyle{appendix}{style=base, style=framed}
 \lstdefinestyle{number}{style=frame, style=numbered}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
-%\lstdefinestyle{captionbar}{style=appendix, style=with-numbers, captionpos=t,  abovecaptionskip=6mm}
-
 
 % styles for slides
 \lstdefinestyle{slide}{style=base, style=coloured, escapeinside={(*@}{@*)}, escapechar=\$}
@@ -67,12 +62,7 @@ escapechar=\`}
 \lstdefinestyle{mcq}{style=base, style=frame, xrightmargin=2.5em}
 \lstdefinestyle{numbered-mcq}{style=mcq, style=numbered, xleftmargin=4.5em}
 
-% captions - use autoref instead
-% \newcommand{\coderef}[1]{Listing~\ref{#1}\xspace}
-% \newcommand{\coderefs}[2]{Listings~\ref{#1}\/ and \ref{#2}\xspace}
-% \newcommand{\algref}[1]{Algorithm~\ref{#1}\xspace}
-
-% Rule after listing
+% rule after listing
 \newcommand{\coderule}{
 \vspace{-5.5mm}
 \makebox[0pt][l]{%
