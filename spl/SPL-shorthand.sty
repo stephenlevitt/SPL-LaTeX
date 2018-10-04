@@ -29,30 +29,22 @@
 \newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
 \newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~levitt/elen7045/}{homepage}\xspace}
 
-% Shorthands for references
-%\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
-%\newcommand{\secrefs}[2]{Sections~\ref{#1}\/ and \ref{#2}\xspace}
-%\newcommand{\chapref}[1]{Chapter~\ref{#1}\xspace}
-%\newcommand{\chaprefs}[2]{chapters~\ref{#1} and \ref{#2}\xspace}
-%\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
-%\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
-%\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
-%\newcommand{\figref}[1]{Figure~\ref{#1}}
-%\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
+% Use \autoref{label} for referring to Chapters, Sections, pages etc.
 
-% rather use \autoref{label}
+% for labelling line numbers in code listings and referring to them with autoref
+\providecommand*{\lstnumberautorefname}{line} 
 
 % http://mirror.ufs.ac.za/ctan/macros/latex/contrib/hyperref/doc/manual.html#TBL-24
-%	Macro 					Default
-%	\figurename 		Figure
-% \tablename 			Table
-%	\partname 				Part
-%	\appendixname 		Appendix
-%	\equationname 		Equation
-%	\Itemname 				item
-%	\chaptername 			chapter
-%	\sectionname 			section
-%	\subsectionname 	subsection
+%	Macro 							Default
+%	\figurename 				Figure
+% \tablename 					Table
+%	\partname 					Part
+%	\appendixname 			Appendix
+%	\equationname 			Equation
+%	\Itemname 					item
+%	\chaptername 				chapter
+%	\sectionname 				section
+%	\subsectionname 		subsection
 %	\subsubsectionname 	subsubsection
 %	\paragraphname 			paragraph
 %	\Hfootnotename 			footnote
