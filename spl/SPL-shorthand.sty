@@ -31,9 +31,21 @@
 
 % Use \autoref{label} for referring to Chapters, Sections, pages etc.
 
-% for labelling line numbers in code listings and referring to them with autoref
-\providecommand*{\lstnumberautorefname}{line} 
+\providecommand*{\lstnumberautorefname}{line}% for labelling line numbers in code listings
+\addto\extrasbritish{%
+  \renewcommand{\chapterautorefname}{Chapter}%
+}
+\addto\extrasbritish{%
+  \renewcommand{\sectionautorefname}{Section}%
+}
+\addto\extrasbritish{%
+  \renewcommand{\subsectionautorefname}{Section}%
+}
+\addto\extrasbritish{%
+  \renewcommand{\subsubsectionautorefname}{Section}%
+}
 
+ 
 % http://mirror.ufs.ac.za/ctan/macros/latex/contrib/hyperref/doc/manual.html#TBL-24
 %	Macro 							Default
 %	\figurename 				Figure
@@ -53,5 +65,5 @@
 %	\page 							page 
 
 
-% Require this package here if not required elsewhere, it is needed by autoref
+% Require this package here if not required elsewhere, it is needed by autoref and other commands in this file
 %\RequirePackage[pdfusetitle]{hyperref}                  		% for hyperlinks in PDF
