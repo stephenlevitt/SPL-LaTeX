@@ -76,7 +76,7 @@
 \includegraphics[width=25mm]{EIE-circuit-logo}%
 \end{picture}%
 &\textsf{UNIVERSITY OF THE WITWATERSRAND, JOHANNESBURG}\\
-&\textsl{Joburg Centre for Software Engineering at WITS}\\
+&\textsl{School of Electrical and Information Engineering}\\
 &\smallskip\zzzc
 \end{tabular}
 \smallskip\hrulefill\medskip
@@ -114,20 +114,13 @@
 \end{figure}} % ----- hanging indentation in a parbox: 
 \newcommand{\pbitem}[1]{\setlength{\parindent}{20pt}\par\hang\textindent{#1}} 
 \newcommand{\subpbitem}[1]{\setlength{\parindent}{20pt}\itemitem{#1}} 
-\newcommand{\instructions}{The CPD Programme consists of courses 
-which contain a large amount of technical content. In order for you 
-to benefit from these courses, a basic familiarity with programming 
-and object-oriented programming, in particular, is necessary. The 
-following test will be used to assess your skill level in this area.
+\newcommand{\instructions}{The PG Diploma consists of courses which contain a large amount of technical content. In order for you to be able to succeed at these courses, a basic familiarity with procedural and object-oriented programming is required. This test will be used to assess your level of competence in these areas. Your performance on this test will determine whether you will be accepted into the PG Diploma (in addition to the requirement of passing the three courses in CPD programme).
 
-Your performance in this test will determine whether you will be 
-accepted into the technical courses of the CPD Programme. You may 
-use any mainstream object-oriented language (for example, Java, C\#, 
+You may use any mainstream object-oriented language (for example, Java, C\#, 
 C++ and so on) in formulating answers which require source code. The 
-focus of this test is on assessing your understanding of basic OO 
-concepts and principles, and your ability to solve problems 
-programmatically --- not your knowledge of specific libraries or 
-language syntax. 
+focus of this test is on assessing your ability to solve problems 
+programmatically as well as assessing your understanding of basic object-oriented 
+concepts and principles.
 
 Note the following: \begin{itemize}
     \item State the programming language that you will use in answering the questions at the beginning of your answer book.
@@ -140,6 +133,3 @@ Note the following: \begin{itemize}
     \item Pencil may be used.
 \end{itemize} \end{itemize}} 
 \endinput
-
-
-

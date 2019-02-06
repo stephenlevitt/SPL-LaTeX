@@ -43,7 +43,9 @@
 \newcommand{\eehd}{\begin{minipage}[]{.2\textwidth}
 \setcounter{secnumdepth}{2}
 \ifthenelse{\boolean{monologo}}{\includegraphics[height=20mm]{ArcSchlLogo}}{\includegraphics[height=20mm]{eielogo}}
-\end{minipage}\begin{minipage}[]{.8\textwidth}
+\end{minipage}
+\vspace{1mm}
+\begin{minipage}[]{.8\textwidth}
 \noindent\Large\textsf\eehead\smallskip\zzzc
 \end{minipage}
 \smallskip\hrule\medskip}

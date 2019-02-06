@@ -59,7 +59,7 @@
 \RequirePackage{ifxetex} % for School logo font
 \ifxetex
     \RequirePackage{fontspec}
-    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.4,Color=003179, BoldFont = Helvetica Neue LT Std] %scale=1.5
+    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.1,Color=003179, BoldFont = Helvetica Neue LT Std] %scale=1.4
 \fi
 
 %---------------------------------------
@@ -73,26 +73,25 @@
 \@addtoreset{eno}{section}
 \newcommand{\eehead}{\textsf{University of the Witwatersrand, Johannesburg}\\
 \textit{School of Electrical and Information Engineering}}
+
 \newcommand{\eehd}{{\noindent\Large\textsf\eehead\smallskip\zzzc}%
 \smallskip\hrule\medskip}
 \newcommand{\zzzc}{}      % Course name generator
-\newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{\LARGE{#1}}}}
+\newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{#1}}}
+%\newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{\LARGE{#1}}}}
 \renewcommand{\@maketitle}{\newpage
 
 \ifxetex
     {\Large
-    \begin{tabular}{p{14mm}l} %17
+    \begin{tabular}{p{11mm}l} %14
     \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(12,19.5) %15,25
+    \begin{picture}(0,0)(15,19.5) %12,19.5
     \includegraphics[width=27mm]{ArcSchllogo} %33mm
     \end{picture}%
-    &{\schoolfont SCHOOL OF \textbf{ELECTRICAL} AND}\vspace{1mm}\\  %0.4mm
-    &{\schoolfont \textbf{INFORMATION ENGINEERING}}\vspace{0.6mm}\\ %1mm
-    &\textsf{\LARGE{University of the Witwatersrand}}\vspace{0.6mm}\\ %\LARGE
+    &{\schoolfont \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\vspace{0.6mm}\\ %1mm
+    &\textsf{University of the Witwatersrand, Johannesburg}\vspace{0.6mm}\\ %\LARGE
     &\smallskip\zzzc
     \end{tabular}
-    %\smallskip\hrulefill\medskip
-    %\smallskip
     }
 \else
     {\Large
