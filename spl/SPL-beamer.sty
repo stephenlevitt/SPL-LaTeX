@@ -175,3 +175,23 @@
 \setbeameroption{show notes on second screen} % Extend to second screen
 %------------------------------------------------------------------------------
 }
+
+%------------------------------------------------------------------------------
+%-------------------from SPL-shorthand-----------------------------------------
+
+\RequirePackage{relsize}                                    % for font sizes relative to the current font
+\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+
+%------------------------------------------------------------------------------
+%                                   Commands
+%------------------------------------------------------------------------------
+% typeset C++, maths symbols, urls, etc. nicely
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
+\newcommand{\SDIIwebsite}{\href{https://witseie.github.io/software-dev-2/}{website}\xspace}
+\newcommand{\sdII}{\url{https://witseie.github.io/software-dev-2/}}
+\newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
+\newcommand{\imagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\footnotesize Source: \url{#1}}}}

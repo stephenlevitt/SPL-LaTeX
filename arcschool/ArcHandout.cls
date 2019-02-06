@@ -88,8 +88,8 @@
     \begin{picture}(0,0)(15,19.5) %12,19.5
     \includegraphics[width=27mm]{ArcSchllogo} %33mm
     \end{picture}%
-    &{\schoolfont \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\vspace{0.6mm}\\ %1mm
-    &\textsf{University of the Witwatersrand, Johannesburg}\vspace{0.6mm}\\ %\LARGE
+    &{\schoolfont \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\vspace{0.5mm}\\ %0.1mm
+    &\textsf{University of the Witwatersrand, Johannesburg}\vspace{0.5mm}\\ %\LARGE
     &\smallskip\zzzc
     \end{tabular}
     }
