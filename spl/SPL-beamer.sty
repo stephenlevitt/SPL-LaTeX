@@ -87,7 +87,8 @@
 \definecolor{links}{HTML}{180F6D}%{0B0071}%{2A1B81}
 \hypersetup{colorlinks,linkcolor=,urlcolor=links}
 
-\RequirePackage{xspace}
+\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+\RequirePackage{relsize}                                    % for font sizes relative to the current font
 
 % path for diagrams and figures
 \graphicspath{{./Figures/}}
@@ -177,13 +178,7 @@
 }
 
 %------------------------------------------------------------------------------
-%-------------------from SPL-shorthand-----------------------------------------
-
-\RequirePackage{relsize}                                    % for font sizes relative to the current font
-\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
-
-%------------------------------------------------------------------------------
-%                                   Commands
+%                    Shorthand Commands (from SPL-shorthand)
 %------------------------------------------------------------------------------
 % typeset C++, maths symbols, urls, etc. nicely
 \protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
@@ -191,7 +186,6 @@
 \newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
 
 \newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
-\newcommand{\SDIIwebsite}{\href{https://witseie.github.io/software-dev-2/}{website}\xspace}
 \newcommand{\sdII}{\url{https://witseie.github.io/software-dev-2/}}
 \newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
 \newcommand{\imagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\footnotesize Source: \url{#1}}}}
