@@ -100,7 +100,7 @@
     \begin{picture}(0,0)(18,18)
     \includegraphics[width=25mm]{ArcSchllogo}
     \end{picture}%
-    &{\Large SCHOOL OF \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\\
+    &\textsf{SCHOOL OF ELECTRICAL AND INFORMATION ENGINEERING}\\
     &\textsf{University of the Witwatersrand, Johannesburg}\\
     &\smallskip\zzzc
     \end{tabular}
