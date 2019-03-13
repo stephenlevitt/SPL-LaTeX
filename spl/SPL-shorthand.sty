@@ -3,7 +3,6 @@
 \typeout{Document Style `SPL-shorthand.sty' <2018/07/14>}
 \typeout{Rev. 1.0.0}
 
-\RequirePackage{textcomp}                                   % Provides "true" copyright symbol and many others
 \RequirePackage{relsize}                                    % for font sizes relative to the current font
 \RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
 
@@ -11,11 +10,27 @@
 %                                   Commands
 %------------------------------------------------------------------------------
 % For use with Bitstream Charter
-\newcommand{\cpyright}{
-\vspace{5mm}
-\vfill \copyright \, \footnotesize Copyright SP Levitt, School of Electrical and Information Engineering.\\
-\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
-\hspace*{1.32em} \footnotesize \texttt{\currfilename}
+% \RequirePackage{textcomp}                                   % Provides "true" copyright symbol and many others
+% \newcommand{\cpyright}{
+% \vspace{5mm}
+% \vfill \copyright \, \footnotesize Copyright SP Levitt, School of Electrical and Information Engineering.\\
+% \hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
+% \hspace*{1.32em} \footnotesize \texttt{\currfilename}
+% }
+
+\DTMnewdatestyle{yearonly}{%
+  \renewcommand{\DTMdisplaydate}[4]{\number##1 }%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{yearonly}
+
+\newcommand{\cpyright}{%
+  \vspace*{5mm}%    
+  \vspace*{\fill}%
+  {\footnotesize
+    Copyright SP Levitt, Wits School of Electrical and Information Engineering.\\%
+    Version \version, \today \, (\texttt{\currfilename})\\ %
+  }
 }
 
 % typeset C++, maths symbols, urls, etc. nicely

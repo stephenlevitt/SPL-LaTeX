@@ -119,6 +119,7 @@
 \title{}\author{}\date{}  % default these to nothing
 \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
 \newcommand{\exercise}{\addtocounter{eno}{1}\subsubsection*{Exercise \thesection.\theeno}}
+\newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
 \newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
 \newcommand{\rhfit}[1]{

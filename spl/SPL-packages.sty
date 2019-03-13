@@ -15,26 +15,20 @@
 %- rework end rules according to stack overflow example
 %- use mdframed instead of framed, can also replace shabox with it
 %- look up missing explanation for listed packages
-%- fix copyright symbol?
-%- post problem with adforn using a MWE on tex exchange
-%- change all declarations to xparse format ?? see comments on xparse on tex exchange - may be worth eliminating?
 
 %------------------------------------------------------------------------------
 %                        Checks for good practice
 %   (see https://tex.stackexchange.com/questions/19264/techniques-and-packages-to-keep-up-with-good-practices?rq=1)
 %------------------------------------------------------------------------------
-\RequirePackage[l2tabu,orthodox]{nag}% Old habits die hard. All the same, there are
-                                     % commands, classes and packages which are
-                                     % outdated and superseded. nag provides routines
-                                     % to warn the user about the use of those.
-\RequirePackage{strict}                  % prevents using LaTeX's declarations as environments (stored in local tree - not part of the MikTeX package manager)
+\RequirePackage[l2tabu,orthodox]{nag}       % Old habits die hard. All the same, there are
+                                            % commands, classes and packages which are
+                                            % outdated and superseded. nag provides routines
+                                            % to warn the user about the use of those.
+\RequirePackage{strict}                     % prevents using LaTeX's declarations as environments (stored in local tree - not part of the MikTeX package manager)
 
 %------------------------------------------------------------------------------
 %                               General Packages
 %------------------------------------------------------------------------------
-%\RequirePackage[a4paper,bottom=26.6mm, textwidth=140mm, textheight=242mm, footskip=12mm]{geometry}
-%\setlength{\parskip}{2ex}%
-%\setlength{\parindent}{0em}%
 \RequirePackage[british]{babel}
 \RequirePackage{booktabs}                                   % nicer tables
 \RequirePackage{multirow}
@@ -42,10 +36,7 @@
 \RequirePackage{currfile}                                   % ascertain the file's name
 \RequirePackage{lastpage}                                   % determines the last page of the document
 \RequirePackage{fancyhdr}                                   % headers and footers
-%\RequirePackage[useregional]{datetime2}                     % date/time formats - redefines \today (datetime package is obsolete)
-%\DTMlangsetup{ord=raise,monthyearsep={,\space}}         % 10th March, 2016
-%\RequirePackage[useregional=numeric]{datetime2}             % 10/3/2016 (datetime package is obsolete)
-\RequirePackage{datetime2}             % 10/3/2016 (datetime package is obsolete)
+\RequirePackage{datetime2}                                  % format date and time, *has to load after the 'babel' package*
 \RequirePackage[square,comma,numbers,sort&compress]{natbib} % citations and references - Numerical Style
 \RequirePackage{bibentry}                                   % inline references (incl with natbib)
 \RequirePackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
@@ -56,15 +47,15 @@
 \RequirePackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
 \RequirePackage{graphicx}                                   % for including graphics
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
-\graphicspath{{./Figures/}}                             % path for all graphics files
+\graphicspath{{./Figures/}}                                 % path for all graphics files
 \RequirePackage{pdflscape}                                  % for landscape layout in pdf
 \RequirePackage{acronym}                                    % Nomenclature listing
 \RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
 \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
-%\RequirePackage{texnames}                                   % defines \LaTeX \BibTeX etc
+\RequirePackage{texnames}                                   % defines \LaTeX \BibTeX etc
 \RequirePackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
-%\RequirePackage{refcheck}                                  % highlights missing and unreferred to citations
+% \RequirePackage{refcheck}                                   % highlights missing and unreferred to citations
 
 %------------------------------------------------------------------------------
 %                      Handling XeLaTeX and PDFLaTeX Processing
@@ -76,7 +67,8 @@
     \setmonofont[Scale=0.9]{Bera Sans Mono} % for code listings beramono is used
     \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine for quotation marks
                                                                % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
-    %\RequirePackage{microtype}                                                               
+    \RequirePackage[verbose=silent]{microtype}                % character protusion and font expansion for better alignment at right margin; 
+                                                              % silence warnings about missing font characters                                                                 
 \else
     % assuming pdfLaTeX driver
     \RequirePackage{lmodern}
@@ -88,11 +80,9 @@
     \RequirePackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
 \fi
 
-%\definecolor{darkblue}{rgb}{0,0,0.5}                % 'red', 'green' and 'blue' are predefined
 \RequirePackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
     pdfauthor={SP Levitt},                          % remove to reuse author data
-    %linkbordercolor={green!60}                      % darkblue is defined above
     colorlinks,
     linkcolor={red!50!black},
     citecolor={green!50!black},
@@ -171,7 +161,6 @@
 % Based on:
 % https://tex.stackexchange.com/questions/181090/alignment-of-image-in-tcolorbox 
 % https://tex.stackexchange.com/questions/336201/vertical-highlight-of-a-paragraph
-
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins}
