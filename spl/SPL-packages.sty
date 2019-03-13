@@ -49,7 +49,7 @@
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
 \graphicspath{{./Figures/}}                                 % path for all graphics files
 \RequirePackage{pdflscape}                                  % for landscape layout in pdf
-\RequirePackage{acronym}                                    % Nomenclature listing
+\RequirePackage{acronym}                                    % nomenclature listing
 \RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
 \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
@@ -63,26 +63,25 @@
 \RequirePackage{ifxetex}
 \ifxetex
     \RequirePackage{fontspec}
-    \setmainfont[Ligatures=TeX]{Bitstream Charter} % [Ligatures=TeX] required for smart quotes, m-dashes etc.
-    \setmonofont[Scale=0.9]{Bera Sans Mono} % for code listings beramono is used
-    \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine for quotation marks
-                                                               % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
-    \RequirePackage[verbose=silent]{microtype}                % character protusion and font expansion for better alignment at right margin; 
-                                                              % silence warnings about missing font characters                                                                 
-\else
-    % assuming pdfLaTeX driver
+    \setmainfont[Ligatures=TeX]{Bitstream Charter}              % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+    \setmonofont[Scale=0.9]{Bera Sans Mono}                     % for code listings beramono is used
+    \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O}  % selects Libertine for quotation marks
+                                                                % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+    \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin; 
+                                                                % silence warnings about missing font characters                                                                 
+\else % assuming pdfLaTeX driver
     \RequirePackage{lmodern}
-    \RequirePackage[bitstream-charter]{mathdesign} % main font for document text + maths, supports font expansion (see microtype)
+    \RequirePackage[bitstream-charter]{mathdesign}              % main font for document text + maths, supports font expansion (see microtype)
     \RequirePackage[utf8]{inputenc}
     \RequirePackage[T1]{fontenc}
     \RequirePackage[scaled]{beramono}                           % for code listings beramono is used
-    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}} % selects Libertine as the quote font
+    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
     \RequirePackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
 \fi
 
-\RequirePackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
+\RequirePackage[pdfusetitle]{hyperref}                          % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
-    pdfauthor={SP Levitt},                          % remove to reuse author data
+    pdfauthor={SP Levitt},                                      % remove to reuse author data
     colorlinks,
     linkcolor={red!50!black},
     citecolor={green!50!black},
@@ -135,8 +134,6 @@
 %
 %------------------------------------------------------------------------------
 
-% adforn ornaments cannot be found so settling for fourier ornaments
-%\RequirePackage{adforn}
 \RequirePackage{fourier-orns}
 
 % Nice ending for sections and subsections
