@@ -55,7 +55,14 @@ escapechar=\`}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
 
 % styles for slides
-\lstdefinestyle{slide}{style=base, style=coloured, escapeinside={(*@}{@*)}, escapechar=\$}
+\lstdefinestyle{slide}{
+		style=base, 
+		style=coloured, 
+		escapeinside={(*@}{@*)}, 
+		escapechar=\$,
+    moredelim=**[is][{\btHL[fill=yellow]}]{`}{`},
+    moredelim=**[is][{\btHL[name=X,draw=red,solid,thick]}]{@}{@},
+}
 \lstdefinestyle{numbered-slide}{style=slide, numbers=left, numberstyle=\tiny}
 
 % styles for MCQ
@@ -71,5 +78,40 @@ escapechar=\`}
 }%
 \vspace{2mm}
 }
+
+% code highlighting styles
+% from https://tex.stackexchange.com/questions/15237/highlight-text-in-code-listing-while-also-keeping-syntax-highlighting/
+
+% to remove space being highlighted at the begin of a line, escape to LaTeX
+% just before the highlighting starts, eg:
+% // class member initialisation
+% D::D(int a, int b):
+%   $$`m{a, b}` 
+% {   
+%     // ...
+% };
+
+
+\makeatletter
+\newenvironment{btHighlight}[1][]
+{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
+{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+
+\newcommand\btHL[1][]{%
+  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
+}
+\def\bt@HL@endenv{%
+  \end{btHighlight}%   
+  \egroup
+}
+\newcommand{\bt@HL@box}[2][]{%
+  \tikz[#1]{%
+    \pgfpathrectangle{\pgfpoint{1pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
+    \pgfusepath{use as bounding box}%
+    \node[anchor=base west, outer xsep = 0pt, inner xsep=1pt, inner ysep=-1pt, rounded corners=3pt, minimum height=0pt,#1]{\raisebox{1pt}{\strut}\strut\usebox{#2}};
+  }%
+}
+\makeatother
+
 
 %------------------------------------------------------------------------------
