@@ -148,11 +148,11 @@
 %------------------------------------------------------------------------------
 % For realistic looking highlighter (will not handle line breaks)
 % from: http://tex.stackexchange.com/questions/5959/cool-text-highlighting-in-latex
-\newcommand\hl[1]{%
-    \tikz[baseline,%
-      decoration={random steps,amplitude=1pt,segment length=15pt},%
-      outer sep=-15pt, inner sep = 0pt%
-    ]%
+\newcommand\hilite[1]{%
+   \tikz[baseline,%
+   decoration={random steps,amplitude=1pt,segment length=15pt},%
+   outer sep=-15pt, inner sep = 0pt%
+   ]%
    \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
 }%
 
@@ -189,3 +189,5 @@
 \newcommand{\sdII}{\url{https://witseie.github.io/software-dev-2/}}
 \newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
 \newcommand{\imagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\footnotesize Source: \url{#1}}}}
+\newcommand{\smallimagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\tiny Source: \url{#1}}}}
+
