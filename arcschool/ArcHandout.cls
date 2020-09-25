@@ -70,6 +70,7 @@
 
 \newcounter{qno}
 \newcounter{eno}
+\newcounter{chno}
 \@addtoreset{eno}{section}
 \newcommand{\eehead}{\textsf{University of the Witwatersrand, Johannesburg}\\
 \textit{School of Electrical and Information Engineering}}
@@ -80,48 +81,52 @@
 \newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{#1}}}
 %\newcommand{\course}[1]{\renewcommand{\zzzc}{\textsf{\LARGE{#1}}}}
 \renewcommand{\@maketitle}{\newpage
-
 \ifxetex
-    {\Large
+{\Large
     \begin{tabular}{p{11mm}l} %14
-    \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(15,19.5) %12,19.5
-    \includegraphics[width=27mm]{ArcSchllogo} %33mm
-    \end{picture}%
-    &{\schoolfont \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\vspace{0.5mm}\\ %0.1mm
-    &\textsf{University of the Witwatersrand, Johannesburg}\vspace{0.5mm}\\ %\LARGE
-    &\smallskip\zzzc
+    
+        \setlength{\unitlength}{1mm}
+        \begin{picture}(0,0)(15,19.5) %12,19.5
+            \includegraphics[width=27mm]{ArcSchllogo} %33mm
+        \end{picture}%
+        &{\schoolfont \textbf{ELECTRICAL} AND \textbf{INFORMATION ENGINEERING}}\vspace{0.5mm}\\ %0.1mm
+        &\textsf{University of the Witwatersrand, Johannesburg}\vspace{0.5mm}\\ %\LARGE
+        &\smallskip\zzzc
     \end{tabular}
     }
-\else
+    \else
     {\Large
     \begin{tabular}{p{5.5mm}l}
-    \setlength{\unitlength}{1mm}
-    \begin{picture}(0,0)(18,18)
-    \includegraphics[width=25mm]{ArcSchllogo}
+        \setlength{\unitlength}{1mm}
+        \begin{picture}(0,0)(18,18)
+            \includegraphics[width=25mm]{ArcSchllogo}
     \end{picture}%
     &\textsf{SCHOOL OF ELECTRICAL AND INFORMATION ENGINEERING}\\
     &\textsf{University of the Witwatersrand, Johannesburg}\\
     &\smallskip\zzzc
     \end{tabular}
     }
-\fi
-\vspace{4mm}
-\begin{center}
-{\Large\textbf \@title \par}
-{\large \lineskip .5em \begin{tabular}[t]{c}\@author\end{tabular}\par}
-\vskip 1em {\large \@date} 
-\vspace{-8mm}
-\end{center}}
+    \fi
+    \vspace{4mm}
+    \begin{center}
+        {\Large\textbf \@title \par}
+    {\large \lineskip .5em \begin{tabular}[t]{c}\@author\end{tabular}\par}
+        \vskip 1em {\large \@date} 
+        \vspace{-8mm}
+    \end{center}
+    }
+    
+    \newcommand{\makeheads}{\hfuzz=\maxdimen\maketitle\hfuzz=0.1pt} % \hfuzz is to remove overfull box warnings for the header
+    \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
+    \title{}\author{}\date{}  % default these to nothing
+    \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
+    \newcommand{\exercise}{\addtocounter{eno}{1}\subsubsection*{Exercise \thesection.\theeno}}
+    \newcommand{\challenge}{\addtocounter{chno}{1}\subsection*{Challenge \thechno}}
 
-\newcommand{\makeheads}{\maketitle}
-\newcommand{\omithead}{\renewcommand{\@maketitle}{}}
-\title{}\author{}\date{}  % default these to nothing
-\newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
-\newcommand{\exercise}{\addtocounter{eno}{1}\subsubsection*{Exercise \thesection.\theeno}}
-\newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
-\newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
-\newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
+    \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
+    \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
+    \newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
+    
 \newcommand{\rhfit}[1]{
 {\unskip\nobreak\hfil\penalty50\hskip2em\vadjust{}\nobreak\hfil
 {#1}\parfillskip=0pt \finalhyphendemerits=0 \par}}
