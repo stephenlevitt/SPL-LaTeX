@@ -39,6 +39,11 @@
 \RequirePackage{lastpage}                                   % determines the last page of the document
 \RequirePackage{fancyhdr}                                   % headers and footers
 \RequirePackage{datetime2}                                  % format date and time, *has to load after the 'babel' package*
+\DTMnewdatestyle{yearonly}{%
+  \renewcommand{\DTMdisplaydate}[4]{\number##1 }%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{yearonly}
 \RequirePackage[square,comma,numbers,sort&compress]{natbib} % citations and references - Numerical Style
 \RequirePackage{bibentry}                                   % inline references (incl with natbib)
 \RequirePackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
@@ -173,10 +178,11 @@
 \newtcolorbox{Sidebar}{
   breakable,  % can break across pages
   enhanced,   % skin
-  beforeafter skip=3mm, % space above and below bounding box
+  beforeafter skip=6mm, % space above and below bounding box
+  % after skip=6mm, % space below bounding box
   right=4mm,  % right margin of bounding box to text
   top=-2pt,    % top of bounding box to text
-  bottom=2pt, % bottom of bounding box to text
+  bottom=0pt, % bottom of bounding box to text
   colback=white, % background colour of bounding box
   width=\textwidth,
   grow to left by=11.5mm, % modify left margin, without moving right margin
