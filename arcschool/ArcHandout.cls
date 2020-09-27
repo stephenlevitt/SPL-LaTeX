@@ -124,8 +124,8 @@
     \newcommand{\challenge}{\addtocounter{chno}{1}\subsection*{Challenge \thechno}}
 
     \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
-    \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
-    \newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
+    % \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
+    % \newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
     
 \newcommand{\rhfit}[1]{
 {\unskip\nobreak\hfil\penalty50\hskip2em\vadjust{}\nobreak\hfil
