@@ -120,7 +120,7 @@
     \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
     \title{}\author{}\date{}  % default these to nothing
     \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
-    \newcommand{\exercise}{\addtocounter{eno}{1}\subsubsection*{Exercise \thesection.\theeno}}
+    \newcommand{\exercise}{\refstepcounter{eno}\subsubsection*{Exercise \thesection.\theeno}}
     \newcommand{\challenge}{\addtocounter{chno}{1}\subsection*{Challenge \thechno}}
 
     \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
