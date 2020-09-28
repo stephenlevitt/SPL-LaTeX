@@ -62,6 +62,8 @@
     \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.1,Color=003179, BoldFont = Helvetica Neue LT Std] %scale=1.4
 \fi
 
+\RequirePackage[svgnames]{xcolor}                           % for defining custom colours
+\definecolor{SchoolLogoBlue}{HTML}{1A417A}
 %---------------------------------------
 
 \setlength{\parskip}{\medskipamount}
@@ -120,7 +122,7 @@
     \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
     \title{}\author{}\date{}  % default these to nothing
     \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
-    \newcommand{\exercise}{\refstepcounter{eno}\subsubsection*{Exercise \thesection.\theeno}}
+    \newcommand{\exercise}{\refstepcounter{eno}\textcolor{SchoolLogoBlue}{\subsubsection*{Exercise \thesection.\theeno}}}  % \textcolor{blue!60!black}
     \newcommand{\challenge}{\addtocounter{chno}{1}\subsection*{Challenge \thechno}}
 
     \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}

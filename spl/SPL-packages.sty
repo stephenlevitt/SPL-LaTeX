@@ -53,7 +53,6 @@
 \RequirePackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
 \RequirePackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
 \RequirePackage{graphicx}                                   % for including graphics
-\RequirePackage[svgnames]{xcolor}                           % for defining custom colours
 \graphicspath{{./Figures/}}                                 % path for all graphics files
 \RequirePackage{pdflscape}                                  % for landscape layout in pdf
 \RequirePackage{acronym}                                    % nomenclature listing
@@ -87,12 +86,15 @@
 \fi
 
 \RequirePackage[pdfusetitle]{hyperref}                          % for hyperlinks in PDF (link colours defined below)
+\definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
+\definecolor{BlueGrotto}{HTML}{0E86D4}
+
 \hypersetup{
     pdfauthor={SP Levitt},                                      % remove to reuse author data
     colorlinks,
     linkcolor={red!50!black},
     citecolor={green!50!black},
-    urlcolor={blue!80!black}
+    urlcolor={BlueGrotto}
 }%
 
 
