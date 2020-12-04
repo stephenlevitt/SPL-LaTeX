@@ -100,7 +100,7 @@
 \newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
 \newcommand{\figref}[1]{Figure~\ref{#1}}
 \newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
-\newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} }
+% \newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} }
 
 
 % Macro for easy inclusion of figures
@@ -156,5 +156,48 @@
 \addtolength{\@rcwhere}{-\@spwhere}
 \addtolength{\@rcwhere}{-\@eqwhere}
 \addtolength{\@rcwhere}{-3\tabcolsep}
+
+% \RequirePackage{SPL-git}
+%------------------------------------------------------------------------------
+%                      Definition of Sidebar environment
+%------------------------------------------------------------------------------
+
+% Based on:
+% https://tex.stackexchange.com/questions/181090/alignment-of-image-in-tcolorbox 
+% https://tex.stackexchange.com/questions/336201/vertical-highlight-of-a-paragraph
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins}
+\tcbuselibrary{breakable}
+
+% remove tikz error: https://tex.stackexchange.com/questions/165929/semiverbatim-with-tikz-in-beamer 
+ \makeatletter
+ \global\let\tikz@ensure@dollar@catcode=\relax
+ \makeatother
+
+\newtcolorbox{Sidebar}{
+  breakable,  % can break across pages
+  enhanced,   % skin
+  beforeafter skip=6mm, % space above and below bounding box
+  % after skip=6mm, % space below bounding box
+  right=4mm,  % right margin of bounding box to text
+  top=-2pt,    % top of bounding box to text
+  bottom=0pt, % bottom of bounding box to text
+  colback=white, % background colour of bounding box
+  width=\textwidth,
+  grow to left by=11.5mm, % modify left margin, without moving right margin
+  %show bounding box, % display bounding box
+  boxsep=4pt,
+  boxrule=0pt,frame hidden,
+  borderline west={.3mm}{12mm}{black}, % colour left bounding box margin
+  fontupper=\small, % change font in upper box (here it is the only box)
+  leftupper=1.5cm, % space from left-hand box margin to text
+  overlay={ % overlay GitHub logo
+    \node[anchor=north west] 
+      at ([xshift=4pt,yshift=4pt]frame.north west)
+       {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
+}
+
+%------------------------------------------------------------------------------
 
 % end of file - SPL-exam.sty
