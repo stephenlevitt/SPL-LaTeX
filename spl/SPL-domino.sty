@@ -1,0 +1,90 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-domino}[For typesetting domino games]
+\typeout{Document Style `SPL-domino.sty'}
+
+% from https://tex.stackexchange.com/questions/267255/domino-tile-images-latex
+
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes.multipart,positioning,shadows,chains,scopes}
+
+\newlength\DominoWd
+\setlength\DominoWd{1cm}
+\newsavebox\mybox
+
+\newcommand\PlaceDot[2]{
+\fill[white] ([shift={(#1\DominoWd,#2\DominoWd)}]0,0) circle [radius=0.08\DominoWd];
+}
+
+\newcommand\domino[1]{%
+\tikz[overlay]
+{
+\ifcase#1\relax
+\or
+\PlaceDot{0}{0}
+\or
+\PlaceDot{-0.3}{0.3}\PlaceDot{0.3}{-0.3}
+\or
+\PlaceDot{-0.3}{0.3}\PlaceDot{0}{0}\PlaceDot{0.3}{-0.3}
+\or
+\PlaceDot{-0.3}{0.3}\PlaceDot{0.3}{0.3}\PlaceDot{-0.3}{-0.3}\PlaceDot{0.3}{-0.3}
+\or
+\PlaceDot{-0.3}{0.3}\PlaceDot{0.3}{0.3}\PlaceDot{0}{0}\PlaceDot{0.3}{-0.3}\PlaceDot{-0.3}{-0.3}
+\or
+\PlaceDot{-0.3}{0.3}\PlaceDot{0.3}{0.3}\PlaceDot{-0.3}{0}\PlaceDot{0.3}{0}\PlaceDot{0.3}{-0.3}\PlaceDot{-0.3}{-0.3}
+\fi}%
+}
+
+\newcounter{domtile}
+
+\newcommand\Domino[3][]{%
+\stepcounter{domtile}
+\node[
+  rectangle split,
+  rectangle split parts=2,
+  fill=black,
+  text width=\DominoWd,
+  align=center,
+  text=white,
+  outer sep=0pt,
+  inner sep=0pt,
+  %drop shadow={black!20,opacity=1},
+  rounded corners=0.13\DominoWd,
+  #1
+  ] 
+  (dom\thedomtile)
+  {%
+    \rule[-0.5\DominoWd]{0pt}{\DominoWd}\domino{#2}%
+    \nodepart{two}\rule[-0.5\DominoWd]{0pt}{\DominoWd}\domino{#3}%
+  };
+\draw[white!80!black,shorten >= 0.11\DominoWd,shorten <= 0.11\DominoWd]
+  (dom\thedomtile.west) -- (dom\thedomtile.east);
+}
+
+\newenvironment{dominogame}[1][]
+  {\begin{tikzpicture}[#1]}
+  {\end{tikzpicture}}
+
+% \begin{document}
+
+% \begin{dominogame}[start chain=1 going above,node distance=1pt,every node/.append style={on chain=1}]
+% \Domino[shift={(\DominoWd,0.5\DominoWd)},rotate=90]{6}{6}
+% \Domino[shift={(\DominoWd,0.5\DominoWd)}]{5}{6}
+% \Domino{2}{5}
+% \Domino{3}{2}
+% \Domino[shift={(0,2\DominoWd+1.5pt)},continue chain=1 going left,rotate=90]{1}{3}
+% \Domino[shift={(-2\DominoWd-1pt,\DominoWd)},rotate=90]{5}{1}
+% \Domino[shift={(-1.5\DominoWd-1pt,-2.5\DominoWd-1pt)},continue chain=1 going below,rotate=180]{0}{5}
+% \Domino{5}{0}
+% \Domino[shift={(-\DominoWd,-0.5\DominoWd)},rotate=90]{0}{0}
+% \Domino[shift={(-\DominoWd,-0.5\DominoWd)}]{0}{3}
+% \Domino{3}{6}
+% \Domino{6}{1}
+% \Domino[shift={(-\DominoWd,-0.5\DominoWd)},rotate=90]{1}{1}
+% {
+% [start chain=2 going below,every node/.append style={on chain=2}]
+% \Domino[shift={(0pt,-0.5\DominoWd)},at=(dom1)]{6}{4}
+% \Domino[shift={(0pt,-2\DominoWd-1.5pt)},continue chain=2 going right,rotate=90]{4}{0}
+% }
+% \end{dominogame}
+
+% \end{document}
