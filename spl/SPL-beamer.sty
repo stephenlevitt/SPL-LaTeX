@@ -156,6 +156,57 @@
    \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
 }%
 
+% define a keystroke, use as follows:
+% To generate a Doxygen-style comment in CodeLite: \textbf{\texttt{/**}} \keystroke{\, Enter \,}
+\newcommand*\keystroke[1]{%
+\tikz[baseline=(key.base)]
+   \node[%
+   draw,
+   fill=white,
+   drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+   rectangle,
+   rounded corners=2pt,
+   inner sep=1pt,
+   line width=0.5pt,
+   font=\scriptsize\sffamily
+   ](key) {#1\strut}
+;
+}
+
+% from https://tex.stackexchange.com/questions/193975/highlight-only-current-subsection-hide-subsections-of-other-sections
+\newcommand{\showcurrentsubsection}[1]
+{
+   \AtBeginSubsection[]
+   {
+      \begin{frame}
+      \frametitle{#1}
+      \tableofcontents
+      [
+         currentsection,
+         currentsubsection,
+         subsectionstyle=show/shaded/hide
+      ]
+      \end{frame}
+   }
+}
+
+% from https://tex.stackexchange.com/questions/193975/highlight-only-current-subsection-hide-subsections-of-other-sections
+\newcommand{\showcurrentsection}[1]
+{
+   \AtBeginSection[]
+   {
+      \begin{frame}
+      \frametitle{#1}
+      \tableofcontents
+      [
+         currentsection,
+         % currentsubsection,
+         % subsectionstyle=show/shaded/hide
+      ]
+      \end{frame}
+   }
+}
+
 
 %------------------------------------------------------------------------------
 %      Put notes on computer screen and project slide (use with Pympress)

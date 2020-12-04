@@ -83,16 +83,17 @@
   \hbox{%
 
 \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
-   \usebeamerfont{author in head/foot}
-   \hspace*{2ex}\insertshorttitle  % insert title in footer
-   \ifx\insertsectionhead\empty
-   \else
-      \, : \insertsectionhead           % insert current section if defined
-       \ifx\insertsubsection\empty
-       \else
-          \, : \insertsubsection           % insert current section if defined
-        \fi
-   \fi
+  %  put section: subsection in the footer (bottom-left)
+  %  \usebeamerfont{author in head/foot}
+  %  \hspace*{2ex}\insertshorttitle  % insert title in footer
+  %  \ifx\insertsectionhead\empty
+  %  \else
+  %     \, : \insertsectionhead           % insert current section if defined
+  %      \ifx\insertsubsection\empty
+  %      \else
+  %         \, : \insertsubsection           % insert current section if defined
+  %       \fi
+  %  \fi
  \end{beamercolorbox}%
 
    \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
