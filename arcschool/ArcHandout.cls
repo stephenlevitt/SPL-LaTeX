@@ -66,8 +66,8 @@
         vvarbb,
         scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
                                                 % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
-    \usepackage[T1]{fontenc}
-    \RequirePackage{libertine}                  % https://tex.stackexchange.com/questions/105970/font-problem-with-xelatex
+    % \usepackage[T1]{fontenc}
+    % \RequirePackage{libertine}                  % https://tex.stackexchange.com/questions/105970/font-problem-with-xelatex
     \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
 
     % \setmainfont[                             % when using XeLaTeX to set the Libertine font
@@ -97,7 +97,9 @@
     % \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O}  % LaTeX font which includes an OTF version, use for quotation marks
                                                                 % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
 
-    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
+    % \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
+    \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif} % selects Libertine as the quote font
+
 
     \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
                                                                 % silence warnings about missing font characters
