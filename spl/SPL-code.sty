@@ -6,11 +6,10 @@
 % Revision history
 % 1.0.0 (2015/01/14) - extracted source code typesetting packages, commands etc from SPL-packages
 
-% Bera Mono (a monospaced, san serif font) is a good choice for code listings;
-% font expansion not available (see microtype)
+
 
 \RequirePackage{listings}
-\lstset{inputpath=code}
+% \lstset{inputpath=../code}
 
 % colour definitions for code listings
 \RequirePackage{color}
@@ -58,9 +57,9 @@ escapechar=\`}
 
 % styles for slides
 \lstdefinestyle{slide}{
-		style=base, 
-		style=coloured, 
-		escapeinside={(*@}{@*)}, 
+		style=base,
+		style=coloured,
+		escapeinside={(*@}{@*)},
 		escapechar=\$,
     moredelim=**[is][{\btHL[fill=yellow]}]{`}{`}, % yellow highlight
     moredelim=**[is][{\btHL[name=X,draw=red,solid,thick]}]{@}{@}, % red border
@@ -88,8 +87,8 @@ escapechar=\`}
 % just before the highlighting starts, eg:
 % // class member initialisation
 % D::D(int a, int b):
-%   $$`m{a, b}` 
-% {   
+%   $$`m{a, b}`
+% {
 %     // ...
 % };
 
@@ -103,7 +102,7 @@ escapechar=\`}
   \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
 }
 \def\bt@HL@endenv{%
-  \end{btHighlight}%   
+  \end{btHighlight}%
   \egroup
 }
 \newcommand{\bt@HL@box}[2][]{%

@@ -54,13 +54,65 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \LoadClass{article}
+
 %---------------------------------------
 
-\RequirePackage{ifxetex} % for School logo font
+\usepackage{anyfontsize}                        % remove error messages re: font sizes
+
+\RequirePackage{ifxetex}
 \ifxetex
-    \RequirePackage{fontspec}
-    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[Scale=1.1,Color=003179, BoldFont = Helvetica Neue LT Std] %scale=1.4
+    \RequirePackage[uprightscript,
+        charter,
+        vvarbb,
+        scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+                                                % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
+    \usepackage[T1]{fontenc}
+    \RequirePackage{libertine}                  % https://tex.stackexchange.com/questions/105970/font-problem-with-xelatex
+    \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
+
+    % \setmainfont[
+    %     Ligatures = TeX,
+    %     Extension = .otf,
+    %     SmallCapsFeatures={Letters=SmallCaps},
+    %     UprightFont    = *_R,
+    %     ItalicFont     = *_RI,
+    %     BoldFont       = *_RB,
+    %     BoldItalicFont = *_RBI,
+    % ]{LinLibertine}
+
+    \setmainfont[
+        Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+    ]{XCharter}                                                 % LaTeX font, includes OTF version for use with xelatex:
+                                                                % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
+    \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[           % Install as a Windows font, use to typeset the school name in the title bar
+        Scale=1.1,
+        Color=003179,
+        BoldFont = Helvetica Neue LT Std
+    ]
+
+    \setmonofont[
+        Scale=0.85,
+    ]{Bitstream Vera Sans Mono}                                 % Install as a Windows font, for code listings - san serif, monospaced;
+                                                                % scaled down slightly because when inlined it appears larger than the main font
+    % \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O}  % LaTeX font which includes an OTF version, use for quotation marks
+                                                                % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+
+    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
+
+    \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
+                                                                % silence warnings about missing font characters
+\else % assuming pdfLaTeX driver
+    \pdfminorversion=6                                          % Produce PDF version 1.6 (removes errors when including PDF 1.6 images):
+                                                                % https://tex.stackexchange.com/questions/202300/options-controlling-pdf-output
+    \RequirePackage{lmodern}                                    % contains some high quality glyphs, allows fonts of arbitrary sizes
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{XCharter}                                   % main font for document text, supports font expansion (see microtype)
+    \RequirePackage[uprightscript,charter,vvarbb,scaled=1.05]{newtxmath}  % maths font: https://texdoc.org/serve/xcharter-doc.pdf/0
+    \RequirePackage[scaled=0.85]{beramono}                      % for code listings, LaTeX Type 1 font
+    \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
+    \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin
 \fi
+%---------------------------------------
 
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
 \definecolor{SchoolLogoBlue}{HTML}{1A417A}
@@ -86,7 +138,7 @@
 \ifxetex
 {\Large
     \begin{tabular}{p{11mm}l} %14
-    
+
         \setlength{\unitlength}{1mm}
         \begin{picture}(0,0)(15,19.5) %12,19.5
             \includegraphics[width=27mm]{ArcSchllogo} %33mm
@@ -113,11 +165,11 @@
     \begin{center}
         {\Large\textbf \@title \par}
     {\large \lineskip .5em \begin{tabular}[t]{c}\@author\end{tabular}\par}
-        \vskip 1em {\large \@date} 
+        \vskip 1em {\large \@date}
         \vspace{-8mm}
     \end{center}
     }
-    
+
     \newcommand{\makeheads}{\hfuzz=\maxdimen\maketitle\hfuzz=0.1pt} % \hfuzz is to remove overfull box warnings for the header
     \newcommand{\omithead}{\renewcommand{\@maketitle}{}}
     \title{}\author{}\date{}  % default these to nothing
@@ -128,7 +180,7 @@
     \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
     % \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
     % \newcommand{\guideline}{\addtocounter{eno}{1}\subsubsection*{Guideline \thesection.\theeno}}
-    
+
 \newcommand{\rhfit}[1]{
 {\unskip\nobreak\hfil\penalty50\hskip2em\vadjust{}\nobreak\hfil
 {#1}\parfillskip=0pt \finalhyphendemerits=0 \par}}
