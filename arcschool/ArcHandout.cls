@@ -70,7 +70,7 @@
     \RequirePackage{libertine}                  % https://tex.stackexchange.com/questions/105970/font-problem-with-xelatex
     \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
 
-    % \setmainfont[
+    % \setmainfont[                             % when using XeLaTeX to set the Libertine font
     %     Ligatures = TeX,
     %     Extension = .otf,
     %     SmallCapsFeatures={Letters=SmallCaps},
