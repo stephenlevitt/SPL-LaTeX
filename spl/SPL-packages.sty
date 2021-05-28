@@ -183,13 +183,14 @@
 \RequirePackage{framed}
 
 % Commands for the quotes
-\newcommand*\quotesize{60} % if quote size changes, need a way to make shifts relative
-\newcommand*{\openquote}
+\newfontfamily\quotationfont[Ligatures=TeX]{Libertinus Serif}
+\newcommand*\quotemarksize{60} % if quote size changes, need a way to make shifts relative
+\newcommand*{\openquotation}
    {\tikz[remember picture,overlay,xshift=-4ex,yshift=-2.5ex]
-   \node (OQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont``};\kern0pt}
-\newcommand*{\closequote}
+   \node (OQ) {\quotationfont\fontsize{\quotemarksize}{\quotemarksize}\selectfont``};\kern0pt}
+\newcommand*{\closequotation}
   {\tikz[remember picture,overlay,xshift=4ex,yshift=-5pt]
-   \node (CQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont''};}
+   \node (CQ) {\quotationfont\fontsize{\quotemarksize}{\quotemarksize}\selectfont''};}
 
 % select a colour for the shading
 \colorlet{shadecolor}{GhostWhite}
@@ -200,10 +201,10 @@
 {
     \begin{snugshade}
     \begin{quote}
-    \openquote
+    \openquotation
 }
 {
-    \hfill\closequote
+    \hfill\closequotation
     \vskip 1.5mm\hspace{95mm} --- \emph{#1}
     \end{quote}
     \end{snugshade}

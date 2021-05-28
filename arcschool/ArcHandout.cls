@@ -97,7 +97,7 @@
     % \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O}  % LaTeX font which includes an OTF version, use for quotation marks
                                                                 % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
 
-    \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif}   % selects Libertine as the quote font:
+    % \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif}   % selects Libertine as the quote font:
                                                                 % https://tex.stackexchange.com/questions/484435/linux-libertine-font-cannot-be-found
 
 
