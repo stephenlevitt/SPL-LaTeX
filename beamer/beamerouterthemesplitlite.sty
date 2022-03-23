@@ -84,8 +84,22 @@
 
 \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{author in head/foot}%
   %  put section: subsection in the footer (bottom-left)
-  %  \usebeamerfont{author in head/foot}
-  %  \hspace*{2ex}\insertshorttitle  % insert title in footer
+  \usebeamerfont{author in head/foot}
+  % \hspace*{2ex}\insertshorttitle  % insert title in footer
+  % \hspace*{2ex}\insertsection  % insert section in footer
+
+  % insert the title of the most deeply nested section in the footer
+  \ifx\insertsubsection\empty
+    \ifx\insertsectionhead\empty      % no footer if both subsection and section are empty
+      \else
+        \, \insertsectionhead           % insert section if defined and subsection undefined
+    \fi
+  \else
+    \, \insertsubsection           % insert subsection if defined
+  \fi
+
+
+
   %  \ifx\insertsectionhead\empty
   %  \else
   %     \, : \insertsectionhead           % insert current section if defined
@@ -94,14 +108,13 @@
   %         \, : \insertsubsection           % insert current section if defined
   %       \fi
   %  \fi
- \end{beamercolorbox}%
+\end{beamercolorbox}%
 
-   \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+\begin{beamercolorbox}[wd=.15\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
     \usebeamerfont{title in head/foot}
     \insertframenumber{} / \inserttotalframenumber
-    %\insertsection
-  \end{beamercolorbox}}%
-  \vskip0pt%
+\end{beamercolorbox}}%
+\vskip0pt%
 }
 
 \mode

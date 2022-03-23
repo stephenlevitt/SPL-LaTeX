@@ -29,14 +29,57 @@
 %------------------------------------------------------------------------------
 %                 Font Selection (requires XeLaTeX or LuaTeX
 %------------------------------------------------------------------------------
+% \RequireXeTeX % code listings font scales better with XeTeX but pdfLaTeX can be used as well
+% \RequirePackage{fontspec}
+% \setmonofont{Bitstream Vera Sans Mono}[Scale=0.9] % for code listings beramono is used
+% \newfontfamily\quotefont{Linux Libertine O}[Ligatures=TeX] % selects Libertine for quotation marks
+%                                                            % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
+% %\setsansfont{Gigi}  % to change the main font that beamer uses (the sans font)
+% \newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans} % a tiny version of the main beamer font
+%                                                       % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+
+%---------------------------------------
+
+\usepackage{anyfontsize}                        % remove error messages re: font sizes
+
+\RequirePackage{ifxetex}
 \RequireXeTeX % code listings font scales better with XeTeX but pdfLaTeX can be used as well
-\RequirePackage{fontspec}
-\setmonofont{Bitstream Vera Sans Mono}[Scale=0.9] % for code listings beramono is used
-\newfontfamily\quotefont{Linux Libertine O}[Ligatures=TeX] % selects Libertine for quotation marks
-                                                           % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
-%\setsansfont{Gigi}  % to change the main font that beamer uses (the sans font)
-\newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans} % a tiny version of the main beamer font
-                                                      % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+
+\RequirePackage[uprightscript,
+   charter,
+   vvarbb,
+   scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+                                          % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
+\RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
+
+\setmainfont[
+   Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+]{XCharter}                                                 % LaTeX font, includes OTF version for use with xelatex:
+                                                            % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
+\newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[           % Install as a Windows font, use to typeset the school name in the title bar
+   Scale=1.1,
+   Color=003179,
+   BoldFont = Helvetica Neue LT Std
+]
+
+\setmonofont[
+   Scale=0.85,
+]{Bitstream Vera Sans Mono}                                 % Install as a Windows font, for code listings - san serif, monospaced;
+                                                            % scaled down slightly because when inlined it appears larger than the main font
+
+\newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans}       % a tiny version of the main beamer font
+                                                            % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+
+                                                            \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
+                                                            % silence warnings about missing font characters
+
+\newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif} % selects Libertine as the quote font
+
+%---------------------------------------
+
+
+
+
 %------------------------------------------------------------------------------
 %                               Title Page
 %------------------------------------------------------------------------------
@@ -207,25 +250,32 @@
    }
 }
 
+% When creating an empty section to have an empty slide footer, hide the associated bookmark in the pdf file
+% From: https://tex.stackexchange.com/questions/449667/how-to-remove-a-specific-section-from-bookmarks
+\newcommand{\hiddensection}{
+   \hypersetup{bookmarksdepth=-1}
+   \section{}
+   \hypersetup{bookmarksdepth} %sections are back
+}
+
 
 %------------------------------------------------------------------------------
 %      Put notes on computer screen and project slide (use with Pympress)
 %------------------------------------------------------------------------------
 % See: https://tex.stackexchange.com/questions/232168/normal-text-is-invisible-when-using-beamer-with-notes-and-xelatex
 \newcommand\present{
-\makeatletter  % sets the font color back to theme's default color - otherwise black code in listings goes missing
-\def\beamer@framenotesbegin{% at beginning of slide
-     \usebeamercolor[fg]{normal text}
-      \gdef\beamer@noteitems{}%
-      \gdef\beamer@notes{}%
-}
-\makeatother
+   \makeatletter  % sets the font color back to theme's default color - otherwise black code in listings goes missing
+   \def\beamer@framenotesbegin{% at beginning of slide
+      \usebeamercolor[fg]{normal text}
+         \gdef\beamer@noteitems{}%
+         \gdef\beamer@notes{}%
+   }
+   \makeatother
 
-% produce slides with adjacent notes
-\usepackage{pgfpages}
-\setbeamertemplate{note page}[plain]
-\setbeameroption{show notes on second screen} % Extend to second screen
-%------------------------------------------------------------------------------
+   % produce slides with adjacent notes
+   \usepackage{pgfpages}
+   \setbeamertemplate{note page}[plain]
+   \setbeameroption{show notes on second screen} % Extend to second screen
 }
 
 %------------------------------------------------------------------------------
