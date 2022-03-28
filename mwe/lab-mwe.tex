@@ -1,0 +1,57 @@
+% !TeX document-id = {1234f916-edb7-4b52-b0e1-da3cc4bc2652}
+% ----------------------------------------------------------
+% TEX directives for LatexTools Plugin for Sublime Text
+%
+% !TEX options = --shell-escape
+% !TEX aux_directory =.
+% The following option prevents tabs from printing when using XeLaTeX (https://tex.stackexchange.com/questions/14771/tabs-in-output-file-written-by-xelatex-and-pdflatex-are-different)
+% !TEX options = --8bit
+% ----------------------------------------------------------
+% TEX directives for TexStudio
+%
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+% ----------------------------------------------------------
+
+% This lab can be compiled without warnings using either PDFLaTeX or XeLaTeX (but it looks nicer with XeLaTeX :-)
+\documentclass[11pt]{../sd3/ArcHandout}
+
+\newcommand{\version}{1.11}
+\usepackage{../sd3/SPL-sd3-labs}
+
+\begin{document}
+
+\course{Software Development III}
+\title{Laboratory 1 --- Git Collaboration, Azure Deployment}
+\makeheads
+
+% ----------------------------------------------------------
+
+In this lab we will go over the basics of Git usage as well as show how a static website can be deployed to Microsoft's Azure cloud service.
+
+\section{Install Git and Git Bash}
+
+Download the \href{https://git-scm.com/downloads}{official Git command-line client} and follow the instructions for your operating system. Visual Studio Code, which we will install next, relies on this for its Git integration.
+
+\section{Install Visual Studio Code} \label{sec:vscode}
+Visual Studio Code, or VS Code as it is commonly known, is a cross-platform, open-source, lightweight code editor.
+It is very popular and is used daily by millions of developers. We will primarily be using it for editing JavaScript but it also supports \href{https://code.visualstudio.com/docs/languages/markdown}{Markdown} and multiple other languages through \href{https://marketplace.visualstudio.com/vscode}{extensions}, including \href{https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop}{LaTeX} and \href{https://marketplace.visualstudio.com/search?term=sql&target=VSCode&category=All%20categories&sortBy=Relevance}{SQL}.
+
+It is interesting to note that it is built using Electron which is a framework for deploying JavaScript applications to the desktop using Node.js as the runtime.
+
+Download and install \href{https://code.visualstudio.com/}{VS Code}.
+
+
+\subsection{Using Git Bash in VS Code's Integrated Terminal}
+The default shell, which runs within the integrated VS Code terminal, is Windows PowerShell. You may wish to change this to use Git Bash. To change the default shell, go to the command palette in VS Code by typing Ctrl-Shift-P, and then type \texttt{Select Default Shell} and choose Git Bash. If you do choose to use Git Bash, then you will need to use Unix commands for changing directories, etc.\ so it is worth reviewing the \href{https://www.git-tower.com/learn/git/ebook/en/command-line/appendix/command-line-101}{basic Bash commands}.
+
+\begin{vscodebox}{Using VS Code for version control}
+	Many Git tasks can be accomplished directly in VS Code without having to use the command line. For some of the sections in this lab, the VS Code procedure is shown in a box like this one.
+\end{vscodebox}
+
+\exercise
+Doing a merge using an ordinary text editor can become tedious and difficult in situations where conflicts happen in many parts of many files. VS Code, however, has excellent, built-in, support for handling diffs and merges.\\
+
+
+\cpyright
+
+\end{document}
