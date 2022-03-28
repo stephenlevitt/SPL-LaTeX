@@ -1,0 +1,143 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SPL-sd3-labs}[2018/03/12 Common packages, commands, etc for Software Development III Labs]
+\typeout{Document Style `SPL-sd3-labs.sty' <2018/03/12>}
+\typeout{Rev. 1.0}
+
+\RequirePackage[outputdir=./out]{minted}                    % use dedicated output directory for all intermediate minted files
+\RequirePackage{relsize}                                    % for font sizes relative to the current font
+\RequirePackage[hyphens]{url}                               % for typesetting and linking URLs, allow urls to break along lines
+\RequirePackage[final]{graphicx}
+\RequirePackage[pdfusetitle]{hyperref}                      % for hyperlinks in PDF (link colours defined below)
+\RequirePackage[many]{tcolorbox}                            % [many] prevents XeLaTeX warnings - https://tex.stackexchange.com/questions/401139/tcolorbox-package-returns-missing-pdfunescapehex-warning
+\RequirePackage{currfile}                                   % ascertain the file's name
+
+
+% ---------------- Commands ------------------------------------
+
+% typeset C++
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++, no trailing space, rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+
+
+% --------------- VS Code instructions ---------------------
+
+\newtcolorbox{vscodebox}[2][]            % default VSCode box, argument is sub-title appended to GitKraken title
+{
+  rounded corners,
+  colback=white,
+  colframe=black,
+  boxrule=0.5pt,
+  title=VS Code: #2,
+  colbacktitle=white,
+  coltitle=black,
+  % width=\dimexpr\textwidth+12mm\relax,
+  width=\dimexpr\textwidth\relax,
+  enlarge left by=0mm,
+  #1
+}
+
+% ------------------- Graphics ---------------------
+
+\DeclareGraphicsExtensions{.eps,.bmp,.jpg,.mps,.png,.pdf}
+\graphicspath{{./figures/}}                             % path for all graphics files
+
+% --------------- Source code formatting  ---------------------
+
+\setmintedinline{fontsize=\normalsize} % inline code is the same size as the normal font
+
+\setminted{
+  frame=single,
+  framesep=2mm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  tabsize=4,
+  obeytabs,
+  style=friendly
+  % linenos
+}
+
+% --------------- PDF and hyperlinks ---------------------
+
+\ifpdf
+\pdfinfo{
+  /Title (ELEN4010 Software Development III Laboratory)
+  /Author (C Haupt, SP Levitt, DS Subramoney)
+  /Subject (ELEN4010 Software Development III)
+  /Keywords (ELEN4010 Software Development)
+}
+\fi
+
+% \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
+% \definecolor{SchoolLogoBlue}{HTML}{1A417A}
+
+
+\hypersetup{
+  colorlinks,
+  allcolors={SchoolLogoBlue!70!blue}
+  % linkcolor={SchoolLogoBlue!75!blue},
+  % citecolor={SchoolLogoBlue!75!blue}},
+  % urlcolor={SchoolLogoBlue!75!blue}} %
+}
+
+\RequirePackage[british]{babel}
+
+\RequirePackage{datetime2}  % datetime format *has to come after babel package*
+\DTMnewdatestyle{yearonly}{%
+  \renewcommand{\DTMdisplaydate}[4]{\number##1 }%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{yearonly}
+
+\newcommand{\cpyright}{%
+  \vspace*{5mm}%
+  \vspace*{\fill}%
+  {
+  \footnotesize{Copyright Wits School of Electrical and Information Engineering}\\%
+  \footnotesize{Version \version, \today \, (\texttt{\currfilename})}\\ %
+  }
+}
+
+
+% Use \autoref{label} for referring to Chapters, Sections, pages etc.
+\providecommand*{\listingautorefname}{Listing}% referencing listings
+\providecommand*{\lstnumberautorefname}{line}% for labelling line numbers in code listings
+\addto\extrasbritish{%
+  \renewcommand{\sectionautorefname}{Section}%
+}
+\addto\extrasbritish{%
+  \renewcommand{\subsectionautorefname}{Section}%
+}
+\addto\extrasbritish{%
+  \renewcommand{\subsubsectionautorefname}{Section}%
+}
+
+% -------------- Typeset keyboard shortcuts ------------------
+
+\usepackage[os=win]{menukeys}
+
+% create a new menustyle style for keys: roundedkeyscondensed - no '+' between keys; narrower keys
+
+% Inspiration and useful resources:
+% https://github.com/tweh/menukeys/issues/49
+% https://tex.stackexchange.com/questions/509440/can-tikz-menu-items-as-defined-by-menukeys-pkg-be-made-to-go-across-multiple-l
+% and the menukeys package documentation
+
+\newmenustylesimple{roundedkeyscondensed}{%
+tw@set@tikz@colors,
+	rounded corners=0.15ex,
+	inner sep=0pt,
+	inner xsep=2pt,
+	text height=1.825ex,
+	text depth=0.7ex,
+	minimum width=1em, % narrow the minimum width for punctuation keys
+	font=\relsize{-1}\sffamily,
+	signal,
+	signal to=nowhere,
+	signal pointer angle=110,
+}[\hspace{0.2em plus 0.1em minus 0.05em}]{gray}
+
+% replace \keys with condensed version
+\renewmenumacro{\keys}[+]{roundedkeyscondensed}
+
+%------------------------------------------------------------------------------
+% end of file - SPL-sd3-labs.sty
