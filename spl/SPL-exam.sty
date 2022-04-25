@@ -65,42 +65,17 @@
     %    pdfauthor={SP Levitt},                          % remove to reuse author data
     %    linkbordercolor={darkblue}                      % darkblue is defined above
     %}%
-\else   % NOT generating PDF
-                                                        % suitable graphics file types are {.eps,.bmp}
-    %\usepackage[dvipdfm]{hyperref}                     % for hyperlinks in PDF (LaTeX -> DVIPDFM) (link colours are defined in hyperref.cfg)
-    %\usepackage[dvips,breaklinks]{hyperref}            % for hyperlinks in PDF (LaTeX -> DVIPS -> PS2PDF) - does not support linebreaks in URL descriptions!
-    %\usepackage[hypertex]{hyperref}                     % for hyperlinks in DVI - accessible in YAP
 \fi
 
 %------------------------------------------------------------------------------
 %                                   Commands
 %------------------------------------------------------------------------------
 
-
 % typeset C++, maths symbols, urls, etc. nicely
-%\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\bf ++}}\xspace}
-%\newcommand{\jw}{j\omega}
-%\newcommand{\w}{\omega}
-%\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
-%\newcommand{\email}[1]{\href{mailto:#1}{#1}}            % for email hyperlinks
-%\newcommand{\SDIIhomepage}{\href{http://dept.ee.wits.ac.za/~slevitt/elen3009/}{homepage}\xspace}
-%\newcommand{\SDIIurl}{\url{http://dept.ee.wits.ac.za/~slevitt/elen3009/}}
-%\newcommand{\sdmethodshomepage}{\href{http://dept.ee.wits.ac.za/~slevitt/elen7045/}{homepage}\xspace}
-%\newcommand{\cpyright}[1]{
-%\vspace{5mm} % For use with Bitstream Charter
-%\vfill \copyright \, \footnotesize Copyright #1, School of Electrical and Information Engineering.\\
-%\hspace*{1.3em} \footnotesize  Version \version\ (\today)\\
-%\hspace*{1.32em} \footnotesize \texttt{\currfilename}
-%}
-
-
-% Shorthands for references
-\newcommand{\appref}[1]{Appendix~\ref{#1}\xspace}
-\newcommand{\tabref}[1] {Table~\ref{#1}\xspace}
-\newcommand{\tabrefs}[2]{Tables~\ref{#1}\/ and \ref{#2}\xspace}
-\newcommand{\figref}[1]{Figure~\ref{#1}}
-\newcommand{\figrefs}[2]{Figures~\ref{#1}\/ and \ref{#2}}
-% \newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} }
+\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\bf ++}}\xspace}
+\newcommand{\jw}{j\omega}
+\newcommand{\w}{\omega}
+\newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
 
 
 % Macro for easy inclusion of figures
