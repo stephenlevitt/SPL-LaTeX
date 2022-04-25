@@ -13,7 +13,6 @@
 \usepackage{fancybox}                                   % boxed text, equations, required by the seminar class
 \usepackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
 \usepackage{amsmath}                                    % very useful math functionality
-\usepackage{lastpage}                                   % determines the last page of the document
 \usepackage{fancyhdr}                                   % headers and footers
 \usepackage{currfile}                                   % ascertain the file's name
 \usepackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
@@ -71,8 +70,11 @@
 %                                   Commands
 %------------------------------------------------------------------------------
 
-% typeset C++, maths symbols, urls, etc. nicely
-\protected\def\CPP{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\bf ++}}\xspace}
+% typeset C++
+\protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++; rather use \CPP
+\newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
+
+% typeset maths symbols, urls, etc. nicely
 \newcommand{\jw}{j\omega}
 \newcommand{\w}{\omega}
 \newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}

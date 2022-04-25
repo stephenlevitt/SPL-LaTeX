@@ -183,9 +183,8 @@
 \setlength{\marginparsep}{10pt}
 \brokenpenalty=10000
 \newcounter{qno}
-\newcommand{\eelastpg}{\pageref{@last-page}}
-\newcommand{\lastpg}[1]{\renewcommand{\eelastpg}{#1}}
-\AtEndDocument{\label{@last-page}}
+
+\usepackage{lastpage} % reliably detect the last page of the exam
 \newcommand{\makeheads}{\begin{titlepage}\vspace{80mm}\thispagestyle{empty}
   Examination question paper for:
   \begin{center}\Large \eeCCode -- \eeCName \end{center}
@@ -195,9 +194,9 @@
 \AtBeginDocument{\pagestyle{empty}
 % modified by SPL 2008-11-14
 %\markright{\eeCCode -- \eeCName \commenthead}
-\markright{\eeCCode--\eeCName \commenthead}
+\markright{\eeCCode \hspace{-0.2pt} \cdot \hspace{-0.2pt}  \eeCName \commenthead}
 \renewcommand{\@oddhead}{\hbox{}\textsl\rightmark \hfil
-\textrm (\eelastpg\ pages---page \thepage)}}
+\textrm (\pageref{LastPage} pages -- page \thepage)}}
 \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
 \newcounter{mcqno}[qno]
