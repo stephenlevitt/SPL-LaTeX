@@ -62,8 +62,9 @@
 \RequirePackage{texnames}                                   % defines \LaTeX \BibTeX etc
 \RequirePackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
 \usepackage[svgnames]{xcolor}
-
 % \RequirePackage{refcheck}                                   % highlights missing and unreferred to citations
+
+%------------------------------------------------------------------------------
 
 %------------------------------------------------------------------------------
 %                      Handling XeLaTeX and PDFLaTeX Processing
@@ -110,6 +111,30 @@
 
 \RequirePackage{tikz}
 \RequirePackage{framed}
+%------------------------------------------------------------------------------
+\usepackage[os=win]{menukeys}
+% create a new menustyle style for keys: roundedkeyscondensed - no '+' between keys; narrower keys
+% Inspiration and useful resources:
+% https://github.com/tweh/menukeys/issues/49
+% https://tex.stackexchange.com/questions/509440/can-tikz-menu-items-as-defined-by-menukeys-pkg-be-made-to-go-across-multiple-l
+% and the menukeys package documentation
+\newmenustylesimple{roundedkeyscondensed}{%
+tw@set@tikz@colors,
+	rounded corners=0.15ex,
+	inner sep=0pt,
+	inner xsep=2pt,
+	text height=1.825ex,
+	text depth=0.7ex,
+	minimum width=1em, % narrow the minimum width for punctuation keys
+	font=\relsize{-1}\sffamily,
+	signal,
+	signal to=nowhere,
+	signal pointer angle=110,
+}[\hspace{0.2em plus 0.1em minus 0.05em}]{gray}
+
+% replace \keys with condensed version
+\renewmenumacro{\keys}[+]{roundedkeyscondensed}
+%------------------------------------------------------------------------------
 
 
 \newcommand*\quotemarksize{60} % if quote size changes, need a way to make shifts relative
