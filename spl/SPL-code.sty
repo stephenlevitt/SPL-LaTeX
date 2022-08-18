@@ -6,9 +6,17 @@
 % Revision history
 % 1.0.0 (2015/01/14) - extracted source code typesetting packages, commands etc from SPL-packages
 
+    \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt, BoldFont=*-Bold,BoldItalicFont=*-BoldIt, Scale=0.9]{SourceCodePro}
+    % use the included TeX font and not the Source Code Pro font from Adobe Type Manager
+    % scaled down slightly because when inlined it appears larger than the main font
+    % use straight double quotes in code samples
+
+
+
 
 
 \RequirePackage{listings}
+\RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation
 % \lstset{inputpath=../code}
 
 % colour definitions for code listings
@@ -30,6 +38,7 @@
 \lstdefinestyle{base}{
 basicstyle=\small\ttfamily,
 tabsize=3,
+autogobble,
 language=[11]C++,
 morekeywords={override, default, final},
 showstringspaces=false,
@@ -53,7 +62,7 @@ escapechar=\`}
 \lstdefinestyle{appendix}{style=base, style=framed}
 \lstdefinestyle{number}{style=frame, style=numbered}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
-\lstdefinestyle{exercise}{style=frame, style=numbered, style=coloured}
+\lstdefinestyle{exercise}{style=base, style=framed, style=numbered, style=coloured}
 
 % styles for slides
 \lstdefinestyle{slide}{
@@ -116,3 +125,53 @@ escapechar=\`}
 
 
 %------------------------------------------------------------------------------
+
+% Typeset listing captions from
+% https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
+%\usepackage{caption}
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+%-------------------------------------------------
+
+%\usepackage{tcolorbox}
+%  \tcbuselibrary{breakable}
+%  \tcbuselibrary{skins}
+%  \tcbuselibrary{listings}
+%\usepackage{caption}
+
+
+%\definecolor{shadecolor}{gray}{0.95}
+%\definecolor{captionbox}{cmyk}{0.43, 0.35, 0.35,0.01}
+
+%\newtcblisting[auto counter]{wgetlisting}[2][]{%
+%  listing only,
+%  breakable,
+%  top=0.5pt,
+%  bottom=0.5pt,
+%  colback=red!5!white,
+%  colframe=red!25,
+%  left=6mm,
+%  sharp corners,
+%  boxrule=0pt,
+%  bottomrule=1pt,
+%  toprule=1pt,
+%  enhanced jigsaw,
+%  listing options={%style=tcblatex,
+%    numbers=left,
+%    numberstyle=\tiny\color{red!75!black},
+%    moredelim={[is][keywordstyle]{@@}{@@}},
+%    basicstyle=\normalsize\ttfamily,
+%    breaklines=true,
+%    breakautoindent=false,
+%    breakindent=0pt,
+%    escapeinside={(*}{*)},
+%  },%
+%  lefttitle=0pt,
+%  coltitle=black,
+%  colbacktitle=white,
+%  title={Listing \thetcbcounter:  #2},#1%
+%  borderline north={8pt}{14.4pt}{red!25,dashed},
+%}
+%

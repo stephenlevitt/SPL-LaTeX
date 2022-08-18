@@ -66,29 +66,6 @@
 
 %------------------------------------------------------------------------------
 
-%------------------------------------------------------------------------------
-%                      Handling XeLaTeX and PDFLaTeX Processing
-%------------------------------------------------------------------------------
-% \RequirePackage{ifxetex}
-% \RequirePackage[bitstream-charter]{mathdesign}              % main font for document text + maths, supports font expansion (see microtype)
-% \ifxetex
-%     \RequirePackage{fontspec}
-%     % \setmainfont[Ligatures=TeX]{Bitstream Charter}              % [Ligatures=TeX] required for smart quotes, m-dashes etc.
-%     % \setmonofont[Scale=0.9]{Bera Sans Mono}                     % for code listings beramono is used
-%     \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O}  % selects Libertine for quotation marks
-%                                                                 % more info: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document?
-%     \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
-%                                                                 % silence warnings about missing font characters
-% \else % assuming pdfLaTeX driver
-%     \RequirePackage{lmodern}
-%     % \RequirePackage[bitstream-charter]{mathdesign}              % main font for document text + maths, supports font expansion (see microtype)
-%     \RequirePackage[utf8]{inputenc}
-%     \RequirePackage[T1]{fontenc}
-%     \RequirePackage[scaled]{beramono}                           % for code listings beramono is used
-%     \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}}     % selects Libertine as the quote font
-%     \RequirePackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
-% \fi
-
 \RequirePackage[pdfusetitle]{hyperref}                          % for hyperlinks in PDF (link colours defined below)
 \definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
 \definecolor{BlueGrotto}{HTML}{0E86D4}
@@ -227,58 +204,6 @@ tw@set@tikz@colors,
       at ([xshift=4pt,yshift=4pt]frame.north west)
        {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
-
-%------------------------------------------------------------------------------
-
-% Typeset listing captions from
-% https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
-%\usepackage{caption}
-%\DeclareCaptionFont{white}{\color{white}}
-%\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
-%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
-
-%-------------------------------------------------
-
-%\usepackage{tcolorbox}
-%  \tcbuselibrary{breakable}
-%  \tcbuselibrary{skins}
-%  \tcbuselibrary{listings}
-%\usepackage{caption}
-
-
-%\definecolor{shadecolor}{gray}{0.95}
-%\definecolor{captionbox}{cmyk}{0.43, 0.35, 0.35,0.01}
-
-%\newtcblisting[auto counter]{wgetlisting}[2][]{%
-%  listing only,
-%  breakable,
-%  top=0.5pt,
-%  bottom=0.5pt,
-%  colback=red!5!white,
-%  colframe=red!25,
-%  left=6mm,
-%  sharp corners,
-%  boxrule=0pt,
-%  bottomrule=1pt,
-%  toprule=1pt,
-%  enhanced jigsaw,
-%  listing options={%style=tcblatex,
-%    numbers=left,
-%    numberstyle=\tiny\color{red!75!black},
-%    moredelim={[is][keywordstyle]{@@}{@@}},
-%    basicstyle=\normalsize\ttfamily,
-%    breaklines=true,
-%    breakautoindent=false,
-%    breakindent=0pt,
-%    escapeinside={(*}{*)},
-%  },%
-%  lefttitle=0pt,
-%  coltitle=black,
-%  colbacktitle=white,
-%  title={Listing \thetcbcounter:  #2},#1%
-%  borderline north={8pt}{14.4pt}{red!25,dashed},
-%}
-%
 
 %------------------------------------------------------------------------------
 % end of file - SPL-packages.sty

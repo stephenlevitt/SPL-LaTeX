@@ -38,8 +38,9 @@
 % \newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans} % a tiny version of the main beamer font
 %                                                       % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 
-%---------------------------------------
-
+%------------------------------------------------------------------------------
+%                               Fonts
+%------------------------------------------------------------------------------
 \usepackage{anyfontsize}                        % remove error messages re: font sizes
 
 \RequirePackage{ifxetex}
@@ -62,22 +63,13 @@
    BoldFont = Helvetica Neue LT Std
 ]
 
-\setmonofont[
-   Scale=0.85,
-]{Bitstream Vera Sans Mono}                                 % Install as a Windows font, for code listings - san serif, monospaced;
-                                                            % scaled down slightly because when inlined it appears larger than the main font
-
 \newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans}       % a tiny version of the main beamer font
                                                             % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 
-                                                            \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
+\RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
                                                             % silence warnings about missing font characters
 
 \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif} % selects Libertine as the quote font
-
-%---------------------------------------
-
-
 
 
 %------------------------------------------------------------------------------
