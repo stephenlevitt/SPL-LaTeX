@@ -6,10 +6,14 @@
 % Revision history
 % 1.0.0 (2015/01/14) - extracted source code typesetting packages, commands etc from SPL-packages
 
+\RequirePackage{ifxetex}
+\RequireXeTeX
+\RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
 \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt, BoldFont=*-Bold,BoldItalicFont=*-BoldIt, Scale=0.9]{SourceCodePro}
 % use the included TeX font and not the Source Code Pro font from Adobe Type Manager
 % scaled down slightly because when inlined it appears larger than the main font
 % use straight double quotes in code samples
+% the code listings font scales better with XeTeX but pdfLaTeX can be used as well
 
 \RequirePackage{listings}
 \RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
