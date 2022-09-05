@@ -160,7 +160,7 @@
 \title{}\author{}\date{}  % default these to nothing
 \newcommand{\question}{\addtocounter{qno}{1}\subsection*{Question \theqno}}
 \newcommand{\hexercise}{\addtocounter{heno}{1}\subsection*{Exercise \theheno}} % handout exercise
-\newcommand{\exercise}{\refstepcounter{eno}\textcolor{SchoolLogoBlue}{\subsubsection*{Exercise \thesection.\theeno}}}  % \textcolor{blue!60!black}
+\newcommand{\exercise}{\refstepcounter{eno}\textcolor{FireBrick}{\subsubsection*{Exercise \thesection.\theeno}}}  % \textcolor{blue!60!black}
 \newcommand{\challenge}{\addtocounter{chno}{1}\subsection*{Challenge \thechno}}
 
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
