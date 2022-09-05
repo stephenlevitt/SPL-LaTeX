@@ -9,9 +9,8 @@
 \RequirePackage{ifxetex}
 \ifxetex
   \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt, BoldFont=*-Bold,BoldItalicFont=*-BoldIt, Scale=0.9]{SourceCodePro}
+  \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt, BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=MatchLowerCase]{SourceCodePro}
   % Use the included TeX font (MikTeX font manager) and not the Source Code Pro font from Adobe Type Manager
-  % Font is scaled down slightly because when inlined it appears larger than the main font.
   % Make sure to use straight double quotes in code samples.
   % The code listings font looks better with XeTeX but pdfLaTeX can be used as well with the default monospaced font.
 \fi
@@ -37,7 +36,8 @@
 
 % base style for C++
 \lstdefinestyle{base}{
-basicstyle=\small\ttfamily,
+% basicstyle=\ttfamily,
+basicstyle=\lst@ifdisplaystyle\ttfamily\small\fi, %https://tex.stackexchange.com/questions/161549/scaling-inline-code-to-the-current-font-size
 tabsize=3,
 autogobble,
 language=[11]C++,
@@ -48,7 +48,8 @@ breakatwhitespace=true,
 captionpos=b,
 moredelim=[il]{//*},
 escapeinside=\`\`,
-escapechar=\`}
+escapechar=\`,
+}
 
 % base style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.7em, xrightmargin=1.7em}
@@ -57,7 +58,8 @@ escapechar=\`}
 \lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}\bfseries}
 
 % styles for documents
-\lstdefinestyle{inline}{style=base, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
+\lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size
+\lstdefinestyle{snippet}{style=base, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{output}{style=base, style=framed, keywordstyle={}}
 \lstdefinestyle{frame}{style=base, style=framed}
 \lstdefinestyle{appendix}{style=base, style=framed}
