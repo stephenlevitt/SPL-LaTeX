@@ -44,7 +44,7 @@ escapechar=\`,
 \lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}\bfseries}
 
 % styles for documents
-\lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size
+\lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size with MatchLowercase
 \lstdefinestyle{snippet}{style=base, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{output}{style=base, style=indented, style=framed, keywordstyle={}}
 \lstdefinestyle{frame}{style=base, style=framed}
@@ -100,7 +100,6 @@ escapechar=\`,
 %     // ...
 % };
 
-
 \makeatletter
 \newenvironment{btHighlight}[1][]
 {\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
@@ -121,7 +120,6 @@ escapechar=\`,
   }%
 }
 \makeatother
-
 
 %------------------------------------------------------------------------------
 
