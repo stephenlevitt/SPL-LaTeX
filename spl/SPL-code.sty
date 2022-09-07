@@ -3,13 +3,9 @@
 \typeout{Document Style `SPL-code.sty' <2015/01/14>}
 \typeout{Rev. 1.0.0}
 
-% Revision history
-% 1.0.0 (2015/01/14) - extracted source code typesetting packages, commands etc from SPL-packages
-
 \RequirePackage{ifxetex}
 \ifxetex
   \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  % \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt, BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=MatchLowerCase]{SourceCodePro}
   \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt,BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=MatchLowercase]{SourceCodePro}
   % Use the included TeX font (MikTeX font manager) and not the Source Code Pro font from Adobe Type Manager
   % Make sure to use straight double quotes in code samples.
@@ -18,7 +14,6 @@
 
 \RequirePackage{listings}
 \RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
-% \lstset{inputpath=../code}
 
 % colour definitions for code listings
 \RequirePackage{color}
@@ -37,7 +32,6 @@
 
 % base style for C++
 \lstdefinestyle{base}{
-% basicstyle=\ttfamily,
 basicstyle=\lst@ifdisplaystyle\ttfamily\small\fi, %https://tex.stackexchange.com/questions/161549/scaling-inline-code-to-the-current-font-size
 tabsize=3,
 autogobble,
@@ -93,7 +87,10 @@ escapechar=\`,
 \vspace{2mm}
 }
 
-% code highlighting styles
+%------------------------------------------------------------------------------
+%                         Code Highlighting (see slide style above)
+%------------------------------------------------------------------------------
+
 % from https://tex.stackexchange.com/questions/15237/highlight-text-in-code-listing-while-also-keeping-syntax-highlighting/
 
 % to remove space being highlighted at the begin of a line, escape to LaTeX
@@ -130,21 +127,19 @@ escapechar=\`,
 
 %------------------------------------------------------------------------------
 
-% Typeset listing captions from
+% Typeset listing and captions as shown here:
 % https://tex.stackexchange.com/questions/14967/source-code-listing-with-frame-around-code
+
 %\usepackage{caption}
 %\DeclareCaptionFont{white}{\color{white}}
 %\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\parbox{\textwidth}{#1#2#3}}}
 %\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
-
-%-------------------------------------------------
 
 %\usepackage{tcolorbox}
 %  \tcbuselibrary{breakable}
 %  \tcbuselibrary{skins}
 %  \tcbuselibrary{listings}
 %\usepackage{caption}
-
 
 %\definecolor{shadecolor}{gray}{0.95}
 %\definecolor{captionbox}{cmyk}{0.43, 0.35, 0.35,0.01}
