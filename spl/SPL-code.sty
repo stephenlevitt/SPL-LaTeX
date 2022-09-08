@@ -6,8 +6,11 @@
 \RequirePackage{ifxetex}
 \ifxetex
   \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt,BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=MatchLowercase]{SourceCodePro}
+  \setmonofont{inconsolata}
+
+  % \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt,BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=0.95]{SourceCodePro}
   % Use the included TeX font (MikTeX font manager) and not the Source Code Pro font from Adobe Type Manager
+  % Scale=MatchLowercase is a bit too large for inline SourceCodePro code, so the font is scaled down
   % Make sure to use straight double quotes in code samples.
   % The code listings font looks better with XeTeX but pdfLaTeX can be used as well with the default monospaced font.
 \fi
@@ -51,6 +54,7 @@ escapechar=\`,
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{ruled}{basicstyle=\small\ttfamily, breaklines=true, frame=tb, framextopmargin=2mm, framexbottommargin=2mm, rulecolor=\color{gray!90}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=3.2ex, belowskip=1.45ex}
 \lstdefinestyle{exercise}{style=base, style=framed, style=numbered, style=coloured}
+\lstdefinestyle{exercise-no-nums}{style=base, style=framed, style=coloured}
 
 % styles for slides
 \lstdefinestyle{slide}{
