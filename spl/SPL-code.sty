@@ -6,7 +6,7 @@
 \RequirePackage{ifxetex}
 \ifxetex
   \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  \setmonofont{inconsolata}
+  \setmonofont[Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]{InconsolataLGCMarkup} % https://bdtechconcepts.com/Inconsolata-LGC-Markup-Font.html
 
   % \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt,BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=0.95]{SourceCodePro}
   % Use the included TeX font (MikTeX font manager) and not the Source Code Pro font from Adobe Type Manager
@@ -44,7 +44,8 @@ escapechar=\`,
 \lstdefinestyle{indented}{xleftmargin=1.5em, xrightmargin=1.5em}
 \lstdefinestyle{framed}{frame=tlrb, framexleftmargin=1mm, aboveskip=2em, abovecaptionskip=4mm}
 \lstdefinestyle{numbered}{numbers=left, numberstyle=\ttfamily\color{black!35}\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em}
-\lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}\bfseries}
+\lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}}
+% \lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}\bfseries}
 
 % styles for documents
 \lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size with MatchLowercase
