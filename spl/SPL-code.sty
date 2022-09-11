@@ -6,12 +6,11 @@
 \RequirePackage{ifxetex}
 \ifxetex
   \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  \setmonofont[Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]{InconsolataLGCMarkup} % https://bdtechconcepts.com/Inconsolata-LGC-Markup-Font.html
+  % Download and install as a Windows system font
+  % https://bdtechconcepts.com/Inconsolata-LGC-Markup-Font.html
+  \setmonofont[Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]{InconsolataLGCMarkup}
 
-  % \setmonofont[Extension=.otf,UprightFont =*-Regular,ItalicFont =*-RegularIt,BoldFont=*-Bold,BoldItalicFont=*-BoldIt,Scale=0.95]{SourceCodePro}
-  % Use the included TeX font (MikTeX font manager) and not the Source Code Pro font from Adobe Type Manager
-  % Scale=MatchLowercase is a bit too large for inline SourceCodePro code, so the font is scaled down
-  % Make sure to use straight double quotes in code samples.
+  % Make sure to use straight quotes in code samples.
   % The code listings font looks better with XeTeX but pdfLaTeX can be used as well with the default monospaced font.
 \fi
 
