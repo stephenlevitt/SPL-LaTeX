@@ -81,30 +81,6 @@ escapechar=\`,
 }
 
 %------------------------------------------------------------------------------
-% \ExplSyntaxOn
-% \tl_new:N \l_Skjerning_dir_tl
-% \tl_new:N \l_Skjerning_file_tl
-% \tl_new:N \l_Skjerning_ext_tl
-% \NewDocumentCommand \GetFileName { O{fe} m }
-%   {
-%     \file_parse_full_name:eNNN { #2 }
-%       \l_Skjerning_dir_tl
-%       \l_Skjerning_file_tl
-%       \l_Skjerning_ext_tl
-%     \tl_if_in:nnT { #1 } { d } { \l_Skjerning_dir_tl / }
-%     \tl_if_in:nnT { #1 } { f } \l_Skjerning_file_tl
-%     \tl_if_in:nnT { #1 } { e } \l_Skjerning_ext_tl
-%   }
-% \cs_generate_variant:Nn \file_parse_full_name:nNNN { eNNN }
-% \ExplSyntaxOff
-
-% \lstset {
-%   title = {\GetFileName{\lstname}}
-% }
-
-% \newcommand{\codefile}{\GetFileName{\lstname}}
-
-%------------------------------------------------------------------------------
 %    Print file path and name outside frame for exercise style (bottom-right)
 %------------------------------------------------------------------------------
 % This command relies on \lstinputlisting setting \lstname so that the file and path
