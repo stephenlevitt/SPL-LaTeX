@@ -73,7 +73,7 @@
 
     \setmainfont[
         Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
-    ]{XCharter}                                                 % LaTeX font, includes OTF version for use with xelatex:
+    ]{XCharter}                                                 % Install as LaTeX font package, includes OTF version for use with xelatex:
                                                                 % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
     \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[           % Install as a Windows font, use to typeset the school name in the title bar
         Scale=1.1,

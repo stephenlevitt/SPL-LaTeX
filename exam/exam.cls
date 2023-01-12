@@ -230,6 +230,8 @@
 
 \providecommand{\mrks}[1]{\rhfit{\textsf{(#1~marks)}}}
 \providecommand{\totalmarks}[1]{\rhfit{\textsf{[Total Marks #1]}}}
+\providecommand{\totalend}[1]{\rhfit{\textsf{(#1)}}}
+
 
 \newcommand{\fig}[1]{\addtocounter{figure}{1}
 \begin{center}\vspace*{#1}Figure \thefigure\end{center}}
