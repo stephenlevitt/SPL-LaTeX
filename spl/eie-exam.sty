@@ -36,20 +36,22 @@
 % https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
 % enumitem-related constructions
 \newlist{mcq@}{enumerate}{1}
-\setlist[mcq@]{label=\alph*),labelsep=0.45em, leftmargin=2.2em, itemsep=1ex, itemindent=-4pt}
+% itemsep is the space between choices
+% labelsep is the space between the choice and the item label
+\setlist[mcq@]{label=\alph*),labelsep=0.45em, leftmargin=2.2em, itemsep=0.35\baselineskip, itemindent=-4pt}
 
 % Create list emulator
-\newenvironment{mcq}[1][]
-{
-        \begin{mcq@}[#1]% \begin{mcq}[<opts>]
-                \let\olditem\item% Store \item in \olditem
-                \RenewDocumentCommand{\item}{o}{% Redefine \item to
-                        \olditem\leavevmode% ... call \olditem...
-                        \IfNoValueF{##1}{\ifprintanswers
-                                        \tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{12mm}\fi}% ... and possibly [..]
-                }}
-                {\end{mcq@}
-}% \end{pointslist}
+\newenvironment{mcq}[1][]{
+    \begin{mcq@}[#1]% \begin{mcq}[<opts>]
+        \let\olditem\item% Store \item in \olditem
+        \RenewDocumentCommand{\item}{o}
+        {% Redefine \item to
+            \olditem\leavevmode% ... call \olditem...
+            \IfNoValueF{##1}{\ifprintanswers
+                    \tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{12mm}\fi}% ... and possibly [..]
+        }
+        }
+        {\end{mcq@}}% \end{pointslist}
 
 
 % itemsep=1ex, ,widest=d)
@@ -113,13 +115,13 @@
 % #4 - Long figure name for caption
 \newcommand{\inputfig}[4][\DefaultCap]
 {\def\DefaultCap{#4}
-        \begin{figure}[htbp]
-                \begin{center}
-                        \includegraphics[#3]{#2}
-                        \caption[#1]{#4}   % includes fig num
-                        \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
-                \end{center}
-        \end{figure}
+    \begin{figure}[htbp]
+        \begin{center}
+            \includegraphics[#3]{#2}
+            \caption[#1]{#4}   % includes fig num
+            \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
+        \end{center}
+    \end{figure}
 }
 
 \DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
@@ -134,15 +136,15 @@
 \RequirePackage{array}
 \newenvironment{where}
 {
-        \setlength{\@rcwhere}{\textwidth}
-        \addtolength{\@rcwhere}{-\@lcsym}
-        \addtolength{\@rcwhere}{-\@spwhere}
-        \addtolength{\@rcwhere}{-\@eqwhere}
-        \addtolength{\@rcwhere}{-3\tabcolsep}
-        where \hfill \nopagebreak\\ \hspace*{\@spwhere}
-        \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
-                }
-                {\end{tabular}}
+    \setlength{\@rcwhere}{\textwidth}
+    \addtolength{\@rcwhere}{-\@lcsym}
+    \addtolength{\@rcwhere}{-\@spwhere}
+    \addtolength{\@rcwhere}{-\@eqwhere}
+    \addtolength{\@rcwhere}{-3\tabcolsep}
+    where \hfill \nopagebreak\\ \hspace*{\@spwhere}
+    \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
+        }
+        {\end{tabular}}
 
 \newlength{\@lcsym} \setlength{\@lcsym}{5em}
 \newlength{\@mcsym} \setlength{\@mcsym}{2em}
@@ -205,26 +207,26 @@
 \makeatother
 
 \newtcolorbox{Sidebar}{
-        breakable,  % can break across pages
-        enhanced,   % skin
-        beforeafter skip=6mm, % space above and below bounding box
-        % after skip=6mm, % space below bounding box
-        right=4mm,  % right margin of bounding box to text
-        top=-2pt,    % top of bounding box to text
-        bottom=0pt, % bottom of bounding box to text
-        colback=white, % background colour of bounding box
-        width=\textwidth,
-        grow to left by=11.5mm, % modify left margin, without moving right margin
-        %show bounding box, % display bounding box
-        boxsep=4pt,
-        boxrule=0pt,frame hidden,
-        borderline west={.3mm}{12mm}{black}, % colour left bounding box margin
-        fontupper=\small, % change font in upper box (here it is the only box)
-        leftupper=1.5cm, % space from left-hand box margin to text
-        overlay={ % overlay GitHub logo
-                        \node[anchor=north west]
-                        at ([xshift=4pt,yshift=4pt]frame.north west)
-                        {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
+    breakable,  % can break across pages
+    enhanced,   % skin
+    beforeafter skip=6mm, % space above and below bounding box
+    % after skip=6mm, % space below bounding box
+    right=4mm,  % right margin of bounding box to text
+    top=-2pt,    % top of bounding box to text
+    bottom=0pt, % bottom of bounding box to text
+    colback=white, % background colour of bounding box
+    width=\textwidth,
+    grow to left by=11.5mm, % modify left margin, without moving right margin
+    %show bounding box, % display bounding box
+    boxsep=4pt,
+    boxrule=0pt,frame hidden,
+    borderline west={.3mm}{12mm}{black}, % colour left bounding box margin
+    fontupper=\small, % change font in upper box (here it is the only box)
+    leftupper=1.5cm, % space from left-hand box margin to text
+    overlay={ % overlay GitHub logo
+            \node[anchor=north west]
+            at ([xshift=4pt,yshift=4pt]frame.north west)
+            {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
 
 %------------------------------------------------------------------------------
