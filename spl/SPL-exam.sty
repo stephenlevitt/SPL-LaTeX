@@ -56,14 +56,14 @@
 %------------------------------------------------------------------------------
 % Load packages differently depending on PDF generation or not
 \ifpdf  % generating PDF
-    \usepackage[outdir=./Figures/]{epstopdf}            % suitable file types are {.png,.pdf,.jpg,.jpeg}
-                                                        % eps files will be automatically converted and
-                                                        % saved in the Figures directory on first run of pdflatex
-    %\usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
-    %\hypersetup{
-    %    pdfauthor={SP Levitt},                          % remove to reuse author data
-    %    linkbordercolor={darkblue}                      % darkblue is defined above
-    %}%
+  \usepackage[outdir=./Figures/]{epstopdf}            % suitable file types are {.png,.pdf,.jpg,.jpeg}
+  % eps files will be automatically converted and
+  % saved in the Figures directory on first run of pdflatex
+  %\usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
+  %\hypersetup{
+  %    pdfauthor={SP Levitt},                          % remove to reuse author data
+  %    linkbordercolor={darkblue}                      % darkblue is defined above
+  %}%
 \fi
 
 %------------------------------------------------------------------------------
@@ -88,13 +88,13 @@
 % #4 - Long figure name for caption
 \newcommand{\inputfig}[4][\DefaultCap]
 {\def\DefaultCap{#4}
-\begin{figure}[htbp]
+  \begin{figure}[htbp]
     \begin{center}
-    \includegraphics[#3]{#2}
-    \caption[#1]{#4}   % includes fig num
-    \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
+      \includegraphics[#3]{#2}
+      \caption[#1]{#4}   % includes fig num
+      \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
     \end{center}
-\end{figure}
+  \end{figure}
 }
 
 \DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
@@ -109,15 +109,15 @@
 \RequirePackage{array}
 \newenvironment{where}
 {
-    \setlength{\@rcwhere}{\textwidth}
-    \addtolength{\@rcwhere}{-\@lcsym}
-    \addtolength{\@rcwhere}{-\@spwhere}
-    \addtolength{\@rcwhere}{-\@eqwhere}
-    \addtolength{\@rcwhere}{-3\tabcolsep}
-    where \hfill \nopagebreak\\ \hspace*{\@spwhere}
-    \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
-}
-{\end{tabular}}
+  \setlength{\@rcwhere}{\textwidth}
+  \addtolength{\@rcwhere}{-\@lcsym}
+  \addtolength{\@rcwhere}{-\@spwhere}
+  \addtolength{\@rcwhere}{-\@eqwhere}
+  \addtolength{\@rcwhere}{-3\tabcolsep}
+  where \hfill \nopagebreak\\ \hspace*{\@spwhere}
+  \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
+    }
+    {\end{tabular}}
 
 \newlength{\@lcsym} \setlength{\@lcsym}{5em}
 \newlength{\@mcsym} \setlength{\@mcsym}{2em}
@@ -148,9 +148,9 @@
 \tcbuselibrary{breakable}
 
 % remove tikz error: https://tex.stackexchange.com/questions/165929/semiverbatim-with-tikz-in-beamer
- \makeatletter
- \global\let\tikz@ensure@dollar@catcode=\relax
- \makeatother
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
 
 \newtcolorbox{Sidebar}{
   breakable,  % can break across pages
@@ -170,9 +170,9 @@
   fontupper=\small, % change font in upper box (here it is the only box)
   leftupper=1.5cm, % space from left-hand box margin to text
   overlay={ % overlay GitHub logo
-    \node[anchor=north west]
+      \node[anchor=north west]
       at ([xshift=4pt,yshift=4pt]frame.north west)
-       {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
+      {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
 
 %------------------------------------------------------------------------------
