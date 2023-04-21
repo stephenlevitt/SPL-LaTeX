@@ -27,37 +27,13 @@
 \definecolor{darkblue}{rgb}{0,0,0.5}                    % 'red', 'green' and 'blue' are predefined
 \usepackage{pdflscape}                                  % for landscape layout in pdf
 \usepackage{tabto}                                  % tab to a fixed horizontal position in a line
-
-% \newcommand*{\mytab}[1]{\tabto{1.5cm}\parbox[t]{%
-%                 \dimexpr\textwidth-1.5cm-\labelwidth-\labelsep}{#1}}
-
 \usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
 
-% https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
-% enumitem-related constructions
-\newlist{mcq@}{enumerate}{1}
-% itemsep is the space between choices
-% labelsep is the space between the choice and the item label
-\setlist[mcq@]{label=\alph*),labelsep=0.45em, leftmargin=2.2em, itemsep=0.35\baselineskip, itemindent=-4pt}
 
-% Create list emulator
-\newenvironment{mcq}[1][]{
-	\begin{mcq@}[#1]% \begin{mcq}[<opts>]
-		\let\olditem\item% Store \item in \olditem
-		\RenewDocumentCommand{\item}{o}
-		{% Redefine \item to
-			\olditem\leavevmode% ... call \olditem...
-			\IfNoValueF{##1}{\ifprintanswers
-					\tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{12mm}\fi}% ... and possibly [..]
-		}
-		}
-		{\end{mcq@}}% \end{pointslist}
+%------------------------------------------------------------------------------
+%                               Cover pages
+%------------------------------------------------------------------------------
 
-% prevent pagebreaks between the MCQ question and the following MCQ choices
-% https://tex.stackexchange.com/questions/224639/how-to-prevent-page-breaks-within-between-a-question-and-its-answer-choices-in-e
-\usepackage{etoolbox}
-\BeforeBeginEnvironment{mcq}{\par\nopagebreak\minipage{\linewidth}}
-\AfterEndEnvironment{mcq}{\endminipage}
 
 % Settings for the exam class
 \totalformat{\hfill[Total Marks: \totalpoints]}
@@ -169,45 +145,9 @@
 	\addtolength{\textwidth}{-30mm}
 }
 
-
-% itemsep=1ex, ,widest=d)
-% \setlist{topsep=0pt, partopsep=0pt, itemsep=2pt, parsep=2pt}
-% \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
-% \setlist[enumerate]{labelsep=*, leftmargin=1.5pc}
-%\setlist[enumerate,1]{label=\arabic*., ref=\arabic*}
-% \setlist[enumerate,1]{label=\alph*), ref=\theenumi.\alph*}
-% \setlist[enumerate,2]{label=\roman*), ref=\theenumii.\roman*, leftmargin=*}
-%\setlist[enumerate,2]{label=\emph{\alph*}),
-%ref=\theenumi.\emph{\alph*}}
-%\usepackage{microtype}                                  % character protusion and font expansion for better alignment at right margin
 \usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
 \usepackage{ifpdf}                                      % true if pdflatex is being used; false otherwise
 \usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
-%------------------------------------------------------------------------------
-%                                   Fonts
-%------------------------------------------------------------------------------
-
-% \usepackage[T1]{fontenc}
-% \usepackage{lmodern}
-% \usepackage[bitstream-charter]{mathdesign} % main font for document text, supports font expansion (see microtype)
-% \usepackage[scaled]{beramono}   % san serif font - used for code snippets; font expansion not available (see microtype)
-% \usepackage{textcomp}           % Provides "true" copyright symbol and many others
-% \usepackage{relsize}            % for font sizes relative to the current font
-
-%------------------------------------------------------------------------------
-%                                   PDF vs DVI Generation
-%------------------------------------------------------------------------------
-% Load packages differently depending on PDF generation or not
-% \ifpdf  % generating PDF
-%     \usepackage[outdir=./Figures/]{epstopdf}            % suitable file types are {.png,.pdf,.jpg,.jpeg}
-%                                                         % eps files will be automatically converted and
-%                                                         % saved in the Figures directory on first run of pdflatex
-%     %\usepackage[pdfusetitle]{hyperref}                  % for hyperlinks in PDF (link colours defined below)
-%     %\hypersetup{
-%     %    pdfauthor={SP Levitt},                          % remove to reuse author data
-%     %    linkbordercolor={darkblue}                      % darkblue is defined above
-%     %}%
-% \fi
 
 %------------------------------------------------------------------------------
 %                                   Commands
@@ -279,29 +219,33 @@
 
 %------------------------------------------------------------------------------
 %                      Multiple Choice Questions
-%------------------------------------------------------------------------------.
-% \newcounter{qno}
-% \addtocounter{qno}{1}
-% \newcounter{mcqno}[qno]
-% \newenvironment{mcq}%
-% {\addtocounter{mcqno}{1}\par\relax\begin{samepage}\theqno.\themcqno \quad}%
-%                 {\end{samepage}\medskip\par\pagebreak[1]}
+%------------------------------------------------------------------------------
 
-% \renewcommand{\theenumi}{(\alph{enumi})}
-% \renewcommand{\theenumii}{\roman{enumii}}
-% \renewcommand{\labelenumi}{\theenumi}
-% \renewcommand{\labelenumii}{\theenumii.}
-% \renewcommand{\p@enumi}{\theqno}
-% % \renewcommand{\p@enumii}{\theqno\theenumi--}
+% https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
+% enumitem-related constructions
+\newlist{mcq@}{enumerate}{1}
+% itemsep is the space between choices
+% labelsep is the space between the choice and the item label
+\setlist[mcq@]{label=\alph*),labelsep=0.45em, leftmargin=2.2em, itemsep=0.35\baselineskip, itemindent=-4pt}
 
-% \newenvironment{squashenum}{\begin{enumerate}\setlength{\parsep}{0pt}}%
-%                 {\end{enumerate}}
-% \providecommand{\Banum}{\begin{list}%
-%                 {(\alph{enumi})}{\usecounter{enumi}}\parskip=0pt}
-%                 \providecommand{\Eanum}{\end{list}}
-% \newcommand{\mcqi}[1][??]{\item \mbox{}\mcqsol{#1}}
-% \newcommand{\mcqsol}[1]{\relax}
+% Create list emulator
+\newenvironment{mcq}[1][]{
+	\begin{mcq@}[#1]% \begin{mcq}[<opts>]
+		\let\olditem\item% Store \item in \olditem
+		\RenewDocumentCommand{\item}{o}
+		{% Redefine \item to
+			\olditem\leavevmode% ... call \olditem...
+			\IfNoValueF{##1}{\ifprintanswers
+					\tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{12mm}\fi}% ... and possibly [..]
+		}
+		}
+		{\end{mcq@}}% \end{pointslist}
 
+% prevent pagebreaks between the MCQ question and the following MCQ choices
+% https://tex.stackexchange.com/questions/224639/how-to-prevent-page-breaks-within-between-a-question-and-its-answer-choices-in-e
+\usepackage{etoolbox}
+\BeforeBeginEnvironment{mcq}{\par\nopagebreak\minipage{\linewidth}}
+\AfterEndEnvironment{mcq}{\endminipage}
 
 
 % \RequirePackage{SPL-git}
