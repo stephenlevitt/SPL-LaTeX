@@ -46,27 +46,27 @@
 \RequirePackage{ifxetex}
 
 \RequirePackage[uprightscript,
-   charter,
-   vvarbb,
-   scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
-                                          % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
+  charter,
+  vvarbb,
+  scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+% must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
 \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
 
 \setmainfont[
-   Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+  Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
 ]{XCharter}                                                 % LaTeX font, includes OTF version for use with xelatex:
-                                                            % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
+% https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
 \newfontfamily\schoolfont{HelveticaNeueLTStd-Lt}[           % Install as a Windows font, use to typeset the school name in the title bar
-   Scale=1.1,
-   Color=003179,
-   BoldFont = Helvetica Neue LT Std
+  Scale=1.1,
+  Color=003179,
+  BoldFont = Helvetica Neue LT Std
 ]
 
 \newfontfamily\tinyfont[Scale=0.7]{Latin Modern Sans}       % a tiny version of the main beamer font
-                                                            % see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
+% see: https://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 
 \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
-                                                            % silence warnings about missing font characters
+% silence warnings about missing font characters
 
 \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif}   % selects Libertine as the quote font
 
@@ -84,32 +84,32 @@
 \usetikzlibrary{decorations.pathmorphing}
 \tikzset{
   every overlay node/.style={
-    draw=white,fill=white,rounded corners,anchor=north west,
-  },
+      draw=white,fill=white,rounded corners,anchor=north west,
+    },
 }
 % Usage:
 % \tikzoverlay at (-1cm,-5cm) {content};
 % or
 % \tikzoverlay[text width=5cm] at (-1cm,-5cm) {content};
 \def\tikzoverlay{%
-   \tikz[baseline,overlay]\node[every overlay node]
+  \tikz[baseline,overlay]\node[every overlay node]
 }%
 
 % definition of the title slide with school logo in the background
 \newcommand{\titleslide}{
-\institute{School of Electrical and Information Engineering\\University of the Witwatersrand}
-\date{\yearonly\today}
+  \institute{School of Electrical and Information Engineering\\University of the Witwatersrand}
+  \date{\yearonly\today}
 
-\begin{frame}[plain]
-   \tikz [remember picture,overlay]
+  \begin{frame}[plain]
+    \tikz [remember picture,overlay]
     \node at
-       ([xshift=-4cm,yshift=2cm]current page.center)
-        {\includegraphics[width=1.5\textwidth]{eie-circuit-logo-pale}};
-   \titlepage
-\end{frame}
+    ([xshift=-4cm,yshift=2cm]current page.center)
+    {\includegraphics[width=1.5\textwidth]{eie-circuit-logo-pale}};
+    \titlepage
+  \end{frame}
 
-% title slide is not numbered, following slides are numbered from 1
-\addtocounter{framenumber}{-1}
+  % title slide is not numbered, following slides are numbered from 1
+  \addtocounter{framenumber}{-1}
 }
 
 %------------------------------------------------------------------------------
@@ -141,9 +141,9 @@
 
 % Make commands for the quotes
 \newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-16pt,yshift=-3pt]
-     \node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
+  \node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
 \newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=-.5pt,yshift=-8pt]
-     \node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
+  \node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
 
 % quoteblock colour based on current theme
 \setbeamercolor{quoteblock}{fg=black,bg=structure.fg!75!black!10!bg}
@@ -151,30 +151,30 @@
 \RequirePackage{xparse}
 \DeclareDocumentEnvironment{signedquote}{m}
 {
-   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
-   \large
-   \begin{quote}
-   \openquote
-}
-{
-   \closequote
-   \end{quote}
-   \vskip3mm
-   \hspace*\fill{\small--- #1}
-   \end{beamercolorbox}
+  \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+    \large
+    \begin{quote}
+      \openquote
+      }
+      {
+      \closequote
+    \end{quote}
+    \vskip3mm
+    \hspace*\fill{\small--- #1}
+  \end{beamercolorbox}
 }
 
 \newenvironment{unsignedquote}%
 {
-   \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
-   \large
-   \begin{quote}
-   \openquote
-}
-{
-   \closequote
-   \end{quote}
-   \end{beamercolorbox}
+  \begin{beamercolorbox}[sep=0.15em,wd=\textwidth,rounded=true,shadow=true]{quoteblock}
+    \large
+    \begin{quote}
+      \openquote
+      }
+      {
+      \closequote
+    \end{quote}
+  \end{beamercolorbox}
 }
 
 %------------------------------------------------------------------------------
@@ -183,70 +183,70 @@
 % For realistic looking highlighter (will not handle line breaks)
 % from: http://tex.stackexchange.com/questions/5959/cool-text-highlighting-in-latex
 \newcommand\hilite[1]{%
-   \tikz[baseline,%
-   decoration={random steps,amplitude=1pt,segment length=15pt},%
-   outer sep=-15pt, inner sep = 0pt%
-   ]%
-   \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
+  \tikz[baseline,%
+    decoration={random steps,amplitude=1pt,segment length=15pt},%
+    outer sep=-15pt, inner sep = 0pt%
+  ]%
+  \node[decorate,rectangle,fill=yellow,anchor=text]{#1\xspace};%
 }%
 
 % define a keystroke, use as follows:
 % To generate a Doxygen-style comment in CodeLite: \textbf{\texttt{/**}} \keystroke{\, Enter \,}
 \newcommand*\keystroke[1]{%
-\tikz[baseline=(key.base)]
-   \node[%
-   draw,
-   fill=white,
-   drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
-   rectangle,
-   rounded corners=2pt,
-   inner sep=1pt,
-   line width=0.5pt,
-   font=\scriptsize\sffamily
-   ](key) {#1\strut}
-;
+  \tikz[baseline=(key.base)]
+  \node[%
+    draw,
+    fill=white,
+    drop shadow={shadow xshift=0.25ex,shadow yshift=-0.25ex,fill=black,opacity=0.75},
+    rectangle,
+    rounded corners=2pt,
+    inner sep=1pt,
+    line width=0.5pt,
+    font=\scriptsize\sffamily
+  ](key) {#1\strut}
+  ;
 }
 
 % from https://tex.stackexchange.com/questions/193975/highlight-only-current-subsection-hide-subsections-of-other-sections
 \newcommand{\showcurrentsubsection}[1]
 {
-   \AtBeginSubsection[]
-   {
-      \begin{frame}
+  \AtBeginSubsection[]
+  {
+    \begin{frame}
       \frametitle{#1}
       \tableofcontents
       [
-         currentsection,
-         currentsubsection,
-         subsectionstyle=show/shaded/hide
+        currentsection,
+        currentsubsection,
+        subsectionstyle=show/shaded/hide
       ]
-      \end{frame}
-   }
+    \end{frame}
+  }
 }
 
 % from https://tex.stackexchange.com/questions/193975/highlight-only-current-subsection-hide-subsections-of-other-sections
 \newcommand{\showcurrentsection}[1]
 {
-   \AtBeginSection[]
-   {
-      \begin{frame}
+  \AtBeginSection[]
+  {
+    \begin{frame}
       \frametitle{#1}
       \tableofcontents
       [
-         currentsection,
-         % currentsubsection,
-         % subsectionstyle=show/shaded/hide
+        currentsection,
+        % currentsubsection,
+        % subsectionstyle=show/shaded/hide
       ]
-      \end{frame}
-   }
+    \end{frame}
+  }
 }
 
 % When creating an empty section to have an empty slide footer, hide the associated bookmark in the pdf file
 % From: https://tex.stackexchange.com/questions/449667/how-to-remove-a-specific-section-from-bookmarks
 \newcommand{\hiddensection}{
-   \hypersetup{bookmarksdepth=-1}
-   \section{}
-   \hypersetup{bookmarksdepth} %sections are back
+  \hypersetup{bookmarksdepth=-1}
+  \section{}
+  \hypersetup{bookmarksdepth} %sections are back
 }
 
 
@@ -255,18 +255,18 @@
 %------------------------------------------------------------------------------
 % See: https://tex.stackexchange.com/questions/232168/normal-text-is-invisible-when-using-beamer-with-notes-and-xelatex
 \newcommand\present{
-   \makeatletter  % sets the font color back to theme's default color - otherwise black code in listings goes missing
-   \def\beamer@framenotesbegin{% at beginning of slide
-      \usebeamercolor[fg]{normal text}
-         \gdef\beamer@noteitems{}%
-         \gdef\beamer@notes{}%
-   }
-   \makeatother
+  \makeatletter  % sets the font color back to theme's default color - otherwise black code in listings goes missing
+  \def\beamer@framenotesbegin{% at beginning of slide
+    \usebeamercolor[fg]{normal text}
+    \gdef\beamer@noteitems{}%
+    \gdef\beamer@notes{}%
+  }
+  \makeatother
 
-   % produce slides with adjacent notes
-   \usepackage{pgfpages}
-   \setbeamertemplate{note page}[plain]
-   \setbeameroption{show notes on second screen} % Extend to second screen
+  % produce slides with adjacent notes
+  \usepackage{pgfpages}
+  \setbeamertemplate{note page}[plain]
+  \setbeameroption{show notes on second screen} % Extend to second screen
 }
 
 %------------------------------------------------------------------------------
