@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{exam-packages}[2023/04/16 Common packages, commands, etc for exams]
+\ProvidesPackage{eie-exam}[2023/04/16 Common packages, commands, etc for exams]
 \typeout{Document Style `eie-exam.sty' <2023/04/16>}
 \typeout{Rev. 1.0}
 
@@ -37,7 +37,7 @@
 
 % Settings for the exam class
 \totalformat{\hfill[Total Marks: \totalpoints]}
-\newcommand{\dropthetotal}{\vspace{10mm}\droptotalpoints} % spacing to total points
+\newcommand{\droptotal}{\vspace{10mm}\droptotalpoints} % spacing to total points
 
 \newcommand{\eiecoverpages}{
 	\addtolength{\evensidemargin}{-15mm}
@@ -236,7 +236,7 @@
 		{% Redefine \item to
 			\olditem\leavevmode% ... call \olditem...
 			\IfNoValueF{##1}{\ifprintanswers
-					\tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{12mm}\fi}% ... and possibly [..]
+					\tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{10mm}\fi}% ... and possibly [..]
 		}
 		}
 		{\end{mcq@}}% \end{pointslist}
