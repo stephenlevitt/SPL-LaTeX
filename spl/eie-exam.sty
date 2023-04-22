@@ -28,6 +28,8 @@
 \usepackage{pdflscape}                                  % for landscape layout in pdf
 \usepackage{tabto}                                  % tab to a fixed horizontal position in a line
 \usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
+\usepackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
+
 
 % Settings for the exam class
 \totalformat{\hfill[Total Marks: \totalpoints]}
@@ -36,6 +38,30 @@
 %------------------------------------------------------------------------------
 %                               Cover pages
 %------------------------------------------------------------------------------
+\newcommand{\examheader}{
+  \pagestyle{head}
+  \lhead{\eeCCode}
+  \chead{\eeCName}
+  \rhead{Page \thepage\ of \numpages}
+}
+
+
+\newcommand{\pagedimensions}{
+  \setlength{\topmargin}{-3mm}
+  \setlength{\headheight}{5mm}
+  \setlength{\headsep}{15mm}
+  \setlength{\textheight}{240mm}
+  \setlength{\footskip}{0mm}
+  \setlength{\oddsidemargin}{0mm}
+  \setlength{\evensidemargin}{0mm}
+  \setlength{\parskip}{\medskipamount}
+  \setlength{\parindent}{0em}
+  \setlength{\unitlength}{1mm}
+  \setlength{\marginparwidth}{40pt}
+  \setlength{\marginparsep}{10pt}
+}
+
+
 \newcommand{\eiecoverpages}{
   \addtolength{\evensidemargin}{-15mm}
   \addtolength{\oddsidemargin}{-15mm}
