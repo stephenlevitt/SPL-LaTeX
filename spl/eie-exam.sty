@@ -19,48 +19,96 @@
 \usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
 \usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
 \usepackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
-\usepackage{url}                                        % typeset and linked URLs, also used by natbib (incl in ltxmisc)
-\usepackage{comment}                                    % allows text to be selectively included or excluded (use for exam answers)
 \usepackage{graphicx}                                   % for including graphics
 \usepackage[svgnames]{xcolor}                           % for defining custom colours
 \graphicspath{{./Figures/}{../figures/}}                             % path for all graphics files
 \definecolor{darkblue}{rgb}{0,0,0.5}                    % 'red', 'green' and 'blue' are predefined
 \usepackage{pdflscape}                                  % for landscape layout in pdf
-\usepackage{tabto}                                  % tab to a fixed horizontal position in a line
+\usepackage{tabto}                                      % tab to a fixed horizontal position in a line
 \usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \usepackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
 
+%------------------------------------------------------------------------------
+% 													Cover Page Dimensions
+%------------------------------------------------------------------------------
 
-% Settings for the exam class
+\setlength{\topmargin}{-3mm}
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{15mm}
+\setlength{\textheight}{240mm}
+\setlength{\footskip}{0mm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0em}
+\setlength{\unitlength}{1mm}
+\setlength{\marginparwidth}{40pt}
+\setlength{\marginparsep}{10pt}
+
+%------------------------------------------------------------------------------
+
+
+\newcommand{\eeInternal}{None}
+\newcommand{\internal}[1]{\renewcommand{\eeInternal}{#1}}
+\newcommand{\eeExternal}{None}
+\newcommand{\external}[1]{\renewcommand{\eeExternal}{#1}}
+\newcommand{\eeDuration}{Three (3)}
+\newcommand{\duration}[1]{\renewcommand{\eeDuration}{#1}}
+\newcommand{\eeRequires}{None}
+\newcommand{\require}[1]{\renewcommand{\eeRequires}{#1}}
+\newcommand{\eeInstruct}{None}
+\newcommand{\instruct}[1]{\renewcommand{\eeInstruct}{#1}}
+\newcommand{\eeMonth}{TBA}
+\newcommand{\exammonth}[1]{\renewcommand{\eeMonth}{#1}}
+\newcommand{\eeType}{Type Unknown}
+\newcommand{\examtype}[1]{\renewcommand{\eeType}{#1}}
+\newcommand{\eeYoS}{TBA}
+\newcommand{\studyyear}[1]{\renewcommand{\eeYoS}{#1}}
+\newcommand{\eeFacs}{Engineering}
+\newcommand{\faculties}[1]{\renewcommand{\eeFacs}{#1}}
+\newcommand{\eeDegs}{BSc (Eng) Elec}
+\newcommand{\studydegs}[1]{\renewcommand{\eeDegs}{#1}}
+\newcommand{\eeCCode}{ELEN???}
+\newcommand{\coursecode}[1]{\renewcommand{\eeCCode}{#1}}
+\newcommand{\eeCName}{??}
+\newcommand{\coursename}[1]{\renewcommand{\eeCName}{#1}}
+
+%------------------------------------------------------------------------------
+% 												Settings for the exam class
+% ------------------------------------------------------------------------------
+
+% remove question indentation
+\renewcommand{\questionshook}{%
+  \setlength{\leftmargin}{0pt}%
+  \setlength{\labelwidth}{-\labelsep}%
+}
+
+% Set the question title format
+% https://tex.stackexchange.com/questions/353142/adjust-vertical-space-between-question-title-and-text-in-exam-class
+\qformat{\textbf{Question \thequestion}
+  \hfill
+  \vrule depth 1em width 0pt
+} % depth is the space between Question # and the first paragraph
+
+% Put the mark allocation on the right
+\setlength{\rightpointsmargin}{2.5cm} % don't push marks into margin
+\pointsdroppedatright % put marks on the right
+\marksnotpoints % use "marks" instead of "points"
+\marginpointname{ \points} % print "marks" after the mark value
+
+% Set the total marks format
 \totalformat{\hfill[Total Marks: \totalpoints]}
 \newcommand{\droptotal}{\vspace{10mm}\droptotalpoints} % spacing to total points
+
+% Exam header
+\pagestyle{head}
+\lhead{\eeCCode}
+\chead{\eeCName}
+\rhead{Page \thepage\ of \numpages}
 
 %------------------------------------------------------------------------------
 %                               Cover pages
 %------------------------------------------------------------------------------
-\newcommand{\examheader}{
-  \pagestyle{head}
-  \lhead{\eeCCode}
-  \chead{\eeCName}
-  \rhead{Page \thepage\ of \numpages}
-}
-
-
-\newcommand{\pagedimensions}{
-  \setlength{\topmargin}{-3mm}
-  \setlength{\headheight}{5mm}
-  \setlength{\headsep}{15mm}
-  \setlength{\textheight}{240mm}
-  \setlength{\footskip}{0mm}
-  \setlength{\oddsidemargin}{0mm}
-  \setlength{\evensidemargin}{0mm}
-  \setlength{\parskip}{\medskipamount}
-  \setlength{\parindent}{0em}
-  \setlength{\unitlength}{1mm}
-  \setlength{\marginparwidth}{40pt}
-  \setlength{\marginparsep}{10pt}
-}
-
 
 \newcommand{\eiecoverpages}{
   \addtolength{\evensidemargin}{-15mm}
@@ -182,6 +230,21 @@
   \end{center}
 }
 
+\newcommand{\startmcqformat}{
+  \renewcommand{\thepartno}{\thequestion.\arabic{partno}}
+  \renewcommand{\partlabel}{\thepartno \,}
+  % https://tex.stackexchange.com/questions/346634/control-the-vertical-space-in-multiple-choice-questions
+  \renewcommand{\partshook}{
+    \setlength{\itemsep}{1.3\baselineskip} % space between MCQs
+    \setlength\parsep{8pt} % space between MCQ question and first choice
+    \setlength{\partopsep}{0pt} % space between instructions and the first MCQ
+  }
+}
+
+\newcommand{\startquestionformat}{
+  \renewcommand{\thepartno}{\alph{partno}}
+  \renewcommand{\partlabel}{\thepartno)}
+}
 
 %------------------------------------------------------------------------------
 %                                   Commands
@@ -221,7 +284,7 @@
 \DeclareMathSymbol{\therefore}    {\mathrel}{AMSa}{"29}
 
 %------------------------------------------------------------------------------
-%                                   Environments
+%                                 Equation Environment
 %------------------------------------------------------------------------------
 
 % definition of "where" environment
@@ -255,7 +318,7 @@
 \addtolength{\@rcwhere}{-3\tabcolsep}
 
 %------------------------------------------------------------------------------
-%                      Multiple Choice Questions
+%                      Multiple Choice Question Environment
 %------------------------------------------------------------------------------
 
 % https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
@@ -284,48 +347,6 @@
 \BeforeBeginEnvironment{mcq}{\par\nopagebreak\minipage{\linewidth}}
 \AfterEndEnvironment{mcq}{\endminipage}
 
-
-% \RequirePackage{SPL-git}
-%------------------------------------------------------------------------------
-%                      Definition of Sidebar environment
 %------------------------------------------------------------------------------
 
-% Based on:
-% https://tex.stackexchange.com/questions/181090/alignment-of-image-in-tcolorbox
-% https://tex.stackexchange.com/questions/336201/vertical-highlight-of-a-paragraph
-
-\RequirePackage{tcolorbox}
-\tcbuselibrary{skins}
-\tcbuselibrary{breakable}
-
-% remove tikz error: https://tex.stackexchange.com/questions/165929/semiverbatim-with-tikz-in-beamer
-\makeatletter
-\global\let\tikz@ensure@dollar@catcode=\relax
-\makeatother
-
-\newtcolorbox{Sidebar}{
-  breakable,  % can break across pages
-  enhanced,   % skin
-  beforeafter skip=6mm, % space above and below bounding box
-  % after skip=6mm, % space below bounding box
-  right=4mm,  % right margin of bounding box to text
-  top=-2pt,    % top of bounding box to text
-  bottom=0pt, % bottom of bounding box to text
-  colback=white, % background colour of bounding box
-  width=\textwidth,
-  grow to left by=11.5mm, % modify left margin, without moving right margin
-  %show bounding box, % display bounding box
-  boxsep=4pt,
-  boxrule=0pt,frame hidden,
-  borderline west={.3mm}{12mm}{black}, % colour left bounding box margin
-  fontupper=\small, % change font in upper box (here it is the only box)
-  leftupper=1.5cm, % space from left-hand box margin to text
-  overlay={ % overlay GitHub logo
-      \node[anchor=north west]
-      at ([xshift=4pt,yshift=4pt]frame.north west)
-      {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
-}
-
-%------------------------------------------------------------------------------
-
-% end of file - SPL-exam.sty
+% end of file - eie-exam.sty
