@@ -7,26 +7,17 @@
 %                                   Packages
 %------------------------------------------------------------------------------
 \RequirePackage[l2tabu, orthodox]{nag}                  % checks for deprecated LaTeX commands
-\usepackage[british]{babel}
-\usepackage{booktabs}                                   % nicer tables
-\usepackage{multirow}
-\usepackage{fancybox}                                   % boxed text, equations, required by the seminar class
-\usepackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
-\usepackage{amsmath}                                    % very useful math functionality
-\usepackage{currfile}                                   % ascertain the file's name
-\usepackage[margin=12pt,font=small,labelfont=bf]{caption}% For figure captions and subfigures - see subcaption (included in caption)
-\usepackage[margin=10pt,format=hang]{subcaption}        % better replacement for subfig
-\usepackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
-\usepackage{boxedminipage}                              % boxedminipage environment (incl in ltxmisc)
-\usepackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
-\usepackage{graphicx}                                   % for including graphics
-\usepackage[svgnames]{xcolor}                           % for defining custom colours
+\RequirePackage[british]{babel}
+\RequirePackage{booktabs}                                   % nicer tables
+\RequirePackage{multirow}
+\RequirePackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
+\RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
+\RequirePackage{graphicx}                                   % for including graphics
+\RequirePackage[svgnames]{xcolor}                           % for defining custom colours
 \graphicspath{{./Figures/}{../figures/}}                             % path for all graphics files
-\definecolor{darkblue}{rgb}{0,0,0.5}                    % 'red', 'green' and 'blue' are predefined
-\usepackage{pdflscape}                                  % for landscape layout in pdf
-\usepackage{tabto}                                      % tab to a fixed horizontal position in a line
-\usepackage{enumitem}                                   % for control over enumerate, itemize and description lists
-\usepackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
+\RequirePackage{tabto}                                      % tab to a fixed horizontal position in a line
+\RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
+\RequirePackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
 
 %------------------------------------------------------------------------------
 % 													Cover Page Dimensions
