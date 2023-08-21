@@ -25,18 +25,18 @@
 
 % base style for C++
 \lstdefinestyle{base}{
-basicstyle=\lst@ifdisplaystyle\ttfamily\small\fi, %https://tex.stackexchange.com/questions/161549/scaling-inline-code-to-the-current-font-size
-tabsize=3,
-autogobble,
-language=[11]C++,
-morekeywords={override, default, final, constexpr, char8_t, concept, co_await, co_return, co_yield, requires, import, module}, % C++20 keywords
-showstringspaces=false,
-breaklines=true,
-breakatwhitespace=true,
-captionpos=b,
-moredelim=[il]{//*},
-escapeinside=\`\`,
-escapechar=\`,
+  basicstyle=\lst@ifdisplaystyle\ttfamily\small\fi, %https://tex.stackexchange.com/questions/161549/scaling-inline-code-to-the-current-font-size
+  tabsize=3,
+  autogobble,
+  language=[11]C++,
+  morekeywords={override, default, final, constexpr, char8_t, concept, co_await, co_return, co_yield, requires, import, module}, % C++20 keywords
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  captionpos=b,
+  moredelim=[il]{//*},
+  escapeinside=\`\`,
+  escapechar=\`,
 }
 
 % base style modifiers
@@ -59,12 +59,12 @@ escapechar=\`,
 
 % styles for slides
 \lstdefinestyle{slide}{
-		style=base,
-		style=coloured,
-		escapeinside={(*@}{@*)},
-		escapechar=\$,
-    moredelim=**[is][{\btHL[fill=yellow]}]{`}{`}, % yellow highlight
-    moredelim=**[is][{\btHL[name=X,draw=red,solid,thick]}]{@}{@}, % red border
+  style=base,
+  style=coloured,
+  escapeinside={(*@}{@*)},
+  escapechar=\$,
+  moredelim=**[is][{\btHL[fill=yellow]}]{`}{`}, % yellow highlight
+  moredelim=**[is][{\btHL[name=X,draw=red,solid,thick]}]{@}{@}, % red border
 }
 
 % Use the commented numbered-style going forward from 2023
@@ -78,12 +78,12 @@ escapechar=\`,
 
 % rule after listing
 \newcommand{\coderule}{
-\vspace{-5.5mm}
-\makebox[0pt][l]{%
-  \rule[-1pt]{\textwidth}{.4pt}%
-  \rule[-2.6pt]{4pt}{4pt}
-}%
-\vspace{2mm}
+  \vspace{-5.5mm}
+  \makebox[0pt][l]{%
+    \rule[-1pt]{\textwidth}{.4pt}%
+    \rule[-2.6pt]{4pt}{4pt}
+  }%
+  \vspace{2mm}
 }
 
 %------------------------------------------------------------------------------
@@ -118,12 +118,12 @@ escapechar=\`,
 \makeatletter
 \newenvironment{btHighlight}[1][]
 {\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
-{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
+    {\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
 
 \newcommand\btHL[1][]{%
   \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
-}
-\def\bt@HL@endenv{%
+    }
+    \def\bt@HL@endenv{%
   \end{btHighlight}%
   \egroup
 }
@@ -184,3 +184,98 @@ escapechar=\`,
 %  title={Listing \thetcbcounter:  #2},#1%
 %  borderline north={8pt}{14.4pt}{red!25,dashed},
 %}
+
+%------------------------------------------------------------------------------
+
+% Changing the background colour of specific lines in a listing
+
+% error with new version of listings. Fix from
+% https://tex.stackexchange.com/questions/451532/recent-issues-with-lstlinebgrd-package-with-listings-after-the-latters-updates
+\makeatletter
+\let\old@lstKV@SwitchCases\lstKV@SwitchCases
+\def\lstKV@SwitchCases#1#2#3{}
+\makeatother
+\usepackage{lstlinebgrd}
+\makeatletter
+\let\lstKV@SwitchCases\old@lstKV@SwitchCases
+
+\lst@Key{numbers}{none}{%
+  \def\lst@PlaceNumber{\lst@linebgrd}%
+  \lstKV@SwitchCases{#1}%
+  {none:\\%
+    left:\def\lst@PlaceNumber{\llap{\normalfont
+        \lst@numberstyle{\thelstnumber}\kern\lst@numbersep}\lst@linebgrd}\\%
+    right:\def\lst@PlaceNumber{\rlap{\normalfont
+        \kern\linewidth \kern\lst@numbersep
+        \lst@numberstyle{\thelstnumber}}\lst@linebgrd}%
+  }{\PackageError{Listings}{Numbers #1 unknown}\@ehc}}
+\makeatother
+
+% background color + overlays
+% http://tex.stackexchange.com/questions/8851/how-can-i-highlight-some-lines-from-source-code
+\makeatletter
+
+\newcount\bt@rangea
+\newcount\bt@rangeb
+
+\newcommand\btIfInRange[2]{%
+  \global\let\bt@inrange\@secondoftwo%
+  \edef\bt@rangelist{#2}%
+  \foreach \range in \bt@rangelist {%
+    \afterassignment\bt@getrangeb%
+    \bt@rangea=0\range\relax%
+    \pgfmathtruncatemacro\result{ ( #1 >= \bt@rangea) && (#1 <= \bt@rangeb) }%
+    \ifnum\result=1\relax%
+      \breakforeach%
+      \global\let\bt@inrange\@firstoftwo%
+    \fi%
+  }%
+  \bt@inrange%
+}
+
+\newcommand\bt@getrangeb{%
+  \@ifnextchar\relax%
+  {\bt@rangeb=\bt@rangea}%
+  {\@getrangeb}%
+}
+
+\def\@getrangeb-#1\relax{%
+  \ifx\relax#1\relax%
+    \bt@rangeb=100000%   \maxdimen is too large for pgfmath
+  \else%
+    \bt@rangeb=#1\relax%
+  \fi%
+}
+
+\@ifclassloaded{beamer}{
+\newcommand<>{\highlight}[1]{%
+\only#2{\btIfInRange{\value{lstnumber}}{#1}{\color{\lstbackgroundcolor}\def\lst@linebgrdcmd{\color@block}}{\def\lst@linebgrdcmd####1####2####3{}}}%
+}%
+}{}
+\makeatother
+
+\def\lstbackgroundcolor{red!30}
+
+% Can be used as follows:
+% \begin{document}
+
+% \begin{frame}[fragile]{Problem}
+%   Test programme:
+%   \begin{lstlisting}[%
+%     language=C,
+%     gobble=4,
+%    linebackgroundcolor={%
+%        \btLstHL<1>{1,3,5-6}%
+%        \btLstHL<2>{4}%
+%    },
+%     backgroundcolor=\color{gray!20}
+% ]
+%     #include <stdio.h>
+
+%     int main(void) {%
+%     printf("Hello World!");
+%         return 0;
+%     }
+% \end{lstlisting}
+% \end{frame}
+% \end{document}
