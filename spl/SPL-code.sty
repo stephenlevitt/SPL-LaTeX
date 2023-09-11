@@ -17,6 +17,10 @@
 \RequirePackage{listings}
 \RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
 
+% Use \autoref{label} for referring to listings and line numbers
+\providecommand*{\listingautorefname}{Listing}% referencing listings
+\providecommand*{\lstnumberautorefname}{line}% for labelling line numbers in code listings
+
 % colour definitions for code listings
 \RequirePackage{color}
 \definecolor{blue}{rgb}{0.13,0.13,1}
@@ -42,11 +46,11 @@
 % base style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.5em, xrightmargin=1.5em}
 \lstdefinestyle{framed}{frame=tlrb, framexleftmargin=1mm, aboveskip=2em, abovecaptionskip=4mm, rulecolor = \color{black}}
-\lstdefinestyle{numbered}{numbers=left, numberstyle=\ttfamily\color{black!35}\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em}
-\lstdefinestyle{numbered-print}{numbers=left, numberstyle=\ttfamily\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em}
+\lstdefinestyle{numbered}{numbers=left, numberstyle=\ttfamily\color{black!35}\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em} % grey numbers
+\lstdefinestyle{numbered-print}{numbers=left, numberstyle=\ttfamily\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em} % black numbers
 \lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}}
 
-% styles for documents
+% ======================= Document Styles ======================
 \lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size with MatchLowercase, cannot be coloured
 \lstdefinestyle{snippet}{style=base, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{in-frame}{style=base, style=framed}
@@ -54,10 +58,10 @@
 \lstdefinestyle{output}{style=in-frame, style=indented, keywordstyle={}}
 \lstdefinestyle{ruled}{basicstyle=\small\ttfamily, breaklines=true, frame=tb, framextopmargin=2mm, framexbottommargin=2mm, rulecolor=\color{gray!90}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=3.2ex, belowskip=1.45ex}
 \lstdefinestyle{boxed}{basicstyle=\small\ttfamily, breaklines=true, backgroundcolor=\color{gray!15}, frame=single, rulecolor=\color{gray!50}, xleftmargin=3pt, xrightmargin=3pt, aboveskip=1.2ex, belowskip=0.45ex}
-\lstdefinestyle{exercise-print}{style=in-frame, style=numbered-print}
+\lstdefinestyle{exercise-print}{style=in-frame, style=numbered-print} % black and white
 \lstdefinestyle{exercise}{style=in-frame, style=numbered, style=coloured}
 
-% styles for slides
+% ======================= Slide Styles ======================
 \lstdefinestyle{slide}{
   style=base,
   style=coloured,
@@ -67,12 +71,9 @@
   moredelim=**[is][{\btHL[name=X,draw=red,solid,thick]}]{@}{@}, % red border
 }
 
-% Use the commented numbered-style going forward from 2023
 \lstdefinestyle{numbered-slide}{style=slide, style=numbered, frame=l, framexleftmargin=1mm, rulecolor = \color{black!35}}
-% old version: prior to 2023
-% \lstdefinestyle{numbered-slide}{style=slide, style=numbered}
 
-% styles for MCQ
+% ======================= MCQ Styles ======================
 \lstdefinestyle{mcq}{style=base, style=framed, xrightmargin=2.5em}
 \lstdefinestyle{numbered-mcq}{style=mcq, style=numbered-print, xleftmargin=4.5em}
 
@@ -279,3 +280,5 @@
 % \end{lstlisting}
 % \end{frame}
 % \end{document}
+
+%------------------------------------------------------------------------------
