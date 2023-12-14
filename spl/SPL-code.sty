@@ -15,6 +15,7 @@
 \fi
 
 \RequirePackage{listings}
+\lstMakeShortInline[language=C++,basicstyle=\ttfamily]| % use |...| for inline code
 \RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
 
 % Use \autoref{label} for referring to listings and line numbers
@@ -45,13 +46,13 @@
 
 % base style modifiers
 \lstdefinestyle{indented}{xleftmargin=1.5em, xrightmargin=1.5em}
-\lstdefinestyle{framed}{frame=tlrb, framexleftmargin=1mm, aboveskip=2em, abovecaptionskip=4mm, rulecolor = \color{black}}
+\lstdefinestyle{framed}{frame=tlrb, framexleftmargin=1mm, aboveskip=2em, abovecaptionskip=1.5ex, rulecolor = \color{black}}
 \lstdefinestyle{numbered}{numbers=left, numberstyle=\ttfamily\color{black!35}\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em} % grey numbers
 \lstdefinestyle{numbered-print}{numbers=left, numberstyle=\ttfamily\footnotesize, xleftmargin=2.5em, xrightmargin=2.5em} % black numbers
 \lstdefinestyle{coloured}{stringstyle=\color{darkbrown}, commentstyle=\color{green}\itshape, keywordstyle=\color{blue}}
 
 % ======================= Document Styles ======================
-\lstdefinestyle{inline}{basicstyle=\ttfamily} % font size is scaled to surrounding font size with MatchLowercase, cannot be coloured
+\lstdefinestyle{inline}{basicstyle=\ttfamily, escapeinside=\`\`} % font size is scaled to surrounding font size with MatchLowercase, cannot be coloured
 \lstdefinestyle{snippet}{style=base, style=indented, aboveskip=1.2ex, belowskip=0.45ex}
 \lstdefinestyle{in-frame}{style=base, style=framed}
 \lstdefinestyle{appendix}{style=base, style=framed}
@@ -73,9 +74,15 @@
 
 \lstdefinestyle{numbered-slide}{style=slide, style=numbered, frame=l, framexleftmargin=1mm, rulecolor = \color{black!35}}
 
-% ======================= MCQ Styles ======================
+% ======================= Test and Exam Styles ======================
+
 \lstdefinestyle{mcq}{style=base, style=framed, xrightmargin=2.5em}
 \lstdefinestyle{numbered-mcq}{style=mcq, style=numbered-print, xleftmargin=4.5em}
+
+\lstdefinestyle{quest-full-frame}{style=base, xleftmargin=0.5em, xrightmargin=0.5em, frame=tlrb, aboveskip=1.7ex, abovecaptionskip=1.5ex, rulecolor = \color{black}}
+
+% ===================================================================
+
 
 % rule after listing
 \newcommand{\coderule}{
