@@ -99,6 +99,23 @@
 \newcommand{\droptotal}{\vspace{5mm}\droptotalpoints} % spacing to total points
 
 % Exam header
+
+\newcommand*{\subtractfrompagecount}[1]
+{
+  \def\numpages{\@ifundefined{exam@lastpage}%
+    {\mbox{\normalfont\bf ??}}%
+    \the\numexpr\exam@lastpage-#1\relax
+  }% numpages
+}
+
+
+% Redefine numpages to exclude reference sheets for SD3
+% \newcommand*{
+% \def\numpages{\@ifundefined{exam@lastpage}%
+%   {\mbox{\normalfont\bf ??}}%
+%   \the\numexpr\exam@lastpage-6\relax
+% }% numpages
+
 \pagestyle{head}
 \lhead{\eeCCode}
 \chead{\eeCName}
