@@ -1,7 +1,36 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{eie-exam-2}[2023/04/16 Common packages, commands, etc for exams]
-\typeout{Document Style `eie-exam.sty' <2023/04/16>}
+\RequirePackage{ifxetex}
+\ProvidesPackage{eie-exam-2}[2024/08/28 Common packages, commands, etc for exams]
+\typeout{Document Style `eie-exam-2.sty' <2024/08/28>}
 \typeout{Rev. 1.0}
+
+\ifxetex
+  % XeTeX is needed to use the selected fonts
+
+  \RequirePackage[uprightscript,
+    charter,
+    vvarbb,
+    scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+  % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
+
+  \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
+  \setmainfont[
+    Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+  ]{XCharter}                                                 % Install as LaTeX font package, includes OTF version for use with xelatex:
+  % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
+
+  % define a fontfamily for the mono-spaced code font so that the code font can be selected for minted listings (not used globallly)
+  % see the fontspec manual "Specifically choosing the NFSS family" for the NFSSFamily argument
+  \newfontfamily{\codefont}{InconsolataLGCMarkup}[NFSSFamily=codefont, Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]
+
+\else
+  \errmessage{This document must be compiled with XeTeX}
+\fi
+
+% \setmonofont[Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]{InconsolataLGCMarkup}
+\RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
+% silence warnings about missing font characters
+
 
 %------------------------------------------------------------------------------
 %                                   Packages
@@ -19,11 +48,9 @@
 \RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
 \RequirePackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
 \RequirePackage{parskip}
-\RequirePackage{shadow}                                     % shadow-boxed text (incl in ltxmisc)
 \RequirePackage{anyfontsize}                % remove error messages re: font sizes
 
-\RequirePackage[pdfusetitle,hidelinks]{hyperref}            % for hyperlinks in PDF (link colours defined below)
-
+\RequirePackage[pdfusetitle]{hyperref}            % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
   pdfauthor={SP Levitt},                                      % remove to reuse author data
   hidelinks,                          % do not colour hyperlinks
@@ -109,7 +136,17 @@
 \totalformat{\hfill[Total Marks: \totalpoints]}
 \newcommand{\droptotal}{\vspace{5mm}\droptotalpoints} % spacing to total points
 
-% Exam header
+% --------------------------- Header -----------------------------
+
+% Allow the total page count to exclude the reference sheets
+% adapted from: https://tex.stackexchange.com/questions/153106/how-can-i-adjust-the-total-page-count-variable
+\newcommand*{\subtractfrompagecount}[1]
+{
+  \def\numpages{\@ifundefined{exam@lastpage}%
+    {\mbox{\normalfont\bf ??}}%
+    \the\numexpr\exam@lastpage-#1\relax
+  }% numpages
+}
 \pagestyle{head}
 \lhead{\eeCCode}
 \chead{\eeCName}
@@ -239,6 +276,22 @@
   \end{center}
 }
 
+
+% ------------------------------------------------------------------------------
+%                          Long Questions
+% ------------------------------------------------------------------------------
+
+\newcommand{\startquestionformat}{
+  \renewcommand{\thepartno}{\alph{partno}}
+  \renewcommand{\partlabel}{\thepartno)}
+  \renewcommand{\partshook}{} % no special hook
+  \setlength{\parskip}{0.7em} % paragraph spacing
+}
+
+%------------------------------------------------------------------------------
+%                      Multiple Choice QuestionS
+%------------------------------------------------------------------------------
+
 \newcommand{\startmcqformat}{
   \renewcommand{\thepartno}{\thequestion.\arabic{partno}}
   \renewcommand{\partlabel}{\thepartno \,}
@@ -249,88 +302,6 @@
     \setlength{\itemsep}{1.3\baselineskip} % space between MCQs
   }
 }
-
-\newcommand{\startquestionformat}{
-  \renewcommand{\thepartno}{\alph{partno}}
-  \renewcommand{\partlabel}{\thepartno)}
-  \renewcommand{\partshook}{} % no special hook
-  \setlength{\parskip}{0.7em} % paragraph spacing
-}
-
-%------------------------------------------------------------------------------
-%                                   Commands
-%------------------------------------------------------------------------------
-
-% \usepackage{texnames}                                   % defines \LaTeX \BibTeX etc
-\usepackage{ifpdf}                                      % true if pdflatex is being used; false otherwise
-% \usepackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
-% typeset C++
-% \protected\def\CPlusPlus{C\nolinebreak[4]\hspace{-.04em}\raisebox{.21ex}{\relsize{-1.5}{\textbf{++}}}} % internal definition of C++; rather use \CPP
-% \newcommand{\CPP}{\texorpdfstring{\CPlusPlus}{C++}} % allows PDF bookmarks to use normal text instead of typeset \CPlusPlus, use \CPP{} to add a trailing space
-
-% typeset maths symbols, urls, etc. nicely
-% \newcommand{\jw}{j\omega}
-% \newcommand{\w}{\omega}
-% \newcommand{\matlab}{\mbox{\textrm{M\kern-.05em\textsc{a\kern-.01em t\kern-.05em\-l\kern-.05em a\kern-.05em b}}}\xspace}
-
-
-% Macro for easy inclusion of figures
-% arguments:
-% #1 - Short figure name for toc [optional]
-% #2 - Figure filename
-% #3 - Scale (1 == no scaling)
-% #4 - Long figure name for caption
-% \newcommand{\inputfig}[4][\DefaultCap]
-% {\def\DefaultCap{#4}
-%   \begin{figure}[htbp]
-%     \begin{center}
-%       \includegraphics[#3]{#2}
-%       \caption[#1]{#4}   % includes fig num
-%       \label{fig:#2} % ie may \ref{fig:#2}  % label is fig:<filename>
-%     \end{center}
-%   \end{figure}
-% }
-
-% \DeclareSymbolFont{AMSa}{U}{msa}{m}{n}
-% \DeclareMathSymbol{\therefore}    {\mathrel}{AMSa}{"29}
-
-%------------------------------------------------------------------------------
-%                                 Equation Environment
-%------------------------------------------------------------------------------
-
-% definition of "where" environment
-% for typesetting equations followed by an explanation of each symbol
-% \RequirePackage{array}
-% \newenvironment{where}
-% {
-%   \setlength{\@rcwhere}{\textwidth}
-%   \addtolength{\@rcwhere}{-\@lcsym}
-%   \addtolength{\@rcwhere}{-\@spwhere}
-%   \addtolength{\@rcwhere}{-\@eqwhere}
-%   \addtolength{\@rcwhere}{-3\tabcolsep}
-%   where \hfill \nopagebreak\\ \hspace*{\@spwhere}
-%   \begin{tabular}{>{\hfill\(}p{\@lcsym}<{\)}@{ = }p{\@rcwhere}}
-%     }
-%     {\end{tabular}}
-
-% \newlength{\@lcsym} \setlength{\@lcsym}{5em}
-% \newlength{\@mcsym} \setlength{\@mcsym}{2em}
-% \newlength{\@rcsym} \setlength{\@rcsym}{\textwidth}
-% % KJN fix to remove annoying warning about overfull box
-% \addtolength{\@rcsym}{-8pt}
-% \addtolength{\@rcsym}{-\@lcsym}
-% \addtolength{\@rcsym}{-\@mcsym}
-% \newlength{\@spwhere} \setlength{\@spwhere}{2em}
-% \newlength{\@eqwhere} \settowidth{\@eqwhere}{ = }
-% \newlength{\@rcwhere} \setlength{\@rcwhere}{\textwidth}
-% \addtolength{\@rcwhere}{-\@lcsym}
-% \addtolength{\@rcwhere}{-\@spwhere}
-% \addtolength{\@rcwhere}{-\@eqwhere}
-% \addtolength{\@rcwhere}{-3\tabcolsep}
-
-%------------------------------------------------------------------------------
-%                      Multiple Choice Question Environment
-%------------------------------------------------------------------------------
 
 % https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
 % enumitem-related constructions
@@ -359,5 +330,7 @@
 \AfterEndEnvironment{mcq}{\endminipage}
 
 %------------------------------------------------------------------------------
+
+
 
 % end of file - eie-exam.sty
