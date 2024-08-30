@@ -14,9 +14,8 @@
   % The code listings font looks better with XeTeX but pdfLaTeX can be used as well with the default monospaced font.
 \fi
 
-\RequirePackage{listings}
-\lstMakeShortInline[language=C++,basicstyle=\ttfamily]| % use |...| for inline code
-\RequirePackage{lstautogobble}  % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
+\RequirePackage{listings, lstautogobble} % gobble up leading spaces and preserve indentation, from https://www.ctan.org/pkg/lstaddons
+\lstMakeShortInline[basicstyle=\ttfamily]| % use |...| for inline code
 
 % Use \autoref{label} for referring to listings and line numbers
 \providecommand*{\listingautorefname}{Listing}% referencing listings
@@ -32,7 +31,7 @@
 \lstdefinestyle{base}{
   basicstyle=\lst@ifdisplaystyle\ttfamily\small\fi, %https://tex.stackexchange.com/questions/161549/scaling-inline-code-to-the-current-font-size
   tabsize=3,
-  autogobble,
+  autogobble=true,
   language=[11]C++,
   morekeywords={override, default, final, constexpr, char8_t, concept, co_await, co_return, co_yield, requires, import, module}, % C++20 keywords
   showstringspaces=false,
@@ -289,3 +288,46 @@
 % \end{document}
 
 %------------------------------------------------------------------------------
+%           Gobble up leading spaces in listings when using lstinputlisting
+%
+% From: https://tex.stackexchange.com/questions/83340/unindent-code-inserted-with-lstinputlisting
+%
+% Works partially, but messes up the spacing to the line numbers
+% Use as follows:
+%   \lstinputlisting[style=numbered-slide,xgobble=2,firstnumber=5,linerange={24-36}]{"../file.cpp"}
+%
+% Gobble works with the minted package when reading a listing from a file:
+% https://tex.stackexchange.com/questions/558268/remove-leading-space-with-lstinputlisting
+%
+%------------------------------------------------------------------------------
+
+% \usepackage{xkeyval}
+
+% \def\lsttextstyle{\footnotesize\ttfamily}
+
+% \lstset{
+%   language=bash,
+%   xleftmargin=4\myspace,
+%   basicstyle=\lsttextstyle,
+%   numbers=left,
+%   numbersep=2\myspace
+% }
+
+% \newlength{\myspace}
+% \settowidth{\myspace}{\lsttextstyle{\ }}
+
+% \newlength{\mytemp}
+% \newlength{\mytempb}
+
+% \makeatletter
+% \define@key{lst}{xgobble}{%
+%   \setlength{\mytemp}{\lst@xleftmargin}
+%   \addtolength{\mytemp}{-#1\myspace}
+%   \def\lst@xleftmargin{\mytemp}%
+%   \setlength{\mytempb}{\lst@numbersep}
+%   \addtolength{\mytempb}{-#1\myspace}
+%   \def\lst@numbersep{\mytempb}%
+% }
+% \makeatother
+
+% -----------------------------------------------------------------------------
