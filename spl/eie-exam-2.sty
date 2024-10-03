@@ -5,32 +5,31 @@
 \typeout{Rev. 1.0}
 
 \ifxetex
-  % XeTeX is needed to use the selected fonts
+% XeTeX is needed to use the selected fonts
 
-  \RequirePackage[uprightscript,
-    charter,
-    vvarbb,
-    scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
-  % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
+\RequirePackage[uprightscript,
+  charter,
+  vvarbb,
+scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+% must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
 
-  \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
-  \setmainfont[
-    Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
-  ]{XCharter}                                                 % Install as LaTeX font package, includes OTF version for use with xelatex:
-  % https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
+\RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
+\setmainfont[
+  Ligatures=TeX,                                          % [Ligatures=TeX] required for smart quotes, m-dashes etc.
+]{XCharter}                                                 % Install as LaTeX font package, includes OTF version for use with xelatex:
+% https://tex.stackexchange.com/questions/205532/charter-font-with-xelatex
 
-  % define a fontfamily for the mono-spaced code font so that the code font can be selected for minted listings (not used globallly)
-  % see the fontspec manual "Specifically choosing the NFSS family" for the NFSSFamily argument
-  \newfontfamily{\codefont}{InconsolataLGCMarkup}[NFSSFamily=codefont, Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]
+% define a fontfamily for the mono-spaced code font so that the code font can be selected for minted listings (not used globallly)
+% see the fontspec manual "Specifically choosing the NFSS family" for the NFSSFamily argument
+\newfontfamily{\codefont}{InconsolataLGCMarkup}[NFSSFamily=codefont, Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]
 
 \else
-  \errmessage{This document must be compiled with XeTeX}
+\errmessage{This document must be compiled with XeTeX}
 \fi
 
 % \setmonofont[Extension=.otf, ItalicFont =*-Italic, BoldFont=*-Bold, Scale=MatchLowercase]{InconsolataLGCMarkup}
 \RequirePackage[verbose=silent]{microtype}                  % character protusion and font expansion for better alignment at right margin;
 % silence warnings about missing font characters
-
 
 %------------------------------------------------------------------------------
 %                                   Packages
@@ -46,7 +45,7 @@
 \graphicspath{{./Figures/}{../figures/}}                             % path for all graphics files
 \RequirePackage{tabto}                                      % tab to a fixed horizontal position in a line
 \RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
-\RequirePackage{pdfpages}																		% for including pdf files (useful for appending reference sheets)
+\RequirePackage{pdfpages}                                    % for including pdf files (useful for appending reference sheets)
 \RequirePackage{parskip}
 \RequirePackage{anyfontsize}                % remove error messages re: font sizes
 
@@ -57,9 +56,8 @@
   pdfpagemode=UseNone                     % hide the sidebar when opening the document
 }%
 
-
 %------------------------------------------------------------------------------
-% 													Cover Page Dimensions
+%                           Cover Page Dimensions
 %------------------------------------------------------------------------------
 
 \setlength{\topmargin}{-3mm}
@@ -77,7 +75,6 @@
 
 %------------------------------------------------------------------------------
 
-
 \newcommand{\eeInternal}{None}
 \newcommand{\internal}[1]{\renewcommand{\eeInternal}{#1}}
 \newcommand{\eeExternal}{None}
@@ -91,7 +88,7 @@
 \newcommand{\eeMonth}{TBA}
 \newcommand{\exammonth}[1]{\renewcommand{\eeMonth}{#1}}
 \newcommand{\eeType}{Type Unknown}
-\newcommand{\examtype}[1]{\renewcommand{\eeType}{#1}}
+\newcommand{\assessment}[1]{\renewcommand{\eeType}{#1}}
 \newcommand{\eeYoS}{TBA}
 \newcommand{\studyyear}[1]{\renewcommand{\eeYoS}{#1}}
 \newcommand{\eeFacs}{Engineering}
@@ -104,7 +101,7 @@
 \newcommand{\coursename}[1]{\renewcommand{\eeCName}{#1}}
 
 %------------------------------------------------------------------------------
-% 												Settings for the exam class
+%                         Settings for the exam class
 % ------------------------------------------------------------------------------
 
 % remove question indentation
@@ -149,7 +146,7 @@
 }
 \pagestyle{head}
 \lhead{\eeCCode}
-\chead{\eeCName}
+% \chead{\eeCName}
 \rhead{Page \thepage\ of \numpages}
 
 %------------------------------------------------------------------------------
@@ -167,8 +164,10 @@
     % temporarily shift the margins
     \fbox{\parbox[c]{25mm}{\raggedleft hrs}}\hspace*{10mm}
     \fbox{\parbox[c]{25mm}{\centering ~~/~~/20~~}}\hspace*{10mm}
-    \fbox{\parbox[c]{50mm}{\strut}}\hspace*{13mm}\begin{tabular}{c}
-      Exams Office \\Use Only\end{tabular}\medskip
+    \fbox{\parbox[c]{50mm}{\strut}}\hspace*{13mm}
+    \begin{tabular}{c}
+      Exams Office \\Use Only
+    \end{tabular}\medskip
 
     ~\rule{180mm}{0.4pt}~\\
     \begin{samepage}
@@ -178,114 +177,148 @@
         \unitlength 1.00mm
         \linethickness{0.4pt}
         \begin{picture}(190.00,205.00)(5,5)
-          \put(5.00,19.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+          \put(5.00,19.00){\makebox(0,0)[lc]{\small
+              \begin{tabular}{l}
                 Instructions to candidates          \\
                 (Examiners may wish to use          \\
-                this space to indicate, inter alia, \\
-                the contribution made by this       \\
-                examination or test towards         \\
-                the year mark, if appropriate)\end{tabular}}}
-          \put(5.00,50.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Time allowance\end{tabular}}}
-          \put(5.00,70.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
+                  this space to indicate, inter alia, \\
+                  the contribution made by this       \\
+                  examination or test towards         \\
+                the year mark, if appropriate)
+          \end{tabular}}}
+          \put(5.00,50.00){\makebox(0,0)[lc]{\small
+              \begin{tabular}{l}
+                Time allowance
+          \end{tabular}}}
+          \put(5.00,70.00){\makebox(0,0)[lc]{\small
+              \begin{tabular}{l}
                 Special materials required  \\
                 (graph/music/drawing paper) \\
                 maps, diagrams, tables,     \\
-                computer cards, etc)\end{tabular}}}
-          \put(5.00,90.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                External examiner(s)\end{tabular}}}
-          \put(5.00,110.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Internal examiners \\and telephone\\number(s)\end{tabular}}}
-          \put(5.00,125.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Faculty/ies presenting \\candidates\end{tabular}}}
-          \put(5.00,160.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Year of Study \\(Art \& Sciences leave blank)\end{tabular}}}
-          \put(5.00,145.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Degrees/Diplomas for which \\this course is prescribed\\
-                (BSc (Eng) should indicate which branch)\end{tabular}}}
-          \put(5.00,175.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Examination/Test$^*$ to be \\held during month(s) of\\
-                \footnotesize($^*$delete as applicable)\end{tabular}}}
-          \put(5.00,190.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Course or topic name(s) \\Paper Number \& title\end{tabular}}}
-          \put(5.00,205.00){\makebox(0,0)[lc]{\small\begin{tabular}{l}
-                Course or topic No(s)\end{tabular}}}
-          \put(90.00,5.00){\framebox(100.00,28.00)[cc]{\begin{minipage}{95mm}
-                \vspace{-4mm}
-                \centering\small\texttt{\eeInstruct}\end{minipage}}}
-          \put(90.00,40.00){\framebox(20.00,15.00)[cc]{\small
-              \shortstack{Course\\Nos}}}
-          \put(110.00,40.00){\framebox(40.00,15.00)[cc]{\small
-              \begin{minipage}{14mm}\centering\texttt{\eeCCode}\end{minipage}}}
-          \put(150.00,40.00){\framebox(18.00,15.00)[cc]{\small Hours}}
-          \put(168.00,40.00){\framebox(22.00,15.00)[cc]{\small
-              \begin{minipage}{22mm}\centering\texttt{\eeDuration}\end{minipage}}}
-          \put(90.00,63.00){\framebox(100.00,13.00)[cc]{\small
-              \begin{minipage}{95mm}\centering\ttfamily\eeRequires\end{minipage}}}
-          \put(90.00,83.00){\framebox(100.00,13.00)[cc]{\small
-              \begin{minipage}{95mm}\centering\ttfamily\eeExternal\end{minipage}}}
-          \put(90.00,100.00){\framebox(100.00,13.00)[cc]{\small
-              \begin{minipage}{95mm}\centering\ttfamily\eeInternal\end{minipage}}}
-          \put(110.00,122.00){\framebox(80.00,8.00)[cc]{\small
-              \begin{minipage}{75mm}\centering\ttfamily\eeFacs\end{minipage}}}
-          \put(110.00,136.00){\framebox(80.00,13.00)[cc]{\small
-              \begin{minipage}{75mm}\centering\ttfamily\eeDegs\end{minipage}}}
-          \put(110.00,157.00){\framebox(80.00,8.00)[cc]{\small
-              \begin{minipage}{75mm}\centering\ttfamily\eeYoS\end{minipage}}}
-          \put(110.00,172.00){\framebox(80.00,8.00)[cc]{\small
-              \begin{minipage}{75mm}\centering\ttfamily\eeMonth\end{minipage}}}
-          \put(90.00,187.00){\framebox(100.00,10.00)[cc]{\small
-              \begin{minipage}{95mm}\centering\ttfamily\eeCName\end{minipage}}}
-          \put(110.00,202.00){\framebox(80.00,8.00)[cc]{\small
-              \begin{minipage}{75mm}\centering\ttfamily\eeCCode\end{minipage}}}
-        \end{picture}
-        \bigskip
+              computer cards, etc)
+        \end{tabular}}}
+        \put(5.00,90.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              External examiner(s)
+        \end{tabular}}}
+        \put(5.00,110.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Internal examiners \\and telephone\\number(s)
+        \end{tabular}}}
+        \put(5.00,125.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Faculty/ies presenting \\candidates
+        \end{tabular}}}
+        \put(5.00,160.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Year of Study \\(Art \& Sciences leave blank)
+        \end{tabular}}}
+        \put(5.00,145.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Degrees/Diplomas for which \\this course is prescribed\\
+              (BSc (Eng) should indicate which branch)
+        \end{tabular}}}
+        \put(5.00,175.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Examination/Test$^*$ to be \\held during month(s) of\\
+              \footnotesize($^*$delete as applicable)
+        \end{tabular}}}
+        \put(5.00,190.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Course or topic name(s) \\Paper Number \& title
+        \end{tabular}}}
+        \put(5.00,205.00){\makebox(0,0)[lc]{\small
+            \begin{tabular}{l}
+              Course or topic No(s)
+        \end{tabular}}}
+        \put(90.00,5.00){\framebox(100.00,28.00)[cc]{
+            \begin{minipage}{95mm}
+              \vspace{-4mm}
+              \centering\small\texttt{\eeInstruct}
+        \end{minipage}}}
+        \put(90.00,40.00){\framebox(20.00,15.00)[cc]{\small
+        \shortstack{Course\\Nos}}}
+        \put(110.00,40.00){\framebox(40.00,15.00)[cc]{\small
+            \begin{minipage}{14mm}\centering\texttt{\eeCCode}
+        \end{minipage}}}
+        \put(150.00,40.00){\framebox(18.00,15.00)[cc]{\small Hours}}
+        \put(168.00,40.00){\framebox(22.00,15.00)[cc]{\small
+            \begin{minipage}{22mm}\centering\texttt{\eeDuration}
+        \end{minipage}}}
+        \put(90.00,63.00){\framebox(100.00,13.00)[cc]{\small
+            \begin{minipage}{95mm}\centering\ttfamily\eeRequires
+        \end{minipage}}}
+        \put(90.00,83.00){\framebox(100.00,13.00)[cc]{\small
+            \begin{minipage}{95mm}\centering\ttfamily\eeExternal
+        \end{minipage}}}
+        \put(90.00,100.00){\framebox(100.00,13.00)[cc]{\small
+            \begin{minipage}{95mm}\centering\ttfamily\eeInternal
+        \end{minipage}}}
+        \put(110.00,122.00){\framebox(80.00,8.00)[cc]{\small
+            \begin{minipage}{75mm}\centering\ttfamily\eeFacs
+        \end{minipage}}}
+        \put(110.00,136.00){\framebox(80.00,13.00)[cc]{\small
+            \begin{minipage}{75mm}\centering\ttfamily\eeDegs
+        \end{minipage}}}
+        \put(110.00,157.00){\framebox(80.00,8.00)[cc]{\small
+            \begin{minipage}{75mm}\centering\ttfamily\eeYoS
+        \end{minipage}}}
+        \put(110.00,172.00){\framebox(80.00,8.00)[cc]{\small
+            \begin{minipage}{75mm}\centering\ttfamily\eeMonth
+        \end{minipage}}}
+        \put(90.00,187.00){\framebox(100.00,10.00)[cc]{\small
+            \begin{minipage}{95mm}\centering\ttfamily\eeCName
+        \end{minipage}}}
+        \put(110.00,202.00){\framebox(80.00,8.00)[cc]{\small
+            \begin{minipage}{75mm}\centering\ttfamily\eeCCode
+        \end{minipage}}}
+      \end{picture}
+      \bigskip
 
-        {\Large Internal Examiners or Heads of School are requested to sign
-          the\\ declaration overleaf}
-      \end{textsf}
-    \end{samepage}
-    \newpage\vspace{40mm}
-    1. As the Internal Examiner/Head of School, I certify that this
-    question paper is in final form, as approved by the External Examiner,
-    and is ready for reproduction.\\[10mm]
-    2. As the Internal Examiner/Head of School, I certify that this
-    question paper is in final form and is ready for reproduction.\\[10mm]
-    (1. is applicable to formal examinations as approved by an external
+      {\Large Internal Examiners or Heads of School are requested to sign
+      the\\ declaration overleaf}
+    \end{textsf}
+  \end{samepage}
+  \newpage\vspace{40mm}
+  1. As the Internal Examiner/Head of School, I certify that this
+  question paper is in final form, as approved by the External Examiner,
+  and is ready for reproduction.\\[10mm]
+  2. As the Internal Examiner/Head of School, I certify that this
+  question paper is in final form and is ready for reproduction.\\[10mm]
+  (1. is applicable to formal examinations as approved by an external
     examiner, while 2. is applicable to formal tests not requiring approval
-    by an external examiner---Delete whichever is not applicable)\\[20mm]
-    Name:\hrulefill\ \  Signature:\hrulefill\\[20mm](THIS PAGE NOT FOR
-    REPRODUCTION)
-  \end{titlepage}
-  \addtolength{\evensidemargin}{15mm}
-  \addtolength{\oddsidemargin}{15mm}
-  \addtolength{\textwidth}{-30mm}
+  by an external examiner---Delete whichever is not applicable)\\[20mm]
+  Name:\hrulefill\ \  Signature:\hrulefill\\[20mm](THIS PAGE NOT FOR
+  REPRODUCTION)
+\end{titlepage}
+\addtolength{\evensidemargin}{15mm}
+\addtolength{\oddsidemargin}{15mm}
+\addtolength{\textwidth}{-30mm}
 }
 
 \newcommand{\solutionscoverpage}{
-  \begin{center}
-    {\Huge\textcolor{red!60!black}{Exam Solutions}}
+\begin{center}
+  {\Huge\textcolor{red!60!black}{Solutions}}
 
-    \vspace{5mm}
+  \vspace{5mm}
 
-    {\Large \eeCCode: \eeCName}
+  {\Large \eeCCode: \eeCName}
 
-    \vspace{3mm}
+  \vspace{3mm}
 
-    {\Large \eeType{} Exam --- \eeMonth}
-  \end{center}
+  {\Large \eeType{} --- \eeMonth}
+\end{center}
 }
-
 
 % ------------------------------------------------------------------------------
 %                          Long Questions
 % ------------------------------------------------------------------------------
 
 \newcommand{\startquestionformat}{
-  \renewcommand{\thepartno}{\alph{partno}}
-  \renewcommand{\partlabel}{\thepartno)}
-  \renewcommand{\partshook}{} % no special hook
-  \setlength{\parskip}{0.7em} % paragraph spacing
+\renewcommand{\thepartno}{\alph{partno}}
+\renewcommand{\partlabel}{\thepartno)}
+\renewcommand{\partshook}{} % no special hook
+\setlength{\parskip}{0.7em} % paragraph spacing
 }
 
 %------------------------------------------------------------------------------
@@ -293,14 +326,15 @@
 %------------------------------------------------------------------------------
 
 \newcommand{\startmcqformat}{
-  \renewcommand{\thepartno}{\thequestion.\arabic{partno}}
-  \renewcommand{\partlabel}{\thepartno \,}
-  % https://tex.stackexchange.com/questions/346634/control-the-vertical-space-in-multiple-choice-questions
-  \renewcommand{\partshook}{
-    \setlength{\partopsep}{0pt} % space between instructions and the first MCQ
-    \setlength\parsep{8pt} % space between MCQ question and first choice
-    \setlength{\itemsep}{1.3\baselineskip} % space between MCQs
-  }
+\renewcommand{\thepartno}{\thequestion.\arabic{partno}}
+\renewcommand{\partlabel}{\thepartno \,}
+% https://tex.stackexchange.com/questions/346634/control-the-vertical-space-in-multiple-choice-questions
+\renewcommand{\partshook}{
+\setlength{\partopsep}{0pt} % space between instructions and the first MCQ
+\setlength\parsep{8pt} % space between MCQ question and first choice
+\setlength{
+\itemsep}{1.3\baselineskip} % space between MCQs
+}
 }
 
 % https://tex.stackexchange.com/questions/225429/redefine-optional-argument-of-item-in-enumitem
@@ -308,20 +342,24 @@
 \newlist{mcq@}{enumerate}{1}
 % itemsep is the space between choices
 % labelsep is the space between the choice and the item label
-\setlist[mcq@]{label=\alph*),labelsep=0.45em, leftmargin=2.2em, itemsep=0.35\baselineskip, itemindent=-4pt}
+% itemindent is the identation for all lines following the first one for each MCQ option
+\setlist[mcq@]{label=\alph*),labelsep=0.39em, leftmargin=1.86em, itemsep=0.35\baselineskip, itemindent=-4pt}
 
 % Create list emulator
 \newenvironment{mcq}[1][]{
-  \begin{mcq@}[#1]% \begin{mcq}[<opts>]
-    \let\olditem\item% Store \item in \olditem
-    \RenewDocumentCommand{\item}{o}
-    {% Redefine \item to
-      \olditem\leavevmode% ... call \olditem...
-      \IfNoValueF{##1}{\ifprintanswers
-          \tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{10mm}\fi}% ... and possibly [..]
-    }
-    }
-    {\end{mcq@}}% \end{pointslist}
+\begin{mcq@}[#1]% \begin{mcq}[<opts>]
+\let\olditem
+\item% Store \item in \olditem
+\RenewDocumentCommand{
+\item}{o}
+{% Redefine \item to
+\olditem\leavevmode% ... call \olditem...
+\IfNoValueF{##1}{\ifprintanswers
+\tabto*{-0.12em}\textcolor{red!60!black}{[##1]}\tabto{10mm}\fi}% ... and possibly [..]
+}
+}
+{
+\end{mcq@}}% \end{pointslist}
 
 % prevent pagebreaks between the MCQ question and the following MCQ choices
 % https://tex.stackexchange.com/questions/224639/how-to-prevent-page-breaks-within-between-a-question-and-its-answer-choices-in-e
@@ -330,7 +368,5 @@
 \AfterEndEnvironment{mcq}{\endminipage}
 
 %------------------------------------------------------------------------------
-
-
 
 % end of file - eie-exam.sty
