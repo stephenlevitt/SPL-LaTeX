@@ -48,7 +48,7 @@
 \RequirePackage[uprightscript,
   charter,
   vvarbb,
-  scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
+scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter: https://texdoc.org/serve/xcharter-doc.pdf/0
 % must be before fontspec: https://tex.stackexchange.com/questions/134515/how-to-combine-latex-fonts-with-system-fonts-in-xelatex
 \RequirePackage{fontspec}                   % font selection when using xelatex and Windows system fonts
 
@@ -70,7 +70,6 @@
 
 \newfontfamily\quotefont[Ligatures=TeX]{Libertinus Serif}   % selects Libertine as the quote font
 
-
 %------------------------------------------------------------------------------
 %                               Title Page
 %------------------------------------------------------------------------------
@@ -84,8 +83,8 @@
 \usetikzlibrary{decorations.pathmorphing}
 \tikzset{
   every overlay node/.style={
-      draw=white,fill=white,rounded corners,anchor=north west,
-    },
+    draw=white,fill=white,rounded corners,anchor=north west,
+  },
 }
 % Usage:
 % \tikzoverlay at (-1cm,-5cm) {content};
@@ -98,7 +97,6 @@
 % definition of the title slide with school logo in the background
 \newcommand{\titleslide}{
   \institute{School of Electrical and Information Engineering\\University of the Witwatersrand}
-  \date{\yearonly\today}
 
   \begin{frame}[plain]
     \tikz [remember picture,overlay]
@@ -141,9 +139,9 @@
 
 % Make commands for the quotes
 \newcommand*{\openquote}{\tikz[remember picture,overlay,xshift=-16pt,yshift=-3pt]
-  \node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
+\node (OQ) {\quotefont\fontsize{40}{40}\selectfont``};\kern0pt}
 \newcommand*{\closequote}{\tikz[remember picture,overlay,xshift=-.5pt,yshift=-8pt]
-  \node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
+\node (CQ) {\quotefont\fontsize{40}{40}\selectfont''};}
 
 % quoteblock colour based on current theme
 \setbeamercolor{quoteblock}{fg=black,bg=structure.fg!75!black!10!bg}
@@ -155,8 +153,8 @@
     \large
     \begin{quote}
       \openquote
-      }
-      {
+    }
+    {
       \closequote
     \end{quote}
     \vskip3mm
@@ -170,8 +168,8 @@
     \large
     \begin{quote}
       \openquote
-      }
-      {
+    }
+    {
       \closequote
     \end{quote}
   \end{beamercolorbox}
@@ -248,7 +246,6 @@
   \section{}
   \hypersetup{bookmarksdepth} %sections are back
 }
-
 
 %------------------------------------------------------------------------------
 %      Put notes on computer screen and project slide (use with Pympress)
