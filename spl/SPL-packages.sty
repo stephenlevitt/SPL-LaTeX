@@ -76,17 +76,17 @@
 % \definecolor{DarkRed}
 
 \hypersetup{
-  bookmarksopen, % PDF opens with bookmarks
-  bookmarksopenlevel=2, % bookmarks are expanded to subsection level
-  pdfauthor={SP Levitt},                                      % remove to reuse author data
+  bookmarksopen,                        % PDF opens with bookmarks
+  bookmarksopenlevel=2,                 % bookmarks are expanded to subsection level
+  pdfauthor={SP Levitt},                % remove to reuse author data
   colorlinks,
   allcolors={SchoolLogoBlue!70!blue},
-  pdfpagemode=UseNone                     % hide the sidebar when opening the document
+  pdfpagemode=UseOutlines,              % show the bookmarks/outline sidebar on open, honoured by Acrobat but not browsers
   pdfusetitle, % added
   % linkcolor={red!50!black},
   % citecolor={green!50!black},
   % urlcolor={BlueGrotto}
-  bookmarksdepth=4  % depth of pdf bookmarks displayed
+  bookmarksdepth=4  % depth of pdf bookmarks that are generated
 }%
 
 \RequirePackage{tikz}
