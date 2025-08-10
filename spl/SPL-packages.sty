@@ -66,7 +66,9 @@
 
 %------------------------------------------------------------------------------
 
-\RequirePackage[pdfusetitle]{hyperref}                          % for hyperlinks in PDF (link colours defined below)
+\RequirePackage{hyperref}                          % for hyperlinks in PDF (link colours defined below)
+\RequirePackage{bookmark}
+
 \definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
 \definecolor{BlueGrotto}{HTML}{0E86D4}
 \definecolor{SchoolLogoBlue}{HTML}{1A417A}
@@ -74,6 +76,7 @@
 % \definecolor{DarkRed}
 
 \hypersetup{
+  bookmarksopen,
   pdfauthor={SP Levitt},                                      % remove to reuse author data
   colorlinks,
   allcolors={SchoolLogoBlue!70!blue},
