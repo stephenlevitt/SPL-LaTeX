@@ -69,11 +69,6 @@
 \RequirePackage{hyperref}                          % for hyperlinks in PDF (link colours defined below)
 \RequirePackage{bookmark}                          % for pdf bookmarks
 
-\setcounter{tocdepth}{4} %tell toc to include all numbered subsects as above
-\newcommand{\toclevel@subsubparagraph}{4} %added to fix pdf bookmark hierarchy
-\newcommand*\l@subsubparagraph{\@dottedtocline{4}{10em}{5em}}% for toc
-\newcommand{\subsubparagraphmark}[1]{}% for page headers
-
 \definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
 \definecolor{BlueGrotto}{HTML}{0E86D4}
 \definecolor{SchoolLogoBlue}{HTML}{1A417A}
@@ -81,7 +76,8 @@
 % \definecolor{DarkRed}
 
 \hypersetup{
-  bookmarksopen,
+  bookmarksopen, % PDF opens with bookmarks
+  bookmarksopenlevel=1, % bookmarks are expanded to subsection level
   pdfauthor={SP Levitt},                                      % remove to reuse author data
   colorlinks,
   allcolors={SchoolLogoBlue!70!blue},
@@ -90,7 +86,7 @@
   % linkcolor={red!50!black},
   % citecolor={green!50!black},
   % urlcolor={BlueGrotto}
-  bookmarksdepth=4
+  bookmarksdepth=4  % depth of pdf bookmarks displayed
 }%
 
 \RequirePackage{tikz}

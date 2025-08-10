@@ -171,10 +171,9 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \renewcommand{\thesubsubsubsection}{\thesubsubsection.\arabic{subsubsubsection}}
 \newcommand{\subsubsubsection}[1]{%
   \refstepcounter{subsubsubsection}%
-  \paragraph{\thesubsubsubsection\hspace{1em}#1}\mbox{}\par%
+  % Print number in heading but remove it from PDF bookmark text
+  \paragraph{\texorpdfstring{\thesubsubsubsection\hspace{1em}#1}{#1}}\mbox{}\par%
 }
-\newcommand{\toclevel@subsubsubsection}{4} % added to fix pdf bookmark hierarchy
-\newcommand{\subsubsubsectionmark}[1]{} % for page headers
 
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
 % \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}
