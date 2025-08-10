@@ -78,9 +78,11 @@
   colorlinks,
   allcolors={SchoolLogoBlue!70!blue},
   pdfpagemode=UseNone                     % hide the sidebar when opening the document
+  pdfusetitle, % added
   % linkcolor={red!50!black},
   % citecolor={green!50!black},
   % urlcolor={BlueGrotto}
+  bookmarksdepth=4
 }%
 
 \RequirePackage{tikz}
@@ -119,10 +121,10 @@
 \newcommand*\quotemarksize{60} % if quote size changes, need a way to make shifts relative
 \newcommand*{\openquotation}
 {\tikz[remember picture,overlay,xshift=-4ex,yshift=-2.5ex]
-  \node (OQ) {\quotefont\fontsize{\quotemarksize}{\quotemarksize}\selectfont``};\kern0pt}
+\node (OQ) {\quotefont\fontsize{\quotemarksize}{\quotemarksize}\selectfont``};\kern0pt}
 \newcommand*{\closequotation}
 {\tikz[remember picture,overlay,xshift=4ex,yshift=-5pt]
-  \node (CQ) {\quotefont\fontsize{\quotemarksize}{\quotemarksize}\selectfont''};}
+\node (CQ) {\quotefont\fontsize{\quotemarksize}{\quotemarksize}\selectfont''};}
 
 % select a colour for the shading
 \colorlet{shadecolor}{GhostWhite}
@@ -134,8 +136,8 @@
   \begin{snugshade}
     \begin{quote}
       \openquotation
-      }
-      {
+    }
+    {
       \hfill\closequotation
       \vskip 1.5mm\hspace{95mm} --- \emph{#1}
     \end{quote}
@@ -156,12 +158,12 @@
 \def\Vhrulefill{\leavevmode\leaders\hrule height 0.7ex depth \dimexpr0.4pt-0.7ex} % vertically centered rule
 \newcommand*\myhrulefill{%
   %   \Vhrulefill\hfill\kern1pt} % rule for star
-  \leavevmode\leaders\hrule depth-2pt height 2.6pt\hfill\kern1pt} % rule for flourishes
+\leavevmode\leaders\hrule depth-2pt height 2.6pt\hfill\kern1pt} % rule for flourishes
 
 \newcommand\niceending[1]{%
   \begin{center}%
     \LARGE  \myhrulefill \hspace{.02cm} #1 \hspace{-0.13cm} \myhrulefill%
-  \end{center}}
+\end{center}}
 
 %\newcommand{\theend}{\vspace{5mm} {\Huge \hrulefill} \vspace{15mm} } % plain rule
 \newcommand*\theend{\vspace{5mm}\niceending{\decofourleft\,\decofourright}\vspace{15mm}} % flourishes
@@ -202,9 +204,9 @@
   fontupper=\small, % change font in upper box (here it is the only box)
   leftupper=1.5cm, % space from left-hand box margin to text
   overlay={ % overlay GitHub logo
-      \node[anchor=north west]
-      at ([xshift=4pt,yshift=4pt]frame.north west)
-      {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
+    \node[anchor=north west]
+    at ([xshift=4pt,yshift=4pt]frame.north west)
+  {\includegraphics[width=0.6cm,height=0.6cm]{github-mark}};}
 }
 
 %------------------------------------------------------------------------------
