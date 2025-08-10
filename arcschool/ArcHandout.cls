@@ -95,8 +95,6 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %---------------------------------------
 
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
-% \RequirePackage{bookmark}
-% \setcounter{tocdepth}{4}
 %---------------------------------------
 
 \setlength{\parskip}{\medskipamount}
@@ -174,9 +172,9 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newcommand{\subsubsubsection}[1]{%
   \refstepcounter{subsubsubsection}%
   \paragraph{\thesubsubsubsection\hspace{1em}#1}\mbox{}\par%
-  \addcontentsline{toc}{subsubsubsection}{#1}%
-  % \bookmark[level=4]{#1}%
 }
+\newcommand{\toclevel@subsubsubsection}{4} % added to fix pdf bookmark hierarchy
+\newcommand{\subsubsubsectionmark}[1]{} % for page headers
 
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
 % \newcommand{\do}{\addtocounter{eno}{1}\subsubsubsection*{Exercise \theeno}}

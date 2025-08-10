@@ -67,7 +67,12 @@
 %------------------------------------------------------------------------------
 
 \RequirePackage{hyperref}                          % for hyperlinks in PDF (link colours defined below)
-\RequirePackage{bookmark}
+\RequirePackage{bookmark}                          % for pdf bookmarks
+
+\setcounter{tocdepth}{4} %tell toc to include all numbered subsects as above
+\newcommand{\toclevel@subsubparagraph}{4} %added to fix pdf bookmark hierarchy
+\newcommand*\l@subsubparagraph{\@dottedtocline{4}{10em}{5em}}% for toc
+\newcommand{\subsubparagraphmark}[1]{}% for page headers
 
 \definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
 \definecolor{BlueGrotto}{HTML}{0E86D4}
