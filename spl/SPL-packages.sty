@@ -61,13 +61,14 @@
 \setdescription{style=nextline, itemsep=6pt, parsep=6pt}
 \RequirePackage{texnames}                                   % defines \LaTeX \BibTeX etc
 \RequirePackage{soul}                                       % highlighting: hl{}; strike out: st{} etc
-\usepackage[svgnames]{xcolor}
+\RequirePackage[svgnames]{xcolor}
 % \RequirePackage{refcheck}                                   % highlights missing and unreferred to citations
 
 %------------------------------------------------------------------------------
 
 \RequirePackage{hyperref}                          % for hyperlinks in PDF (link colours defined below)
 \RequirePackage{bookmark}                          % for pdf bookmarks
+\bookmarksetup{open,openlevel=2}                   % Control initial expansion of the bookmarks tree
 
 \definecolor{NavyBlue}{HTML}{003060}                            % https://www.canva.com/colors/color-palettes/bright-lights/
 \definecolor{BlueGrotto}{HTML}{0E86D4}
@@ -76,8 +77,6 @@
 % \definecolor{DarkRed}
 
 \hypersetup{
-  bookmarksopen,                        % PDF opens with bookmarks
-  bookmarksopenlevel=2,                 % bookmarks are expanded to subsection level
   pdfauthor={SP Levitt},                % remove to reuse author data
   colorlinks,
   allcolors={SchoolLogoBlue!70!blue},
@@ -92,7 +91,8 @@
 \RequirePackage{tikz}
 \RequirePackage{framed}
 %------------------------------------------------------------------------------
-\usepackage[os=win]{menukeys}
+\RequirePackage{relsize} % for \relsize used in menukeys styling
+\RequirePackage[os=win]{menukeys}
 % create a new menustyle style for keys: roundedkeyscondensed - no '+' between keys; narrower keys
 % Inspiration and useful resources:
 % https://github.com/tweh/menukeys/issues/49
@@ -122,6 +122,7 @@
 % adapted from https://tex.stackexchange.com/questions/16964/block-quote-with-big-quotation-marks
 %------------------------------------------------------------------------------
 
+\providecommand\quotefont{\normalfont} % fallback if not defined by class
 \newcommand*\quotemarksize{60} % if quote size changes, need a way to make shifts relative
 \newcommand*{\openquotation}
 {\tikz[remember picture,overlay,xshift=-4ex,yshift=-2.5ex]
