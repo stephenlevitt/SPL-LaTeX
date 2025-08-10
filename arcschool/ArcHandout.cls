@@ -95,8 +95,8 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %---------------------------------------
 
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
-\RequirePackage{bookmark}
-\setcounter{tocdepth}{4}
+% \RequirePackage{bookmark}
+% \setcounter{tocdepth}{4}
 %---------------------------------------
 
 \setlength{\parskip}{\medskipamount}
@@ -175,7 +175,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \refstepcounter{subsubsubsection}%
   \paragraph{\thesubsubsubsection\hspace{1em}#1}\mbox{}\par%
   \addcontentsline{toc}{subsubsubsection}{#1}%
-  \bookmark[level=4]{#1}%
+  % \bookmark[level=4]{#1}%
 }
 
 \newcommand{\quest}{\addtocounter{qno}{1}\par{\textbf Q\theqno :\quad}}
