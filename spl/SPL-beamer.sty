@@ -121,6 +121,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 
 \RequirePackage{xspace}                                     % inserts spaces after macro expansions (incl in tools)
 \RequirePackage{relsize}                                    % for font sizes relative to the current font
+\RequirePackage[style=english]{csquotes}                    % double quotes by default, single quotes inside double quotes, \enquote* for explicit single quotes
 
 % path for diagrams and figures
 \graphicspath{{./Figures/}}
@@ -279,4 +280,3 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newcommand{\sdIII}{\url{https://witseie.github.io/software-dev-3/}}
 \newcommand{\imagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\footnotesize Source: \url{#1}}}}
 \newcommand{\smallimagecitation}[1]{\raisebox{-1em}{\makebox[0pt][r]{\tiny Source: \url{#1}}}}
-
