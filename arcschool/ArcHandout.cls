@@ -61,6 +61,7 @@ School of Electrical and Information Engineering Handout Class]
 
 \RequirePackage{ifxetex}
 \ifxetex
+\AtBeginDocument{\special{pdf:minorversion=6}}  % Avoid PDF version errors
 \RequirePackage[uprightscript,
   charter,
   vvarbb,
@@ -95,6 +96,8 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %---------------------------------------
 
 \RequirePackage[svgnames]{xcolor}                           % for defining custom colours
+\definecolor{ExerciseGreen}{HTML}{008F6A}
+
 %---------------------------------------
 
 \setlength{\parskip}{\medskipamount}
@@ -161,8 +164,14 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \subsection*{Question \theqno}}
 \newcommand{\hexercise}{\addtocounter{heno}{1}
 \subsection*{Exercise \theheno}} % handout exercise
-\newcommand{\exercise}{\refstepcounter{eno}\textcolor{FireBrick}{
-\subsubsection*{Exercise \thesection.\theeno}}}  % \textcolor{blue!60!black}
+% optionally accept a name for the exercise
+\newcommand{\exercise}[1][]{%
+  \refstepcounter{eno}%
+  \def\exercisetitle{Exercise \thesection.\theeno\if\relax\detokenize{#1}\relax\else:\space#1\fi}%
+  \textcolor{ExerciseGreen}{%
+    \@startsection{subsection}{2}{\z@}{0pt}{1.5ex plus .2ex}{\normalfont\large\bfseries}*{\exercisetitle}%
+  }%
+}  % \textcolor{blue!60!black}
 \newcommand{\challenge}{\addtocounter{chno}{1}
 \subsection*{Challenge \thechno}}
 
