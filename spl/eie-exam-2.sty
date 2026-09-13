@@ -104,10 +104,19 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %                         Settings for the exam class
 % ------------------------------------------------------------------------------
 
+% Extra space placed before each new question, so that a question that begins
+% part-way down a page is clearly separated from the one before it.  This is
+% added to \itemsep, and so it is inserted only between the items of the
+% questions list.  Glue at the top of a page is discarded by \TeX{}, so a
+% question that happens to begin a page is not given any extra space above it.
+\newlength{\eeQuestionPreSkip}
+\setlength{\eeQuestionPreSkip}{10mm}
+
 % remove question indentation
 \renewcommand{\questionshook}{%
   \setlength{\leftmargin}{0pt}%
   \setlength{\labelwidth}{-\labelsep}%
+  \addtolength{\itemsep}{\eeQuestionPreSkip}%
 }
 
 % Set the question title format
@@ -141,7 +150,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 {
   \def\numpages{\@ifundefined{exam@lastpage}%
     {\mbox{\normalfont\bf ??}}%
-    \the\numexpr\exam@lastpage-#1\relax
+    {\the\numexpr\exam@lastpage-#1\relax}%
   }% numpages
 }
 \pagestyle{head}
