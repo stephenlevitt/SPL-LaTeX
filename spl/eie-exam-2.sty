@@ -132,10 +132,98 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \marksnotpoints % use "marks" instead of "points"
 \marginpointname{ \points} % print "marks" after the mark value
 
-\newcommand{\dropmarks}{
-  \setlength{\parskip}{2mm} % reduce spacing to above question when marks are dropped into a new paragraph
-  \droppoints
-  \setlength{\parskip}{0.7em} % resume normal paragraph spacing between question parts / sub-parts
+%------------------------------------------------------------------------------
+%                        Dropping the mark allocation
+%------------------------------------------------------------------------------
+% \dropmarks drops a question's mark allocation at the right-hand edge of the
+% last line of the question, and is written directly after the full stop that
+% ends the question.  The block of marks is roughly 2cm wide, so on a long final
+% line it would collide with the text of the question.  \dropmarks therefore
+% measures how much of its last line the question has already used and picks one
+% of three placements:
+%
+%   \droppointsinline         the marks stay on the final line, if that line is
+%                             fairly short;
+%   \droppointsslightlybelow  the marks go on the next line but hug the
+%                             question, if the final line is long yet still
+%                             leaves room beside the text for the marks;
+%   \droppointsbelow          the marks go a full paragraph below the question,
+%                             if there is no room for them beside the text.
+%
+% The measurement uses the \tabto{\CurrentLineWidth} trick demonstrated in
+% test-measure-2.tex: afterwards \TabPrevPos holds the natural width of the last
+% line of the current paragraph.  The three commands may also be used directly,
+% to override the automatic choice for an unusual layout.
+%------------------------------------------------------------------------------
+
+% Width of the block of marks that \droppoints will place, and the space that is
+% still free on the last line of the question.
+\newlength{\eeMarkBlockWidth}
+\newlength{\eeMarkFreeSpace}
+
+% Free space that must remain beside the text, over and above the width of the
+% mark block itself, before the marks may share the last line.
+\newlength{\eeMarkSafetyGap}
+\setlength{\eeMarkSafetyGap}{5mm}
+
+% A last line that uses less than this fraction of the text width is "fairly
+% short", and its marks are set inline beside it.
+\newcommand{\eeMarkInlineFraction}{0.55}
+
+% Extra space above the marks for the two "below" placements.
+% \droppointsslightlybelow cancels the paragraph skip, so its marks sit one
+% normal line below the question; \droppointsbelow keeps the paragraph skip.
+% Both may be given a non-zero value to fine-tune the spacing.
+\newlength{\eeMarkSlightlyBelowSkip}
+\setlength{\eeMarkSlightlyBelowSkip}{0pt}
+\newlength{\eeMarkBelowSkip}
+\setlength{\eeMarkBelowSkip}{0pt}
+
+% Measure the block of marks that \droppoints would place.  exam.cls defines
+% \padded@point@block when the points of the current question are read; fall back
+% to zero width if the question has no points, so that \dropmarks still works.
+\newcommand{\eeMarkBlock}{%
+  \@ifundefined{padded@point@block}%
+  {\setlength{\eeMarkBlockWidth}{\z@}}%
+  {\settowidth{\eeMarkBlockWidth}{\padded@point@block}}%
+}
+
+% Marks on the same line as the last line of the question.
+\newcommand{\droppointsinline}{\droppoints}
+
+% Marks on the next line, hugging the question: the paragraph skip is cancelled
+% so that only the normal interline space remains.
+\newcommand{\droppointsslightlybelow}{%
+  \par
+  \vskip-\parskip
+  \vskip\eeMarkSlightlyBelowSkip
+  \noindent\droppoints
+}
+
+% Marks a full paragraph below the question.
+\newcommand{\droppointsbelow}{%
+  \par
+  \vskip\eeMarkBelowSkip
+  \noindent\droppoints
+}
+
+\newcommand{\dropmarks}{%
+  \TabPrevPos\linewidth % pessimistic default if \tabto cannot measure the line
+  \tabto{\CurrentLineWidth}% record the width of the last line of the question
+  \setlength{\eeMarkFreeSpace}{\dimexpr\linewidth-\TabPrevPos\relax}%
+  \eeMarkBlock
+  \ifdim\TabPrevPos<\eeMarkInlineFraction\linewidth
+  % The last line is fairly short: the marks fit neatly at its right.
+  \droppointsinline
+  \else
+  \ifdim\eeMarkFreeSpace<\dimexpr\eeMarkBlockWidth+\eeMarkSafetyGap\relax
+  % Not enough room left beside the text: drop the marks a full paragraph.
+  \droppointsbelow
+  \else
+  % There is room, but the line is long: keep the marks close below it.
+  \droppointsslightlybelow
+  \fi
+  \fi
 }
 
 % Set the total marks format
