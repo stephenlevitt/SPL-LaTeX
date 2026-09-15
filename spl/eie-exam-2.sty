@@ -34,8 +34,9 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %------------------------------------------------------------------------------
 %                                   Packages
 %------------------------------------------------------------------------------
-\RequirePackage[l2tabu, orthodox]{nag}                  % checks for deprecated LaTeX commands
+\RequirePackage[l2tabu, orthodox]{nag}                      % checks for deprecated LaTeX commands
 \RequirePackage[british]{babel}
+\RequirePackage[style=english]{csquotes}                    % double quotes by default, single quotes inside double quotes, \enquote* for explicit single quotes
 \RequirePackage{booktabs}                                   % nicer tables
 \RequirePackage{multirow}
 \RequirePackage[thinqspace,squaren,binary]{SIunits}         % SI Units (meters, degrees, volts etc), squaren avoids conflicts with amssymb
@@ -45,9 +46,10 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \graphicspath{{./Figures/}{../figures/}}                             % path for all graphics files
 \RequirePackage{tabto}                                      % tab to a fixed horizontal position in a line
 \RequirePackage{enumitem}                                   % for control over enumerate, itemize and description lists
-\RequirePackage{pdfpages}                                    % for including pdf files (useful for appending reference sheets)
-\RequirePackage{parskip}
-\RequirePackage{anyfontsize}                % remove error messages re: font sizes
+\RequirePackage{pdfpages}
+\RequirePackage{anyfontsize}                                % remove error messages re: font sizes
+\RequirePackage{framed}                                     % for the framed Instructions block
+\RequirePackage{subcaption}
 
 \RequirePackage[pdfusetitle]{hyperref}            % for hyperlinks in PDF (link colours defined below)
 \hypersetup{
