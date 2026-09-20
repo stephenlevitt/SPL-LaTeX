@@ -114,6 +114,21 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newlength{\eeQuestionPreSkip}
 \setlength{\eeQuestionPreSkip}{5.4ex} % 10mm at 11pt
 
+% Paragraph spacing inside a question, i.e. the space produced by a blank line
+% in the source.  \startquestionformat sets \parskip for paragraphs that are
+% not inside a list, but the parts and subparts lists take their paragraph
+% spacing from the list parameters instead, and \list does that by copying
+% \parsep into \parskip *after* it has run \partshook and \subpartshook.
+% Setting \parskip in those hooks is therefore discarded without warning;
+% \parsep is the length that has to be set.  Without this, a blank line inside
+% a part adds only the 2pt of exam.cls's list \parsep (and nothing at all
+% inside a subpart, where \parsep is 0pt), so the paragraphs of a part run
+% together.  Note that the paragraph spacing between the parts themselves is
+% max(\parsep, \itemsep), so this also sets the minimum gap between one part
+% and the next.
+\newlength{\eePartParagraphSkip}
+\setlength{\eePartParagraphSkip}{2.3ex} % as \startquestionformat's \parskip
+
 % remove question indentation
 \renewcommand{\questionshook}{%
   \setlength{\leftmargin}{0pt}%
@@ -151,6 +166,12 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %                              question, if the final line has sufficient room;
 %   \droppointsbelow           the marks go a full paragraph below the question,
 %                              if there is no room for them beside the text.
+%
+% Each placement separates the block of marks from whatever follows it -- the
+% next paragraph of the question, or the next question -- by a rigid \kern, so
+% that the list spacing that follows is added on top of it rather than replacing
+% it: see \eeMarkAfterSkip for the two below-line placements and
+% \eeMarkInlineAfterSkip for the inline placement.
 %
 % Writing \TabPrevPos for the natural width of the last line of the question, the
 % inline choice is made using \eeMarkInlineFraction; if inline placement is
@@ -230,7 +251,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % for the marks to read as a separate block rather than as part of that final
 % line.
 \newlength{\eeMarkParagraphSkip}
-\setlength{\eeMarkParagraphSkip}{1.5ex}
+\setlength{\eeMarkParagraphSkip}{1.45ex}
 
 % Extra space placed after the block of dropped marks, i.e. between the dropped
 % marks and whatever follows them (the next paragraph of the question, or the
@@ -241,6 +262,17 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % whereas a \kern is not glue, so \itemsep is still added on top of it.
 \newlength{\eeMarkAfterSkip}
 \setlength{\eeMarkAfterSkip}{1.5ex}
+
+% Extra space placed after the marks when \dropmarksinline has kept them on the
+% final line of the question.  The two below-line placements set the marks in a
+% line of their own, and it is that line which separates the question from
+% whatever follows it; when the marks stay inline nothing is added, so two
+% consecutive questions whose marks are inline are set only the ordinary
+% paragraph skip apart and read as one block of text.  This length puts back the
+% missing line.  It is added with the same rigid \kern as \eeMarkAfterSkip, and
+% for the same reason.
+\newlength{\eeMarkInlineAfterSkip}
+\setlength{\eeMarkInlineAfterSkip}{0.6\baselineskip}
 
 % Measure the block of marks that \droppoints would place.  exam.cls defines
 % \padded@point@block when the points of the current question are read; fall back
@@ -292,6 +324,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \else
   \ifdim\TabPrevPos<\eeMarkInlineWidth
   \droppoints
+  \kern\eeMarkInlineAfterSkip
   \else
   \eeDropMarksBelow
   \fi
@@ -309,9 +342,15 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 }
 
 % Marks a full paragraph below the question: \eeMarkParagraphSkip is added
-% above the marks (see the note on it above).
+% above the marks (see the note on it above).  The paragraph skip that the list
+% inserts between the question and the marks is cancelled first, so that the
+% drop is exactly \eeMarkParagraphSkip and does not silently grow when the
+% paragraph spacing of the parts and subparts lists is changed (it is now
+% \eePartParagraphSkip, which is much larger than the 2pt that used to be in
+% force inside a part).
 \newcommand{\droppointsbelow}{%
   \par
+  \vskip-\parskip
   \vskip\eeMarkParagraphSkip
   \vskip\eeMarkBelowSkip
   \noindent\droppoints
@@ -513,8 +552,10 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newcommand{\startquestionformat}{
 \renewcommand{\thepartno}{\alph{partno}}
 \renewcommand{\partlabel}{\thepartno)}
-\renewcommand{\partshook}{} % no special hook
-\setlength{\parskip}{2.3ex} % paragraph spacing
+% \parsep, not \parskip: see the note on \eePartParagraphSkip
+\renewcommand{\partshook}{\setlength{\parsep}{\eePartParagraphSkip}}%
+\renewcommand{\subpartshook}{\setlength{\parsep}{\eePartParagraphSkip}}%
+\setlength{\parskip}{2.3ex} % paragraph spacing outside the lists
 }
 
 %------------------------------------------------------------------------------
