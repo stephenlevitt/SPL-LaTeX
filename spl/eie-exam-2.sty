@@ -153,13 +153,21 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %                        Dropping the mark allocation
 %------------------------------------------------------------------------------
 % \dropmarks and \dropmarksinline are written directly after the full stop that
-% ends the question or on the next line.  The block of marks is roughly 2cm wide,
-% so on a long final
-% line it would collide with the text of the question.  Both commands therefore
-% measure how much of the final line the question has already used.  \dropmarksinline
-% keeps the marks on that line only when it is sufficiently short; otherwise it
-% uses the same below-line placement rules as \dropmarks.
+% ends the question, or on the line after it, and must precede the blank line or
+% \par that ends the question.  The block of marks is roughly 2cm wide, so on a
+% long final line it would collide with the text of the question.  Both commands
+% therefore measure how much of the final line the question has already used, and
+% how many lines of text the question has set, before choosing where to set the
+% marks.
 %
+% \dropmarks makes that choice automatically: the marks stay on the final line
+% only when the question is a single line of text that is short enough to leave
+% the marks' column clear.  A multi-line question always has its marks below it:
+% a short final line of a multi-line question is indistinguishable, by its width
+% alone, from a short single-line question, and setting the marks beside it would
+% strand them in the middle of the question.
+%
+%   \dropmarks                 the automatic choice just described;
 %   \dropmarksinline           the marks stay on the final line, if that line is
 %                              fairly short;
 %   \droppointsslightlybelow   the marks go on the next line but are closer to the
@@ -173,30 +181,56 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % it: see \eeMarkAfterSkip for the two below-line placements and
 % \eeMarkInlineAfterSkip for the inline placement.
 %
-% Writing \TabPrevPos for the natural width of the last line of the question, the
-% inline choice is made using \eeMarkInlineFraction; if inline placement is
-% rejected, the reserved-zone comparison chooses between the two below-line
-% placements:
+% Writing \TabPrevPos for the natural width of the final line of the question and
+% \eeMarkLineCount for the number of lines of question text set so far, the
+% automatic choice made by \dropmarks is:
 %
-%   \TabPrevPos = 0                     -> \droppointsbelow,
-%   \TabPrevPos < \eeMarkInlineFraction\linewidth
-%                                       -> \droppoints,
-%   \TabPrevPos < \linewidth - \eeMarkBlockWidth - \eeMarkSafetyGap
-%                                       -> \droppointsslightlybelow,
-%   otherwise (the line has run into the space reserved for the marks)
-%                                       -> \droppointsbelow.
+%   \TabPrevPos = 0                                 -> \droppointsbelow,
+%   \eeMarkLineCount > 1                            -> \eeDropMarksBelow,
+%   \TabPrevPos < \eeMarkInlineWidth, i.e. the line
+%   uses less than \eeMarkInlineFraction of the
+%   text width, and \TabPrevPos < \linewidth
+%   - \eeMarkBlockWidth - \eeMarkSafetyGap, i.e.
+%   the marks' column stays clear                    -> \droppoints,
+%   otherwise                                        -> \eeDropMarksBelow.
 %
-% \TabPrevPos is zero when the measurement could not be taken, which happens
-% when the last line of the question was already full: \tabto then breaks the
-% line and starts a new, empty one.  Such a line obviously leaves no room for the
-% marks, so they are dropped a full paragraph below.  Without this special case a
-% full final line would be mistaken for a very short one, and the marks would be
-% placed on top of the text.
+% When the marks are not set inline, the two below-line placements are chosen
+% from the reserved-zone comparison alone, as they always were:
 %
-% The measurement uses the \tabto{\CurrentLineWidth} trick:
-% afterwards \TabPrevPos holds the natural width of the last
-% line of the current paragraph.  The three commands may also be used directly,
-% to override the automatic choice for an unusual layout.
+%   \TabPrevPos = 0                                  -> \droppointsbelow,
+%   \TabPrevPos < \linewidth - \eeMarkBlockWidth
+%   - \eeMarkSafetyGap, and \TabPrevPos <
+%   \eeMarkHugFraction\linewidth                      -> \droppointsslightlybelow,
+%   otherwise (the line has run into the space
+%   reserved for the marks)                           -> \droppointsbelow.
+%
+% \TabPrevPos is zero when \tabto found no line to measure: outside the paragraph
+% of the question, which is what happens when \dropmarks is written after a blank
+% line, and on a final line too short for the measurement to give a positive
+% width (tabto.sty discards a negative result).  Neither line leaves room for the
+% marks, so they are dropped a full paragraph below -- without this special case
+% the zero width would pass the tests below and the marks would be set beside a
+% line that does not exist.
+%
+% The measurements use the \tabto{\CurrentLineWidth} trick: afterwards
+% \TabPrevPos holds the natural width of the final line of the current paragraph,
+% and \prevgraf holds a count of the lines of text that the question has set.  It
+% is not quite the number of lines.  tabto.sty takes the lines of its own display
+% out of \prevgraf with a flat \advance-4, which leaves the count one line short
+% of the lines actually set; and the vertical skips around a display count as
+% lines, so a display in the question text adds three lines to the count in place
+% of the one line that the display takes up.
+%
+% \eeMarkMeasure adds the missing line back and \eeMarkRemoveLabelLine takes out
+% the line occupied by the question's label when exam.cls has set the label on a
+% line of its own.  What is left is the number of lines of question text: 1 for a
+% single-line question, 2 for a two-line question, and so on, and 0 for a
+% question with no text of its own.  The over-count of a display is harmless: a
+% display cannot be part of a single line of text, and an over-count only makes
+% the count less likely to come out as the 1 that \dropmarks looks for.
+%
+% \dropmarksinline, \droppointsslightlybelow and \droppointsbelow may also be used
+% directly, to override the automatic choice for an unusual layout.
 %------------------------------------------------------------------------------
 
 % Width of the block of marks that \droppoints will place.
@@ -208,8 +242,10 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % 1ex = 5.267pt, so 1em is about 2.08ex.
 \newlength{\eeMarkBlockWidth}
 
-% Free space that must remain beside the marks text, over and above the width of the
-% mark block itself, before the marks may share the last line.
+% Free space that must remain beside the marks text, over and above the width of
+% the mark block itself, before the marks may share a line with it: it keeps
+% \dropmarks from setting the marks over the text of a final line that reaches
+% into the marks' column, and \eeDropMarksBelow from hugging such a line.
 \newlength{\eeMarkSafetyGap}
 \setlength{\eeMarkSafetyGap}{1.3em} % 5mm at 11pt
 
@@ -221,10 +257,12 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % instead.  Short final lines are unaffected.
 \newcommand{\eeMarkHugFraction}{0.75}
 
-% Public tuning value for \dropmarksinline. The fraction of th line that
-% can be occupied and the marks still placed inline. Note, the \dropmarks command
-% never places marks inline, because it cannot reliably distinguish a short final
-% line of a multi-line paragraph from a short single-line question.
+% Public tuning value for the inline placement: the fraction of the line that the
+% final line of the question may occupy and the marks still be set beside it.
+% \dropmarks applies this on top of its single-line test and the reserved-zone
+% test above, so it never sets the marks over the text of the question;
+% \dropmarksinline applies this test on its own, so that a final line that reaches
+% into the marks' column can still be overridden explicitly.
 \newcommand{\eeMarkInlineFraction}{0.90}
 \newlength{\eeMarkInlineWidth}
 
@@ -283,13 +321,74 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   {\settowidth{\eeMarkBlockWidth}{\padded@point@block}}%
 }
 
+% Number of lines of question text set at the point where \dropmarks or
+% \dropmarksinline is written: 1 for a single-line question, 2 for a two-line
+% question, and so on.  It is read from \prevgraf by \eeMarkMeasure, which adds
+% the line that tabto's correction loses and removes the question's label from
+% the count.  A question with no text of its own is not counted as 0 lines in
+% every context, so it is the \TabPrevPos = 0 test, not this count, that drops
+% the marks a full paragraph below such a question.
+\newcount\eeMarkLineCount
+
+% Take the line occupied by the question's label out of \eeMarkLineCount.
+%
+% exam.cls sets a question label on a line of its own only when it is written by
+% \qformat, as it is here, or by \bonusqformat for a bonus question; with
+% \noqformat or \nobonusqformat the label shares the first line of the question
+% text.  The labels of the parts, subparts and choice lists are always set at the
+% start of the text they precede, by the list machinery.  Those lists are the
+% reason for the \@queslevel test: \@queslevel is exam.cls's record of which of
+% \question, \part, \subpart ... is current, and only when it is the question
+% itself can the label have taken a line of its own -- unless the question is
+% followed by one of those lists, in which case a paragraph after the list has no
+% label of its own but still sees the question level as current.  \eeMarkLineCount
+% is then one line too small, which can set the marks of a two-line paragraph of
+% that sort on its final line; \dropmarksinline sets them there for any length of
+% paragraph, and \dropmarks still refuses a final line that reaches into the
+% marks' column, so the result is safe.
+\newcommand{\eeMarkRemoveLabelLine}{%
+  \def\ee@mark@question{question}%
+  \ifx\@queslevel\ee@mark@question
+  \if@bonus
+  \if@bonusqformat
+  \advance\eeMarkLineCount\m@ne
+  \fi
+  \else
+  \if@qformat
+  \advance\eeMarkLineCount\m@ne
+  \fi
+  \fi
+  \fi
+}
+
+% Take the measurements on which the placement of the marks depends: the natural
+% width of the final line of the question (\TabPrevPos), the number of lines of
+% question text (\eeMarkLineCount), the width of the block of marks that
+% \droppoints will set (\eeMarkBlockWidth), and the longest final line that may
+% carry the marks inline (\eeMarkInlineWidth).
+%
+% The \tabto{\CurrentLineWidth} trick leaves the natural width of the final line
+% in \TabPrevPos.  \prevgraf is read immediately afterwards, while it still holds
+% tabto's correction of the line count of the paragraph, and it is corrected
+% straight away into the number of lines of question text.
+\newcommand{\eeMarkMeasure}{%
+  \TabPrevPos\linewidth % pessimistic default if \tabto cannot measure the line
+  \tabto{\CurrentLineWidth}% record the width of the last line of the question
+  \eeMarkLineCount\prevgraf
+  \advance\eeMarkLineCount\@ne % tabto's correction leaves the count one short
+  \eeMarkRemoveLabelLine
+  \eeMarkBlock
+  \setlength{\eeMarkInlineWidth}{\eeMarkInlineFraction\linewidth}%
+}
+
 % Place the marks below the question.
 %
-% A zero \TabPrevPos means that the final line was already full: \tabto had to
-% end it in order to measure it, and that leaves an empty line behind.  Its only
-% contribution to the vertical list is the interline glue before the next line,
-% so exactly one \baselineskip is cancelled; the marks are then dropped just as
-% they are for any other final line that has no room for them.
+% A zero \TabPrevPos means that \tabto found no line to measure: it happens when
+% \dropmarks is written outside the question's paragraph, after a blank line, and
+% on a final line too short for the measurement to give a positive width
+% (tabto.sty discards a negative result).  Such a line leaves no room for the
+% marks, so they are dropped a full paragraph below, with one \baselineskip
+% cancelled to take out the empty line that the measurement leaves behind.
 %
 % Otherwise the marks sit close below the question (\droppointsslightlybelow)
 % only when the final line is genuinely short: it must both leave the marks'
@@ -314,20 +413,23 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \fi
 }
 
-\newcommand{\dropmarksinline}{%
-  \TabPrevPos\linewidth
-  \tabto{\CurrentLineWidth}%
-  \eeMarkBlock
-  \setlength{\eeMarkInlineWidth}{\eeMarkInlineFraction\linewidth}%
-  \ifdim\TabPrevPos=\z@
-  \eeDropMarksBelow
-  \else
+% Set the marks on the final line of the question if that line is short enough
+% for them, and below the question otherwise.
+\newcommand{\eeMarkDropInlineIfShort}{%
   \ifdim\TabPrevPos<\eeMarkInlineWidth
   \droppoints
   \kern\eeMarkInlineAfterSkip
   \else
   \eeDropMarksBelow
   \fi
+}
+
+\newcommand{\dropmarksinline}{%
+  \eeMarkMeasure
+  \ifdim\TabPrevPos=\z@
+  \eeDropMarksBelow
+  \else
+  \eeMarkDropInlineIfShort
   \fi
 }
 
@@ -357,11 +459,25 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \kern\eeMarkAfterSkip
 }
 
+% The automatic placement: the marks share the final line of the question only
+% when the question is a single line of text (\eeMarkLineCount) and that line
+% leaves the marks' column clear (\eeMarkBlockWidth plus \eeMarkSafetyGap).
+% Otherwise the marks are dropped below the question, as for any other question.
 \newcommand{\dropmarks}{%
-  \TabPrevPos\linewidth % pessimistic default if \tabto cannot measure the line
-  \tabto{\CurrentLineWidth}% record the width of the last line of the question
-  \eeMarkBlock
+  \eeMarkMeasure
+  \ifdim\TabPrevPos=\z@
   \eeDropMarksBelow
+  \else
+  \ifnum\eeMarkLineCount=\@ne
+  \ifdim\TabPrevPos<\dimexpr\linewidth-\eeMarkBlockWidth-\eeMarkSafetyGap\relax
+  \eeMarkDropInlineIfShort
+  \else
+  \eeDropMarksBelow
+  \fi
+  \else
+  \eeDropMarksBelow
+  \fi
+  \fi
 }
 
 % Set the total marks format
