@@ -112,7 +112,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % questions list.  Glue at the top of a page is discarded by \TeX{}, so a
 % question that happens to begin a page is not given any extra space above it.
 \newlength{\eeQuestionPreSkip}
-\setlength{\eeQuestionPreSkip}{10mm}
+\setlength{\eeQuestionPreSkip}{5.4ex} % 10mm at 11pt
 
 % remove question indentation
 \renewcommand{\questionshook}{%
@@ -147,8 +147,8 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %
 %   \dropmarksinline           the marks stay on the final line, if that line is
 %                              fairly short;
-%   \droppointsslightlybelow   the marks go on the next line but hug the
-%                              question, if the final line leaves some room;
+%   \droppointsslightlybelow   the marks go on the next line but are closer to the
+%                              question, if the final line has sufficient room;
 %   \droppointsbelow           the marks go a full paragraph below the question,
 %                              if there is no room for them beside the text.
 %
@@ -179,12 +179,26 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %------------------------------------------------------------------------------
 
 % Width of the block of marks that \droppoints will place.
+%
+% The spacing lengths in this section are given in font-relative units so that
+% they scale with the font size: the vertical skips in ex (the x-height, the
+% usual unit for vertical spacing) and the horizontal clearances in em (the
+% usual unit for horizontal measurement).  In XCharter at 11pt, 1em = 10.95pt and
+% 1ex = 5.267pt, so 1em is about 2.08ex.
 \newlength{\eeMarkBlockWidth}
 
 % Free space that must remain beside the marks text, over and above the width of the
 % mark block itself, before the marks may share the last line.
 \newlength{\eeMarkSafetyGap}
-\setlength{\eeMarkSafetyGap}{5mm}
+\setlength{\eeMarkSafetyGap}{1.3em} % 5mm at 11pt
+
+% Public tuning value for the "slightly below" placement: the fraction of the
+% line that the final line of the question may occupy and the marks still sit
+% close below it.  A longer final line reaches across the column in which the
+% marks are set, and hugging it makes the marks look as though they belonged to
+% that line, so they are dropped \eeMarkParagraphSkip below the question
+% instead.  Short final lines are unaffected.
+\newcommand{\eeMarkHugFraction}{0.75}
 
 % Public tuning value for \dropmarksinline. The fraction of th line that
 % can be occupied and the marks still placed inline. Note, the \dropmarks command
@@ -194,13 +208,39 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newlength{\eeMarkInlineWidth}
 
 % Extra space above the marks for the two "below" placements.
-% \droppointsslightlybelow cancels the paragraph skip, so its marks sit one
-% normal line below the question; \droppointsbelow keeps the paragraph skip.
-% Both may be given a non-zero value to fine-tune the spacing.
+% \droppointsslightlybelow pulls the marks up towards the question so that they
+% sit just below it; \droppointsbelow puts them \eeMarkParagraphSkip below it
+% (see the note on that length, below).  \eeMarkBelowSkip is left at zero: it
+% used to make up for the paragraph skip that \droppointsbelow was documented as
+% keeping but never actually had, and that skip is now supplied explicitly.
+% Either value may be changed to fine-tune the spacing.
 \newlength{\eeMarkSlightlyBelowSkip}
-\setlength{\eeMarkSlightlyBelowSkip}{-8pt}
+\setlength{\eeMarkSlightlyBelowSkip}{-1.4ex}
 \newlength{\eeMarkBelowSkip}
-\setlength{\eeMarkBelowSkip}{-6pt}
+\setlength{\eeMarkBelowSkip}{0ex}
+
+% The drop used by \droppointsbelow: the distance by which the marks are
+% pushed below a final line that leaves no room for them beside the text.
+% This is held explicitly rather than taken from \parskip, because the
+% list environments of exam.cls set \parskip for their own purposes, and inside
+% subparts it is 0pt.  Taking it from \parskip would then leave the marks on
+% the very next line (differing from \droppointsslightlybelow only by the two
+% skips above), so a final line that has run into the marks' column would not
+% push them down at all.  The value is a tuning value: it has to be large enough
+% for the marks to read as a separate block rather than as part of that final
+% line.
+\newlength{\eeMarkParagraphSkip}
+\setlength{\eeMarkParagraphSkip}{1.5ex}
+
+% Extra space placed after the block of dropped marks, i.e. between the dropped
+% marks and whatever follows them (the next paragraph of the question, or the
+% next question).  This is a rigid \kern rather than a \vskip: when a question
+% is followed by another \question, \@item adds the space between the items with
+% \addvspace\itemsep, and \addvspace replaces any glue it finds at the end of the
+% list item with the larger of the two.  A \vskip would therefore be swallowed,
+% whereas a \kern is not glue, so \itemsep is still added on top of it.
+\newlength{\eeMarkAfterSkip}
+\setlength{\eeMarkAfterSkip}{1.5ex}
 
 % Measure the block of marks that \droppoints would place.  exam.cls defines
 % \padded@point@block when the points of the current question are read; fall back
@@ -211,24 +251,31 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   {\settowidth{\eeMarkBlockWidth}{\padded@point@block}}%
 }
 
-% Place the marks below the question.  A zero \TabPrevPos means that the last
-% line was already full, so the marks cannot be inline and there is not even room
-% for the "slightly below" placement: they go a full paragraph below.
+% Place the marks below the question.
 %
-% To measure a line that is already full, \tabto has to end it first, and that
-% leaves an empty line behind.  Its one contribution to the vertical list is the
-% interline glue before the next line, so exactly one \baselineskip is cancelled
-% to keep the marks the same distance below the question as in the cases where
-% the last line was short enough to measure in place.
+% A zero \TabPrevPos means that the final line was already full: \tabto had to
+% end it in order to measure it, and that leaves an empty line behind.  Its only
+% contribution to the vertical list is the interline glue before the next line,
+% so exactly one \baselineskip is cancelled; the marks are then dropped just as
+% they are for any other final line that has no room for them.
+%
+% Otherwise the marks sit close below the question (\droppointsslightlybelow)
+% only when the final line is genuinely short: it must both leave the marks'
+% column clear (\eeMarkSafetyGap) and be no more than \eeMarkHugFraction of the
+% line width.  A final line that is full, or nearly full, is dropped
+% \eeMarkParagraphSkip below the question instead.
 \newcommand{\eeDropMarksBelow}{%
   \ifdim\TabPrevPos=\z@
   \par
   \vskip-\baselineskip
-  \vskip\eeMarkBelowSkip
-  \noindent\droppoints
+  \droppointsbelow
   \else
   \ifdim\TabPrevPos<\dimexpr\linewidth-\eeMarkBlockWidth-\eeMarkSafetyGap\relax
+  \ifdim\TabPrevPos<\eeMarkHugFraction\linewidth
   \droppointsslightlybelow
+  \else
+  \droppointsbelow
+  \fi
   \else
   \droppointsbelow
   \fi
@@ -258,13 +305,17 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \vskip-\parskip
   \vskip\eeMarkSlightlyBelowSkip
   \noindent\droppoints
+  \kern\eeMarkAfterSkip
 }
 
-% Marks a full paragraph below the question.
+% Marks a full paragraph below the question: \eeMarkParagraphSkip is added
+% above the marks (see the note on it above).
 \newcommand{\droppointsbelow}{%
   \par
+  \vskip\eeMarkParagraphSkip
   \vskip\eeMarkBelowSkip
   \noindent\droppoints
+  \kern\eeMarkAfterSkip
 }
 
 \newcommand{\dropmarks}{%
@@ -276,7 +327,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 
 % Set the total marks format
 \totalformat{\hfill[Total Marks: \totalpoints]}
-\newcommand{\droptotal}{\vspace{5mm}\droptotalpoints} % spacing to total points
+\newcommand{\droptotal}{\vspace{2.7ex}\droptotalpoints} % spacing to total points (5mm at 11pt)
 
 % --------------------------- Header -----------------------------
 
@@ -463,7 +514,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \renewcommand{\thepartno}{\alph{partno}}
 \renewcommand{\partlabel}{\thepartno)}
 \renewcommand{\partshook}{} % no special hook
-\setlength{\parskip}{1.1em} % paragraph spacing
+\setlength{\parskip}{2.3ex} % paragraph spacing
 }
 
 %------------------------------------------------------------------------------
