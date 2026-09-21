@@ -168,15 +168,15 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % inline: a short final line of a multi-line question is indistinguishable, by
 % its width alone, from a short single-line question, and setting the marks
 % beside it would strand them in the middle of the question.  The marks of a
-% multi-line question go below it -- on the line after its final line when they
-% fit there, a full paragraph below when that line has run into the column in
-% which they are set.
+% multi-line question go below it -- on the line after its final line, one
+% ordinary interline down, when that line stops short of the column in which the
+% marks are set, and a full paragraph below when it has reached into it.
 %
 %   \dropmarks                 the automatic choice just described;
 %   \dropmarksinline           the marks stay on the final line, if that line is
 %                              fairly short;
-%   \droppointsslightlybelow   the marks go on the next line but are closer to the
-%                              question, if the final line has sufficient room;
+%   \droppointsslightlybelow   the marks go on the next line, one ordinary
+%                              interline below the question;
 %   \droppointsbelow           the marks go a full paragraph below the question,
 %                              if there is no room for them beside the text.
 %
@@ -205,23 +205,32 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %   reaches no more than \eeMarkHugIntrusion of the
 %   way into the marks' column, or the question is
 %   longer and \TabPrevPos < \linewidth
-%   - \eeMarkBlockWidth - \eeMarkSafetyGap, i.e.
-%   its final line leaves the marks' column clear    -> \droppointsslightlybelow,
+%   - \eeMarkBlockWidth, i.e. its final line stops
+%   short of the marks' column                       -> \droppointsslightlybelow,
 %   otherwise                                        -> \droppointsbelow.
 %
 % The comparison between \TabPrevPos and \linewidth - \eeMarkBlockWidth
-% - \eeMarkSafetyGap is the reserved-zone test: it is what keeps the marks off a
-% final line that reaches into the column in which they are set.  A single-line
-% question gets its marks hugged even when it fails that test, because a hug
-% places them on the line below, out of reach of the line itself, and keeps them
-% close to the question they belong to -- but only up to \eeMarkHugWidth, the
-% point at which its line is almost a full line: a line that reaches more than
-% \eeMarkHugIntrusion of the way into the marks' column leaves a hug reading as
-% though the marks ran on from the line itself, and they are dropped a full
-% \eeMarkParagraphSkip below instead.  A longer question that fails the
-% reserved-zone test is dropped the same way, and sooner: that test requires its
-% final line to stop \eeMarkSafetyGap short of the marks' column, whereas a
-% single line is allowed to reach \eeMarkHugIntrusion of the way into it.
+% - \eeMarkSafetyGap is the reserved-zone test: it decides whether the marks may
+% share the final line of the question, a line that reaches into the column in
+% which they are set being set over by them otherwise.  The below-line placements
+% are governed by the marks' column itself instead, because a hug sets the marks
+% on the line below, out of the line's way, and so needs no clearance beside it.
+% A single-line question is therefore hugged even when it fails the reserved-zone
+% test -- but only up to \eeMarkHugWidth, the point at which its line is almost a
+% full line: a line that reaches more than \eeMarkHugIntrusion of the way into
+% the marks' column leaves a hug reading as though the marks ran on from the line
+% itself, and they are dropped a full \eeMarkParagraphSkip below instead.  A
+% longer question gets the marks' column itself as its below-line test: it is
+% hugged while its final line stops short of that column, and dropped a full
+% paragraph below once the line has reached into it, since a final line that ends
+% among the marks leaves them reading as its continuation.
+%
+% A hug keeps the marks clear of the final line by setting them on the next line:
+% the paragraph skip is cancelled and nothing is put in its place, so the marks
+% sit exactly one ordinary interline below the line they belong to, however far
+% into the marks' column that line has reached.  \droppointsbelow sets them the
+% same way and then adds \eeMarkParagraphSkip on top, which is what makes that
+% drop read as a block of its own rather than as the next line of the question.
 %
 % \TabPrevPos is zero when \tabto found no line to measure: outside the paragraph
 % of the question, which is what happens when \dropmarks is written after a blank
@@ -263,8 +272,10 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 
 % Free space that must remain beside the marks text, over and above the width of
 % the mark block itself, before the marks may share a line with it: it keeps
-% \dropmarks from setting the marks over the text of a final line that reaches
-% into the marks' column, and \eeDropMarksBelow from hugging such a line.
+% \dropmarks from setting the marks hard against the text of a final line that
+% comes close to the marks' column.  It applies to the inline placement only: the
+% below-line placements set the marks on a line of their own, where they need no
+% clearance beside the final line.
 \newlength{\eeMarkSafetyGap}
 \setlength{\eeMarkSafetyGap}{1.3em} % 5mm at 11pt
 
@@ -288,15 +299,15 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newcommand{\eeMarkHugIntrusion}{0.65}
 \newlength{\eeMarkHugWidth}
 
-% Extra space above the marks for the two "below" placements.
-% \droppointsslightlybelow pulls the marks up towards the question so that they
-% sit just below it; \droppointsbelow puts them \eeMarkParagraphSkip below it
-% (see the note on that length, below).  \eeMarkBelowSkip is left at zero: it
-% used to make up for the paragraph skip that \droppointsbelow was documented as
-% keeping but never actually had, and that skip is now supplied explicitly.
-% Either value may be changed to fine-tune the spacing.
-\newlength{\eeMarkSlightlyBelowSkip}
-\setlength{\eeMarkSlightlyBelowSkip}{-1.4ex}
+% Extra space above the marks.  \droppointsslightlybelow hugs them one ordinary
+% interline below the question: the paragraph skip is cancelled and nothing is
+% added in its place, which is what keeps the hug "slight" next to the full drop
+% of \droppointsbelow, and safe on any final line.  That drop adds
+% \eeMarkParagraphSkip on top (see the note on that length, below).
+% \eeMarkBelowSkip is left at zero: it used to make up for the paragraph skip
+% that \droppointsbelow was documented as keeping but never actually had, and
+% that skip is now supplied explicitly.  It may be changed to fine-tune the
+% drop.
 \newlength{\eeMarkBelowSkip}
 \setlength{\eeMarkBelowSkip}{0ex}
 
@@ -305,9 +316,9 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % This is held explicitly rather than taken from \parskip, because the
 % list environments of exam.cls set \parskip for their own purposes, and inside
 % subparts it is 0pt.  Taking it from \parskip would then leave the marks on
-% the very next line (differing from \droppointsslightlybelow only by the two
-% skips above), so a final line that has run into the marks' column would not
-% push them down at all.  The value is a tuning value: it has to be large enough
+% the very next line -- which is exactly where \droppointsslightlybelow puts
+% them -- so a final line that has run into the marks' column would not push
+% them down at all.  The value is a tuning value: it has to be large enough
 % for the marks to read as a separate block rather than as part of that final
 % line.
 \newlength{\eeMarkParagraphSkip}
@@ -415,17 +426,18 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % cancelled to take out the empty line that the measurement leaves behind.
 %
 % Otherwise the marks sit close below the question (\droppointsslightlybelow) when
-% the final line leaves the marks' column clear (\eeMarkBlockWidth plus
-% \eeMarkSafetyGap), and \eeMarkParagraphSkip below the question when that line
-% has run into the column, as marks set directly under the end of such a line
-% would read as part of it.
+% the final line stops short of the marks' column (\eeMarkBlockWidth), and
+% \eeMarkParagraphSkip below the question when that line has reached into the
+% column: a hug sets the marks on the line below, out of the line's way, so it
+% needs no clearance beside it, whereas marks set directly under the end of a
+% line that ends among them would read as part of it.
 \newcommand{\eeDropMarksBelow}{%
   \ifdim\TabPrevPos=\z@
   \par
   \vskip-\baselineskip
   \droppointsbelow
   \else
-  \ifdim\TabPrevPos<\dimexpr\linewidth-\eeMarkBlockWidth-\eeMarkSafetyGap\relax
+  \ifdim\TabPrevPos<\dimexpr\linewidth-\eeMarkBlockWidth\relax
   \droppointsslightlybelow
   \else
   \droppointsbelow
@@ -453,12 +465,15 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \fi
 }
 
-% Marks on the next line, hugging the question: the paragraph skip is cancelled
-% so that only the normal interline space remains.
+% Marks on the next line, hugging the question: the paragraph skip between the
+% question and the marks is cancelled, so that they sit one ordinary interline
+% below the final line of the question.  Nothing is added in place of that skip:
+% a hug is then safe however far into the marks' column the final line has
+% reached, which is why this placement needs no measurement and may be written
+% directly, unlike the placements chosen by \dropmarks.
 \newcommand{\droppointsslightlybelow}{%
   \par
   \vskip-\parskip
-  \vskip\eeMarkSlightlyBelowSkip
   \noindent\droppoints
   \kern\eeMarkAfterSkip
 }
@@ -481,11 +496,13 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 
 % The automatic placement.  The marks share the final line of the question only
 % when the question is a single line of text (\eeMarkLineCount) and that line
-% leaves the marks' column clear (\eeMarkBlockWidth plus \eeMarkSafetyGap).  A
-% single line too long for that is hugged below, unless it is almost a full line
-% and reaches more than \eeMarkHugIntrusion of the way into the marks' column
-% (\eeMarkHugWidth), in which case it is dropped a full paragraph below like the
-% final line of a longer question that has run into that column.
+% leaves the marks' column clear with \eeMarkSafetyGap to spare.  A single line
+% too long for that is hugged below, unless it is almost a full line and reaches
+% more than \eeMarkHugIntrusion of the way into the marks' column
+% (\eeMarkHugWidth), in which case it is dropped a full paragraph below.  A
+% longer question gets those same two below-line placements, its final line
+% drawing the line between them: hugged while it stops short of the marks'
+% column, dropped a full paragraph below once it has reached into it.
 \newcommand{\dropmarks}{%
   \eeMarkMeasure
   \ifdim\TabPrevPos=\z@
