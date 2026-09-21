@@ -152,7 +152,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %------------------------------------------------------------------------------
 %                        Dropping the mark allocation
 %------------------------------------------------------------------------------
-% \dropmarks and \dropmarksinline are written directly after the full stop that
+% \dropmarksi s written directly after the full stop that
 % ends the question, or on the line after it, and must precede the blank line or
 % \par that ends the question.  The block of marks is roughly 2cm wide, so on a
 % long final line it would collide with the text of the question.  Both commands
@@ -160,20 +160,19 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % how many lines of text the question has set, before choosing where to set the
 % marks.
 %
-% \dropmarks makes that choice automatically: the marks stay on the final line
+% \dropmarks makes that choice automatically: the marks stay in line
 % only when the question is a single line of text that is short enough to leave
-% the marks' column clear.  A single line too long for that is hugged below it,
-% and one that is almost a full line is dropped a full paragraph below, as the
-% marks of a longer question are.  A multi-line question never carries its marks
-% inline: a short final line of a multi-line question is indistinguishable, by
-% its width alone, from a short single-line question, and setting the marks
-% beside it would strand them in the middle of the question.  The marks of a
-% multi-line question go below it -- on the line after its final line, one
-% ordinary interline down, when that line stops short of the column in which the
+% the marks' column clear.  The mark for a single line too long for that is dropped slightly below it,
+% and when in cases of almost a full line, the mark is dropped a full paragraph below.
+
+% A multi-line question never carries its marks
+% in line. The marks of a
+% multi-line question go below it -- on the line after its final line, dropped slightly
+% below, when that line stops short of the column in which the
 % marks are set, and a full paragraph below when it has reached into it.
 %
 %   \dropmarks                 the automatic choice just described;
-%   \dropmarksinline           the marks stay on the final line, if that line is
+%   \droppointsinline           the marks stay on the final line, if that line is
 %                              fairly short;
 %   \droppointsslightlybelow   the marks go on the next line, one ordinary
 %                              interline below the question;
@@ -258,7 +257,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % display cannot be part of a single line of text, and an over-count only makes
 % the count less likely to come out as the 1 that \dropmarks looks for.
 %
-% \dropmarksinline, \droppointsslightlybelow and \droppointsbelow may also be used
+% \droppointsinline, \droppointsslightlybelow and \droppointsbelow may also be used
 % directly, to override the automatic choice for an unusual layout.
 %------------------------------------------------------------------------------
 
@@ -284,7 +283,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % final line of the question may occupy and the marks still be set beside it.
 % \dropmarks applies this on top of its single-line test and the reserved-zone
 % test above, so it never sets the marks over the text of the question;
-% \dropmarksinline applies this test on its own, so that a final line that reaches
+% \droppointsinline applies this test on its own, so that a final line that reaches
 % into the marks' column can still be overridden explicitly.
 \newcommand{\eeMarkInlineFraction}{0.90}
 \newlength{\eeMarkInlineWidth}
@@ -329,7 +328,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % has to be large enough for the marks to read as a separate block rather than as
 % part of that final line.
 \newlength{\eeMarkSlightlyBelowSkip}
-\setlength{\eeMarkSlightlyBelowSkip}{0ex}
+\setlength{\eeMarkSlightlyBelowSkip}{-0.45ex}
 \newlength{\eeMarkBelowSkip}
 \setlength{\eeMarkBelowSkip}{1.45ex}
 
@@ -343,7 +342,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newlength{\eeMarkAfterSkip}
 \setlength{\eeMarkAfterSkip}{1.5ex}
 
-% Extra space placed after the marks when \dropmarksinline has kept them on the
+% Extra space placed after the marks when \droppointsinline has kept them on the
 % final line of the question.  The two below-line placements set the marks in a
 % line of their own, and it is that line which separates the question from
 % whatever follows it; when the marks stay inline nothing is added, so two
@@ -364,7 +363,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 }
 
 % Number of lines of question text set at the point where \dropmarks or
-% \dropmarksinline is written: 1 for a single-line question, 2 for a two-line
+% \droppointsinline is written: 1 for a single-line question, 2 for a two-line
 % question, and so on.  It is read from \prevgraf by \eeMarkMeasure, which adds
 % the line that tabto's correction loses and removes the question's label from
 % the count.  A question with no text of its own is not counted as 0 lines in
@@ -385,7 +384,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % followed by one of those lists, in which case a paragraph after the list has no
 % label of its own but still sees the question level as current.  \eeMarkLineCount
 % is then one line too small, which can set the marks of a two-line paragraph of
-% that sort on its final line; \dropmarksinline sets them there for any length of
+% that sort on its final line; \droppointsinline sets them there for any length of
 % paragraph, and \dropmarks still refuses a final line that reaches into the
 % marks' column, so the result is safe.
 \newcommand{\eeMarkRemoveLabelLine}{%
@@ -465,7 +464,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
   \fi
 }
 
-\newcommand{\dropmarksinline}{%
+\newcommand{\droppointsinline}{%
   \eeMarkMeasure
   \ifdim\TabPrevPos=\z@
   \eeDropMarksBelow
