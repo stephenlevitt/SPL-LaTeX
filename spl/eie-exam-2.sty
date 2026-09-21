@@ -219,18 +219,19 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 % test -- but only up to \eeMarkHugWidth, the point at which its line is almost a
 % full line: a line that reaches more than \eeMarkHugIntrusion of the way into
 % the marks' column leaves a hug reading as though the marks ran on from the line
-% itself, and they are dropped a full \eeMarkParagraphSkip below instead.  A
+% itself, and they are dropped a full \eeMarkBelowSkip below instead.  A
 % longer question gets the marks' column itself as its below-line test: it is
 % hugged while its final line stops short of that column, and dropped a full
 % paragraph below once the line has reached into it, since a final line that ends
 % among the marks leaves them reading as its continuation.
 %
 % A hug keeps the marks clear of the final line by setting them on the next line:
-% the paragraph skip is cancelled and nothing is put in its place, so the marks
-% sit exactly one ordinary interline below the line they belong to, however far
-% into the marks' column that line has reached.  \droppointsbelow sets them the
-% same way and then adds \eeMarkParagraphSkip on top, which is what makes that
-% drop read as a block of its own rather than as the next line of the question.
+% the paragraph skip is cancelled and \eeMarkSlightlyBelowSkip -- zero unless the
+% document has tuned it -- is put in its place, so the marks sit one ordinary
+% interline below the line they belong to, however far into the marks' column that
+% line has reached.  \droppointsbelow sets them the same way and then adds
+% \eeMarkBelowSkip on top, which is what makes that drop read as a block of
+% its own rather than as the next line of the question.
 %
 % \TabPrevPos is zero when \tabto found no line to measure: outside the paragraph
 % of the question, which is what happens when \dropmarks is written after a blank
@@ -299,30 +300,38 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 \newcommand{\eeMarkHugIntrusion}{0.65}
 \newlength{\eeMarkHugWidth}
 
-% Extra space above the marks.  \droppointsslightlybelow hugs them one ordinary
-% interline below the question: the paragraph skip is cancelled and nothing is
-% added in its place, which is what keeps the hug "slight" next to the full drop
-% of \droppointsbelow, and safe on any final line.  That drop adds
-% \eeMarkParagraphSkip on top (see the note on that length, below).
-% \eeMarkBelowSkip is left at zero: it used to make up for the paragraph skip
-% that \droppointsbelow was documented as keeping but never actually had, and
-% that skip is now supplied explicitly.  It may be changed to fine-tune the
-% drop.
+% Space above the marks, over and above the ordinary interline that separates them
+% from the final line of the question: \eeMarkSlightlyBelowSkip for the hug of
+% \droppointsslightlybelow and \eeMarkBelowSkip for the full drop of
+% \droppointsbelow, each named for the placement it tunes.  The hug leaves its
+% length at zero, which is the spacing that placement is designed around, and the
+% drop sets the whole of its distance in its own; both may be changed to fine-tune
+% that placement.
+%
+% \droppointsslightlybelow cancels the paragraph skip between the question and
+% the marks and adds \eeMarkSlightlyBelowSkip where that skip was, so the marks
+% sit one ordinary interline below the question.  A positive
+% \eeMarkSlightlyBelowSkip pushes every hug further below; a negative one pulls it
+% back towards the final line, and needs care: a hug is chosen precisely for a
+% final line that has reached into the marks' column, and it is the interline that
+% leaves the marks reading as a block of their own rather than as the continuation
+% of that line.
+%
+% \eeMarkBelowSkip is the drop of \droppointsbelow: the distance by which the
+% marks are pushed below a final line that leaves no room for them beside the
+% text.  \droppointsbelow cancels the same paragraph skip and adds
+% \eeMarkBelowSkip in its place.  It is held explicitly rather than taken from
+% \parskip, because the list environments of exam.cls set \parskip for their own
+% purposes, and inside subparts it is 0pt.  Taking it from \parskip would then
+% leave the marks on the very next line -- which is exactly where
+% \droppointsslightlybelow puts them -- so a final line that has run into the
+% marks' column would not push them down at all.  The value is a tuning value: it
+% has to be large enough for the marks to read as a separate block rather than as
+% part of that final line.
+\newlength{\eeMarkSlightlyBelowSkip}
+\setlength{\eeMarkSlightlyBelowSkip}{0ex}
 \newlength{\eeMarkBelowSkip}
-\setlength{\eeMarkBelowSkip}{0ex}
-
-% The drop used by \droppointsbelow: the distance by which the marks are
-% pushed below a final line that leaves no room for them beside the text.
-% This is held explicitly rather than taken from \parskip, because the
-% list environments of exam.cls set \parskip for their own purposes, and inside
-% subparts it is 0pt.  Taking it from \parskip would then leave the marks on
-% the very next line -- which is exactly where \droppointsslightlybelow puts
-% them -- so a final line that has run into the marks' column would not push
-% them down at all.  The value is a tuning value: it has to be large enough
-% for the marks to read as a separate block rather than as part of that final
-% line.
-\newlength{\eeMarkParagraphSkip}
-\setlength{\eeMarkParagraphSkip}{1.45ex}
+\setlength{\eeMarkBelowSkip}{1.45ex}
 
 % Extra space placed after the block of dropped marks, i.e. between the dropped
 % marks and whatever follows them (the next paragraph of the question, or the
@@ -427,7 +436,7 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 %
 % Otherwise the marks sit close below the question (\droppointsslightlybelow) when
 % the final line stops short of the marks' column (\eeMarkBlockWidth), and
-% \eeMarkParagraphSkip below the question when that line has reached into the
+% \eeMarkBelowSkip below the question when that line has reached into the
 % column: a hug sets the marks on the line below, out of the line's way, so it
 % needs no clearance beside it, whereas marks set directly under the end of a
 % line that ends among them would read as part of it.
@@ -466,29 +475,30 @@ scaled=1.05]{newtxmath}                 % LaTeX math font which matches Charter:
 }
 
 % Marks on the next line, hugging the question: the paragraph skip between the
-% question and the marks is cancelled, so that they sit one ordinary interline
-% below the final line of the question.  Nothing is added in place of that skip:
-% a hug is then safe however far into the marks' column the final line has
-% reached, which is why this placement needs no measurement and may be written
-% directly, unlike the placements chosen by \dropmarks.
+% question and the marks is cancelled and \eeMarkSlightlyBelowSkip -- zero unless
+% the document has tuned it -- is added in its place, so that the marks sit one
+% ordinary interline below the final line of the question.  A hug is then safe
+% however far into the marks' column the final line has reached, which is why
+% this placement needs no measurement and may be written directly, unlike the
+% placements chosen by \dropmarks.
 \newcommand{\droppointsslightlybelow}{%
   \par
   \vskip-\parskip
+  \vskip\eeMarkSlightlyBelowSkip
   \noindent\droppoints
   \kern\eeMarkAfterSkip
 }
 
-% Marks a full paragraph below the question: \eeMarkParagraphSkip is added
+% Marks a full paragraph below the question: \eeMarkBelowSkip is added
 % above the marks (see the note on it above).  The paragraph skip that the list
 % inserts between the question and the marks is cancelled first, so that the
-% drop is exactly \eeMarkParagraphSkip and does not silently grow when the
+% drop is exactly \eeMarkBelowSkip and does not silently grow when the
 % paragraph spacing of the parts and subparts lists is changed (it is now
 % \eePartParagraphSkip, which is much larger than the 2pt that used to be in
 % force inside a part).
 \newcommand{\droppointsbelow}{%
   \par
   \vskip-\parskip
-  \vskip\eeMarkParagraphSkip
   \vskip\eeMarkBelowSkip
   \noindent\droppoints
   \kern\eeMarkAfterSkip
